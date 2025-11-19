@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { resetPassword } from "../../../api/auth.service";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { resetPassword, resetPasswordViaEmail } from "../../../api/auth.service";
 import loginlogo from "../../../assets/login.svg";
 
 import "./ResetPassword.css";
 
 const ResetPassword = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,18 +17,19 @@ const ResetPassword = () => {
     const [loading, setLoading] = useState(false);
     const [touched, setTouched] = useState(false);
 
-    const email = localStorage.getItem("pendingEmail");
-    const oldPassword = localStorage.getItem("oldPassword");
+    const queryParams = new URLSearchParams(location.search);
+    const urlEmail = queryParams.get("email");
 
-    const validatePassword = (password) => {
-        return {
-            length: password.length >= 8,
-            uppercase: /[A-Z]/.test(password),
-            lowercase: /[a-z]/.test(password),
-            number: /[0-9]/.test(password),
-            special: /[@#$%^&*!]/.test(password),
-        };
-    };
+    const email = !urlEmail ? localStorage.getItem("pendingEmail") : null;
+    const oldPassword = !urlEmail ? localStorage.getItem("oldPassword") : null;
+
+    const validatePassword = (password) => ({
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /[0-9]/.test(password),
+        special: /[@#$%^&*!]/.test(password),
+    });
 
     const rules = validatePassword(password);
 
@@ -49,15 +51,19 @@ const ResetPassword = () => {
         setLoading(true);
 
         try {
-            const res = await resetPassword({
-                email: email,
-                oldPassword: oldPassword,
-                newPassword: password,
-            });
+            const payload = urlEmail
+                ? { email: urlEmail, newPassword: password } 
+                : { email, oldPassword, newPassword: password }; 
+                
+            const res = urlEmail
+                ? await resetPasswordViaEmail(payload)
+                : await resetPassword(payload);
 
-            if (res?.message === "Password changed successfully") {
-                localStorage.removeItem("pendingEmail");
-                localStorage.removeItem("oldPassword");
+            if (res?.message === "Password Changed successfully" || res?.message === "Password changed successfully") {
+                if (!urlEmail) {
+                    localStorage.removeItem("pendingEmail");
+                    localStorage.removeItem("oldPassword");
+                }
                 navigate("/login");
             }
         } catch (err) {
@@ -105,8 +111,7 @@ const ResetPassword = () => {
                                 placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={(e) => { setConfirmPassword(e.target.value); setTouched(true); }}
-                                onFocus={() => setTouched(true)
-                                }
+                                onFocus={() => setTouched(true)}
                             />
                             <span
                                 className="eye-icon"
@@ -119,42 +124,31 @@ const ResetPassword = () => {
                         {error && <p className="error-text">{error}</p>}
 
                         <ul className="password-rules">
-                            <li>
-                                <span className={`circle ${rules.length ? "valid" : ""}`}></span>
-                                At least 8 characters long
-                            </li>
-                            <li>
-                                <span className={`circle ${rules.uppercase ? "valid" : ""}`}></span>
-                                One Uppercase letter (A-Z)
-                            </li>
-                            <li>
-                                <span className={`circle ${rules.lowercase ? "valid" : ""}`}></span>
-                                One Lowercase letter (a-z)
-                            </li>
-                            <li>
-                                <span className={`circle ${rules.number ? "valid" : ""}`}></span>
-                                One Number (0-9)
-                            </li>
-                            <li>
-                                <span className={`circle ${rules.special ? "valid" : ""}`}></span>
-                                One special character (@#$%^&*! )
-                            </li>
+                            <li><span className={`circle ${rules.length ? "valid" : ""}`}></span>At least 8 characters long</li>
+                            <li><span className={`circle ${rules.uppercase ? "valid" : ""}`}></span>One Uppercase letter (A-Z)</li>
+                            <li><span className={`circle ${rules.lowercase ? "valid" : ""}`}></span>One Lowercase letter (a-z)</li>
+                            <li><span className={`circle ${rules.number ? "valid" : ""}`}></span>One Number (0-9)</li>
+                            <li><span className={`circle ${rules.special ? "valid" : ""}`}></span>One special character (@#$%^&*! )</li>
                         </ul>
 
 
                         <div className="reset-buttons">
+                            {!urlEmail && (
+                                <button
+                                    type="button"
+                                    className="reset-btn-back"
+                                    onClick={() => navigate(-1)}
+                                >
+                                    Back
+                                </button>
+                            )}
+
                             <button
-                                type="button"
-                                className="reset-btn-back"
-                                onClick={() => navigate(-1)}
+                                type="submit"
+                                className={`reset-btn-login ${touched ? "active-btn" : ""}`}
+                                disabled={loading}
                             >
-                                Back
-                            </button>
-
-                            <button type="submit" className={`reset-btn-login ${touched ? "active-btn" : ""}`}
-
-                                disabled={loading}>
-                                {loading ? "Processing..." : "Login"}
+                                {loading ? "Processing..." : "Submit"}
                             </button>
                         </div>
                     </form>
