@@ -6,6 +6,7 @@ import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
 import Dashboard from "../components/Dashboard/Dashboard";
 import IpBlocked from "../components/Error/IpBlocked";
 import AccountDisabled from "../components/Error/AccountDeactivated";
+import ForgotPassword from "../components/Auth/ForgetPassword/ForgotPassword";
 
 function AppRoutes() {
 
@@ -17,6 +18,7 @@ function AppRoutes() {
         <Route path="/ip-blocked" element={<IpBlocked />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/account-disabled" element={<AccountDisabled />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );
 }
