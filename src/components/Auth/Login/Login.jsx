@@ -17,6 +17,17 @@ function Login() {
     e.preventDefault();
     setErrorMessage("");
 
+    const today = new Date().getDay(); 
+    if (today === 0 || today === 6) { // Sunday (0) and Saturday (6)
+      navigate("/account-disabled", {
+        state: {
+          message:
+            "Your account is temporarily deactivated on weekends for routine system checks. Please try again on Monday."
+        }
+      });
+      return;
+    }
+
     try {
       const res = await loginUser(email, password);
 
@@ -34,6 +45,16 @@ function Login() {
       }
 
     } catch (error) {
+      const backendMsg =
+        error?.data?.error ||
+        error?.data?.message ||
+        error?.message;
+
+      if (backendMsg?.includes("IP not whitelisted")) {
+        navigate("/ip-blocked", { state: { backendMessage: backendMsg } });
+        return;
+      }
+
       setErrorMessage("Incorrect password. Please try again.");
     }
   };
