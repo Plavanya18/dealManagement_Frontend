@@ -56,20 +56,6 @@
   line-height: 1.5;
 }
 
-.auth-box input {
-  width: 430px;
-  height: 44px;
-  padding: 14px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  margin-bottom: 20px;
-}
-
-.auth-box input:focus {
-  border: 1px solid #FFCC00;
-}
-
 .btn-group {
   width: 430px;       
   display: flex;
@@ -148,16 +134,22 @@
   font-weight: 500;
 }
 
+.auth-box input,
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border-radius: 6px;
+  max-width: 430px;
+  height: 44px;
+  padding: 12px 14px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   outline: none;
   font-size: 14px;
   background: #fff;
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
+.auth-box input:focus,
 .form-group input:focus {
   border-color: #FFCC00 !important;
   box-shadow: 0 0 4px rgba(255, 204, 0, 0.5);

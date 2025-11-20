@@ -49,6 +49,7 @@ function ForgotPassword() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={errorMessage ? "input-error" : ""}
+                                style={{ marginTop: "20px" }} 
                             />
                             {errorMessage && (
                                 <p className="error-text">{errorMessage}</p>
