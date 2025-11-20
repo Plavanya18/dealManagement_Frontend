@@ -1,45 +1,49 @@
-.forgot-container {
+.auth-container {
   display: flex;
   width: 100%;
   height: 100vh;
 }
 
-.forgot-left {
+.auth-left {
   flex: 1;
   background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   border-radius: 20px;
+  overflow: hidden;
 }
 
-.forgot-right {
+.auth-right {
   flex: 1;
   background: linear-gradient(to bottom right, #ffffff, #fff7dd, #ffffff);
   display: flex;
   justify-content: center;
-  align-items: center;     
-  min-height: 100vh;   
+  align-items: center;
   padding: 20px;
 }
 
-.forgot-box h2 {
+.auth-box {
+  width: 420px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.auth-box h2 {
   font-size: 26px;
   font-weight: 600;
   margin-bottom: 15px; 
   text-align: center;
 }
 
-.forgot-box p {
+.auth-box p {
   margin-bottom: 25px;
   color: #666;
   text-align: center;
   line-height: 1.5;
 }
 
-
-.forgot-box input {
+.auth-box input {
   width: 430px;
   height: 44px;
   padding: 14px;
@@ -49,29 +53,44 @@
   margin-bottom: 20px;
 }
 
+.auth-box input:focus {
+  border: 1px solid #FFCC00;
+}
+
+.auth-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 20px 20px 0;
+}
+
 .btn-group {
+  width: 430px;       
   display: flex;
-  gap: 10px; 
+  gap: 30px;         
+}
+
+.back-btn,
+.continue-btn {
+  flex: 1;         
+  height: 44px;      
+  padding: 12px 0 !important;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .back-btn {
-  padding: 12px 70px;  
-  border-radius: 8px;
-  height: 44px;
+  padding: 12px 0;    
   border: 1px solid #d4a106;
   background: transparent;
   color: #d4a106;
-  cursor: pointer;
 }
 
 .continue-btn {
-  padding: 12px 70px;  
-  height: 44px;
-  border-radius: 8px;
   background: #333;
   color: white;
   border: none;
-  cursor: pointer;
 }
 
 .continue-btn.active {
@@ -80,26 +99,20 @@
   border: 1px solid #FFCC00;
 }
 
-.forgot-box input:focus {
-  border: 1px solid #FFCC00;
+.auth-box p.error-text {
+  margin-top: 6px;
+  font-family: "Sk-Modernist";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0;
+  color: #EB1D2E;
+  text-align: left !important;
+  line-height: normal !important;
+
 }
 
-.forgot-right img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0 20px 20px 0;
-}
-
-.caption {
-  position: absolute;
-  bottom: 40px;
-  left: 40px;
-  color: white;
-  font-size: 32px;
-  font-weight: 600;
-}
-
-.caption span {
-  color: #f5c519;
+.input-error {
+  border-color: #EB1D2E !important;
+  box-shadow: 0 0 4px rgba(235, 29, 46, 0.4);
 }
