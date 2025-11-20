@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { sendResetPasswordEmail } from "../../../api/auth.service";
+import { sendResetPasswordEmail } from "../../../api/auth.service.jsx";
 import "./ForgotPassword.css";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
