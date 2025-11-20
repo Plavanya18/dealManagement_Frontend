@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../../api/auth.service.jsx";
-import "./login.css";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
 
@@ -60,14 +59,14 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-left">
+    <div className="auth-container">
+      <div className="auth-left">
         <img src={loginlogo} alt="Illustration" className="illustration" />
       </div>
 
-      <div className="login-right">
-        <div className="login-box">
-          <img src={welcomeImg} alt="Welcome" className="welcome-img" />
+      <div className="auth-right">
+        <div className="auth-box">
+          <img src={welcomeImg} alt="Welcome" className="img" />
 
           <form onSubmit={handleLogin}>
             <div className="form-group">
