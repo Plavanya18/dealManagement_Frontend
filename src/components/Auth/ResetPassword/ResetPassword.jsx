@@ -98,7 +98,7 @@ const ResetPassword = () => {
                                 required
                                 style={{ marginTop: "20px"}}
                             />
-                            <span className="eye" onClick={() => setShowPass(!showPass)}>
+                            <span className="eye" onClick={() => setShowPass(!showPass)} style={{ marginTop:"20px"}}>
                                 👁
                             </span>
                         </div>
