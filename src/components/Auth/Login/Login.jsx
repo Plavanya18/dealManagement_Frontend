@@ -66,7 +66,7 @@ function Login() {
 
       <div className="auth-right">
         <div className="auth-box">
-          <img src={welcomeImg} alt="Welcome" className="img" />
+          <img src={welcomeImg} alt="Welcome" className="welcome-img" />
 
           <form onSubmit={handleLogin}>
             <div className="form-group">
