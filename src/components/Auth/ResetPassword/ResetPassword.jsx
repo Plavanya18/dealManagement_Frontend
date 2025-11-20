@@ -3,8 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { resetPassword, resetPasswordViaEmail } from "../../../api/auth.service.jsx";
 import loginlogo from "../../../assets/login.svg";
 
-import "./ResetPassword.css";
-
 const ResetPassword = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -74,16 +72,16 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="reset-container">
+        <div className="auth-container">
 
-            <div className="reset-left">
+            <div className="auth-left">
                 <img src={loginlogo} alt="Illustration" className="illustration" />
             </div>
 
-            <div className="reset-right">
-                <div className="reset-box">
-                    <h2 className="reset-title">Reset Password</h2>
-                    <p className="reset-subtext">
+            <div className="auth-right">
+                <div className="auth-box">
+                    <h2 >Reset Password</h2>
+                    <p >
                         To reset your password, please enter your new password <br />
                         and confirm the new password.
                     </p>
@@ -93,13 +91,14 @@ const ResetPassword = () => {
                         <div className="password-wrapper">
                             <input
                                 type={showPass ? "text" : "password"}
-                                className="reset-input"
                                 placeholder="New Password"
                                 value={password}
                                 onChange={(e) => { setPassword(e.target.value); setTouched(true); }}
                                 onFocus={() => setTouched(true)}
+                                required
+                                style={{ marginTop: "20px"}}
                             />
-                            <span className="eye-icon" onClick={() => setShowPass(!showPass)}>
+                            <span className="eye" onClick={() => setShowPass(!showPass)}>
                                 👁
                             </span>
                         </div>
@@ -107,14 +106,14 @@ const ResetPassword = () => {
                         <div className="password-wrapper">
                             <input
                                 type={showConfirmPass ? "text" : "password"}
-                                className={`reset-input ${error ? "input-error" : ""}`}
+                                className={error ? "input-error" : ""}
                                 placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={(e) => { setConfirmPassword(e.target.value); setTouched(true); }}
                                 onFocus={() => setTouched(true)}
                             />
                             <span
-                                className="eye-icon"
+                                className="eye"
                                 onClick={() => setShowConfirmPass(!showConfirmPass)}
                             >
                                 👁
@@ -132,11 +131,10 @@ const ResetPassword = () => {
                         </ul>
 
 
-                        <div className="reset-buttons">
+                        <div className="btn-group">
                             {!urlEmail && (
                                 <button
-                                    type="button"
-                                    className="reset-btn-back"
+                                    className="back-btn"
                                     onClick={() => navigate(-1)}
                                 >
                                     Back
@@ -144,8 +142,7 @@ const ResetPassword = () => {
                             )}
 
                             <button
-                                type="submit"
-                                className={`reset-btn-login ${touched ? "active-btn" : ""}`}
+                                className={`continue-btn ${touched ? "active" : ""}`}
                                 disabled={loading}
                             >
                                 {loading ? "Processing..." : "Submit"}
