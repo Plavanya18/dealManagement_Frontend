@@ -4,7 +4,6 @@ import { verifyOtp } from "../../../api/auth.service.jsx";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
 import authlogo from "../../../assets/authsymbol.svg";
-import "./VerifyLogin.css";
 
 function VerifyOtp() {
   const navigate = useNavigate();
@@ -41,14 +40,14 @@ function VerifyOtp() {
   };
 
   return (
-    <div className="verify-container">
+    <div className="auth-container">
 
-      <div className="verify-left">
+      <div className="auth-left">
         <img src={loginlogo} alt="Illustration" className="illustration" />
       </div>
 
-      <div className="verify-right">
-        <div className="verify-box">
+      <div className="auth-right">
+        <div className="auth-box">
 
           <img src={welcomeImg} alt="Welcome" className="welcome-img" />
           <div className="otp-card">
@@ -71,14 +70,14 @@ function VerifyOtp() {
 
           {error && <p className="otp-error">{error}</p>}
 
-          <div className="button-row">
-            <button className="back-btn" onClick={() => navigate("/login")}>
-              Back
-            </button>
+          <div className="btn-group">
+              <button className="back-btn" onClick={() => navigate("/login")}>
+                  Back
+              </button>
 
-            <button className="verify-btn" onClick={handleVerify}>
-              Verify & Login
-            </button>
+              <button className={`continue-btn ${otp.length === 4 ? "active" : ""}`}  onClick={handleVerify}>
+                  Verify & Login
+              </button>
           </div>
 
           <p className="otp-time">
