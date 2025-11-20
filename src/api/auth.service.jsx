@@ -65,3 +65,35 @@ export const resetPassword = async (data) => {
 
   return json;
 };
+
+export const sendResetPasswordEmail = async (email) => {
+  const response = await fetch(`${API_URL}/auth/request-password-reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.error || "Failed to send reset password email");
+  }
+
+  return json;
+};
+
+export const resetPasswordViaEmail = async (data) => {
+  const response = await fetch(`${API_URL}/auth/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.message || "Password reset failed");
+  }
+
+  return json;
+};

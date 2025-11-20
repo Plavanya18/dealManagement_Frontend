@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../../api/auth.service";
+import { loginUser } from "../../../api/auth.service.jsx";
 import "./login.css";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
@@ -75,9 +75,13 @@ function Login() {
                 type="email"
                 placeholder="Type your email here"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errorMessage) setErrorMessage("");
+                  }}       
                 onFocus={() => setIsInputActive(true)}
                 onBlur={() => setIsInputActive(false)}
+                className={errorMessage === "Email field cannot be empty." ? "input-error" : ""}
                 required
               />
             </div>
@@ -88,11 +92,14 @@ function Login() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errorMessage) setErrorMessage("");
+                  }}
                   onFocus={() => setIsInputActive(true)}
                   onBlur={() => setIsInputActive(false)}
                   required
-                  className={errorMessage ? "input-error" : ""}
+                  className={errorMessage === "Incorrect password. Please try again." ? "input-error" : ""}
                 />
                 <span
                   className="eye"
@@ -111,7 +118,19 @@ function Login() {
                    Remember me
                 </label>
 
-                <a href="#" className="forgot">Forgot password?</a>
+                <span
+                  className="forgot"
+                  onClick={() => {
+                    if (!email) {
+                      setErrorMessage("Email field cannot be empty.");
+                      return;
+                    }
+                    navigate("/forgot-password");
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  Forgot password?
+                </span>
               </div>
             </div>
 

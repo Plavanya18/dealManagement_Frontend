@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { verifyOtp } from "../../../api/auth.service";
+import { verifyOtp } from "../../../api/auth.service.jsx";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
 import authlogo from "../../../assets/authsymbol.svg";
