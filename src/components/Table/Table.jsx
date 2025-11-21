@@ -85,7 +85,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                             <img
                                                 src={uparrowIcon}
                                                 alt="asc"
-                                                className={`w-3 h-3 ${sortConfig.key === col.key && sortConfig.direction === "ascending"
+                                                className={`w-2 h-3 ${sortConfig.key === col.key && sortConfig.direction === "ascending"
                                                         ? "opacity-100"
                                                         : "opacity-30"
                                                     }`}
@@ -93,7 +93,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                             <img
                                                 src={downarrowIcon}
                                                 alt="desc"
-                                                className={`w-3 h-3 ${sortConfig.key === col.key && sortConfig.direction === "descending"
+                                                className={`w-2 h-3 ${sortConfig.key === col.key && sortConfig.direction === "descending"
                                                         ? "opacity-100"
                                                         : "opacity-30"
                                                     }`}
