@@ -1,42 +1,20 @@
 import React from "react";
 
-function StatsCard({ title, value, change, subChange, changeType, icon }) {
+function StatsCard({ title, value, subChange, icon }) {
   return (
-    <div className="stat-card">
-      <div className="stat-header">
-        {change && (
-          <span
-            className={
-              changeType === "closing"
-                ? "closing-soon"
-                : `change ${changeType}`
-            }
-          >
-            {change}
-          </span>
-        )}
+    <div  className="w-[220px] h-[120px] bg-white rounded-xl border border-[#E5E5E5] shadow-sm p-4 flex flex-col justify-center gap-2">
+      
+      <div className="flex justify-between items-start p-6">
+        <h4 className="text-[16px] font-semibold text-black">{title}</h4>
+
         {icon && (
-          <div className="stat-icon-right">
-            <img src={icon} alt="icon" />
-          </div>
+          <img src={icon} alt="icon" className="w-6 h-6" />
         )}
       </div>
 
-      <h4>{title}</h4>
-      <p className="value">{value}</p>
+      <p className="text-[16px] font-bold text-black mt-1">{value}</p>
 
-      {subChange && title === "Total Candidates" && (
-        <p className="value-change">
-          <span className="green-text">{subChange.split(" ")[0]}</span>{" "}
-          <span className="grey-text">
-            {subChange.replace(/^\+\d+\s*/, "")}
-          </span>
-        </p>
-      )}
-
-      {subChange && title !== "Total Candidates" && (
-        <p className="value-change grey-text">{subChange}</p>
-      )}
+      <p className="text-[15px] text-[#6c757d] mt-1">{subChange}</p>
     </div>
   );
 }
