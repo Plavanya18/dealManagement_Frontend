@@ -1,0 +1,65 @@
+import React from "react";
+import { NavLink } from "react-router-dom";
+import settingIcon from "../../assets/setting.svg";
+import dashboardIcon from "../../assets/home.svg";
+import userCandidateIcon from "../../assets/user_candidates.svg";
+import newsIcon from "../../assets/news.svg";
+import candidateIcon from "../../assets/candidate.svg";
+import dealIcon from "../../assets/join_hand.svg";
+
+function Sidebar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role?.toLowerCase();
+
+  const linkClasses = ({ isActive }) =>
+    `flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors mt-2 ${
+      isActive
+        ? "bg-gradient-to-r from-[#FFCC00]-500 to-indigo-500 text-white font-semibold"
+        : "text-gray-700 hover:bg-gray-100 hover:text-[#FFCC00]-600"
+    }`;
+
+  return (
+    <aside className="w-[220px] h-[600px] bg-white p-2 flex flex-col shadow-md">
+      <ul className="flex flex-col gap-2">
+        <li>
+          <NavLink to="/dashboard" className={linkClasses}>
+            <img src={dashboardIcon} alt="dashboard" className="w-5 h-5" />
+            Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/users" className={linkClasses}>
+            <img src={userCandidateIcon} alt="users" className="w-5 h-5" />
+            User Management
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/customers" className={linkClasses}>
+            <img src={candidateIcon} alt="customers" className="w-5 h-5" />
+            Customers
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/deals" className={linkClasses}>
+            <img src={dealIcon} alt="deals" className="w-5 h-5" />
+            Deals
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/Audit" className={linkClasses}>
+            <img src={newsIcon} alt="audit" className="w-5 h-5" />
+            Audit Logs
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/settings" className={linkClasses}>
+            <img src={settingIcon} alt="settings" className="w-5 h-5" />
+            Settings
+          </NavLink>
+        </li>
+      </ul>
+    </aside>
+  );
+}
+
+export default Sidebar;
