@@ -126,7 +126,7 @@ function Dashboard() {
               icon={compilanceIcon}
             />
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 mr-10 ml-4">
             <div className="p-4 flex items-center justify-between">
               <div className="flex flex-col">
                 <h2 className="text-lg font-semibold text-gray-800">
