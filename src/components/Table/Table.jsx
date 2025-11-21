@@ -78,10 +78,10 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                     className="py-3 text-left font-medium whitespace-nowrap cursor-pointer select-none"
                                     onClick={() => handleSort(col.key)}
                                 >
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center">
                                         {col.label || col}
 
-                                        <span className="flex">
+                                        <span className="flex ml-1">
                                             <img
                                                 src={uparrowIcon}
                                                 alt="asc"
