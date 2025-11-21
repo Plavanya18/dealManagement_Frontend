@@ -12,15 +12,15 @@ function Sidebar() {
   const role = user?.role?.toLowerCase();
 
   const linkClasses = ({ isActive }) =>
-    `flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors mt-2 ${
+    `flex items-center gap-3 p-3 rounded-lg text-sm text-[16px] transition-colors mt-2 ${
       isActive
-        ? "bg-gradient-to-r from-[#FFCC00]-500 to-indigo-500 text-white font-semibold"
-        : "text-gray-700 hover:bg-gray-100 hover:text-[#FFCC00]-600"
+        ? "bg-gradient-to-r from-[#FFCC00] to-[#FFD633] text-black text-[16px]"
+        : "text-black hover:bg-gray-100 hover:text-[#000000]"
     }`;
 
   return (
-    <aside className="w-[220px] h-[600px] bg-white p-2 flex flex-col shadow-md">
-      <ul className="flex flex-col gap-2">
+    <aside className="w-[220px] h-[600px] bg-white p-1 flex flex-col shadow-md">
+      <ul className="flex flex-col gap-1">
         <li>
           <NavLink to="/dashboard" className={linkClasses}>
             <img src={dashboardIcon} alt="dashboard" className="w-5 h-5" />
