@@ -6,6 +6,7 @@ import pendingDealIcon from "../../assets/pending_deal.svg";
 import rejectedDealIcon from "../../assets/rejected_deal.svg";
 import candiateIcon from "../../assets/candidate.svg";
 import compilanceIcon from "../../assets/compilance.svg";
+import searchIcon from "../../assets/search.svg";
 import { fetchDashboardData } from "../../api/dashboardService";
 import { fetchDeals } from "../../api/deal.service";
 
@@ -109,15 +110,20 @@ function Dashboard() {
             <h2 className="text-lg font-semibold text-gray-800">
               Today's Deal
             </h2>
-            <p className="text-sm text-gray-500">
+            <p className="text-medium text-gray-500">
               Deals processed today in this branch
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="relative w-[320px]">
+            <img
+                src={searchIcon}
+                alt="search"
+                className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5"
+              />
             <input
               type="text"
-              placeholder="Search deals..."
-              className="px-3 py-2 border rounded-lg border-[#E1E1E1] text-sm w-[320px]"
+              placeholder="Search"
+              className="w-full pl-10 pr-3 py-2 border rounded-lg border-[#E1E1E1] text-sm focus:outline-none focus:border-[#E1E1E1]"
             />
           </div>
         </div>
