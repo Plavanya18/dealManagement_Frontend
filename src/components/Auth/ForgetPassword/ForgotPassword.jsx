@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendResetPasswordEmail } from "../../../api/auth.service.jsx";
-import "./ForgotPassword.css";
 import loginlogo from "../../../assets/login.svg";
 import welcomeImg from "../../../assets/welcome_rafiki.svg";
 
@@ -29,13 +28,13 @@ function ForgotPassword() {
     };
 
     return (
-        <div className="forgot-container">
-            <div className="forgot-left">
+        <div className="auth-container">
+            <div className="auth-left">
                 <img src={loginlogo} alt="Illustration" className="illustration" />
             </div>
 
-            <div className="forgot-right">
-                <div className="forgot-box">
+            <div className="auth-right">
+                <div className="auth-box">
                     {!submitted ? (
                         <>
                             <h2>Forgot Password</h2>
@@ -50,6 +49,7 @@ function ForgotPassword() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={errorMessage ? "input-error" : ""}
+                                style={{ marginTop: "20px" }} 
                             />
                             {errorMessage && (
                                 <p className="error-text">{errorMessage}</p>
