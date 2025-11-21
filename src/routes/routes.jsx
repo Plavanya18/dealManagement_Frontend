@@ -1,12 +1,12 @@
 import React from "react";
-import Login from "../components/Auth/Login/Login";
+import Login from "../pages/Auth/Login/Login";
 import { Routes, Route } from "react-router-dom";
-import VerifyOtp from "../components/Auth/VerifyLogin/VerifyLogin";
-import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
-import Dashboard from "../components/Dashboard/Dashboard";
-import IpBlocked from "../components/Error/IpBlocked";
-import AccountDisabled from "../components/Error/AccountDeactivated";
-import ForgotPassword from "../components/Auth/ForgetPassword/ForgotPassword";
+import VerifyOtp from "../pages/Auth/VerifyLogin/VerifyLogin";
+import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import IpBlocked from "../pages/Error/IpBlocked";
+import AccountDisabled from "../pages/Error/AccountDeactivated";
+import ForgotPassword from "../pages/Auth/ForgetPassword/ForgotPassword";
 
 function AppRoutes() {
 

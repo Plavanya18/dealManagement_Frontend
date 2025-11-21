@@ -1,5 +1,5 @@
 import React from "react";
-import StatsCard from "../StatsCard/StatsCard";
+import StatsCard from "../../components/StatsCard/StatsCard";
 import joinhandIcon from "../../assets/join_hand.svg";
 import pendingDealIcon from "../../assets/pending_deal.svg";
 import rejectedDealIcon from "../../assets/rejected_deal.svg";
