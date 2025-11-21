@@ -9,6 +9,7 @@ import compilanceIcon from "../../assets/compilance.svg";
 import searchIcon from "../../assets/search.svg";
 import { fetchDashboardData } from "../../api/dashboardService";
 import { fetchDeals } from "../../api/deal.service";
+import Navbar from "../Navbar/Navbar";
 
 function Dashboard() {
   const [data, setData] = useState(null);
@@ -82,6 +83,8 @@ function Dashboard() {
   return (
     <div className="p-5 w-full min-h-screen bg-[#fffef7]">
 
+      <Navbar/> 
+      
       <div className="flex flex-wrap gap-5 mb-10">
         <StatsCard
           title="Total Deals"
