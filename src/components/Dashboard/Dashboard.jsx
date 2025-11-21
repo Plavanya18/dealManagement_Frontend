@@ -1,6 +1,10 @@
 import React from "react";
 import StatsCard from "../StatsCard/StatsCard";
-import loginlogo from "../../assets/login.svg";
+import joinhandIcon from "../../assets/join_hand.svg";
+import pendingDealIcon from "../../assets/pending_deal.svg";
+import rejectedDealIcon from "../../assets/rejected_deal.svg";
+import candiateIcon from "../../assets/candidate.svg";
+import compilanceIcon from "../../assets/compilance.svg";
 
 function Dashboard() {
   return (
@@ -10,31 +14,31 @@ function Dashboard() {
         title="Total Deals"
         value="1200"
         subChange="All deals from this branch"
-        color="blue"
+        icon={joinhandIcon}
       />
       <StatsCard
         title="Pending Deals"
         value="$120K"
         subChange="Awaiting checker approval"
-        color="red"
+        icon={pendingDealIcon}
       />
       <StatsCard
         title="Rejected Deals"
         value="2"
         subChange="Declined by checkers"
-        color="blue"
+        icon={rejectedDealIcon}
       />
       <StatsCard
         title="Branch Customers"
         value="40"
         subChange="10 corporate, 30 retail"
-        color="red"
+        icon={candiateIcon}
       />
       <StatsCard
         title="Compliance Alerts"
         value="2"
         subChange="Requires attention"
-        color="green"
+        icon={compilanceIcon}
       />
     </div>
   );
