@@ -64,9 +64,14 @@ function Dashboard() {
     { label: "Date", key: "Date" },
   ];
 
+  const capitalize = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const formattedDeals = deals.map((deal) => ({
     deal_number: deal.deal_number,
-    type: deal.deal_type,
+    type: capitalize(deal.deal_type),
     currency: deal.baseCurrency?.code || "N/A",
     amount: deal.amount,
     status: deal.status?.name || "N/A",

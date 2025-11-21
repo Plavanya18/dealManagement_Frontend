@@ -5,8 +5,46 @@ function UniversalTable({
     subtitle = "",
     columns = [],
     rows = [],
-    renderCell,
 }) {
+    const renderCell = (col, value) => {
+        const pillColors = {
+            type: {
+                Buy: "text-green-800 bg-green-100 border-green-800",
+                Sell: "text-yellow-800 bg-yellow-100 border-yellow-800",
+            },
+            status: {
+                Pending: "text-yellow-800 bg-yellow-100",
+                Rejected: "text-red-800 bg-red-100",
+                Approved: "text-green-800 bg-green-100",
+                Closed: "text-gray-800 bg-gray-200",
+            },
+        };
+        if (col.key === "type" && pillColors.type[value]) {
+            return (
+                <span
+                    className={`px-4 py-2 text-sm font-medium border ${pillColors.type[value]} shadow-sm`}
+                    style={{ borderRadius: "7px" }}
+                >
+                    {value}
+                </span>
+            );
+        }
+
+
+        if (col.key === "status" && pillColors.status[value]) {
+            return (
+                <span
+                    className={`px-3 py-1 text-sm font-medium ${pillColors.status[value]}`}
+                    style={{ borderRadius: "4px" }}
+                >
+                    {value}
+                </span>
+            );
+        }
+
+        return value;
+    };
+
     return (
 
         <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 p-6 w-full">
@@ -55,9 +93,7 @@ function UniversalTable({
 
                                         return (
                                             <td key={colIndex} className="py-4 whitespace-nowrap">
-                                                {renderCell
-                                                    ? renderCell(col, row[key], row)
-                                                    : row[key]}
+                                                {renderCell(col, row[key], row)}
                                             </td>
                                         );
                                     })}
