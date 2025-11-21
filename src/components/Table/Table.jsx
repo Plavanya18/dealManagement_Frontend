@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import uparrowIcon from "../../assets/up_arrow.svg";
+import downarrowIcon from "../../assets/down_arrow.svg";
 
-function UniversalTable({
-    title = "",
-    subtitle = "",
-    columns = [],
-    rows = [],
-}) {
+function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) {
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+
+    const handleSort = (colKey) => {
+        let direction = "ascending";
+        if (sortConfig.key === colKey && sortConfig.direction === "ascending") {
+            direction = "descending";
+        }
+        setSortConfig({ key: colKey, direction });
+    };
+
+    const sortedRows = React.useMemo(() => {
+        if (!sortConfig.key) return rows;
+        const sorted = [...rows].sort((a, b) => {
+            const aVal = a[sortConfig.key];
+            const bVal = b[sortConfig.key];
+
+            if (aVal < bVal) return sortConfig.direction === "ascending" ? -1 : 1;
+            if (aVal > bVal) return sortConfig.direction === "ascending" ? 1 : -1;
+            return 0;
+        });
+        return sorted;
+    }, [rows, sortConfig]);
+
     const renderCell = (col, value) => {
         const pillColors = {
             type: {
@@ -46,8 +66,7 @@ function UniversalTable({
     };
 
     return (
-
-        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200  pt-0 pr-6 pl-6 pb-2 w-full mr-4">
+        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 pt-0 pr-6 pl-6 pb-2 w-full mr-4">
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
 
@@ -56,30 +75,46 @@ function UniversalTable({
                             {columns.map((col, index) => (
                                 <th
                                     key={index}
-                                    className="py-3 text-left font-medium whitespace-nowrap"
+                                    className="py-3 text-left font-medium whitespace-nowrap cursor-pointer select-none"
+                                    onClick={() => handleSort(col.key)}
                                 >
-                                    {col.label || col}
+                                    <div className="flex items-center gap-1">
+                                        {col.label || col}
+
+                                        <span className="flex">
+                                            <img
+                                                src={uparrowIcon}
+                                                alt="asc"
+                                                className={`w-3 h-3 ${sortConfig.key === col.key && sortConfig.direction === "ascending"
+                                                        ? "opacity-100"
+                                                        : "opacity-30"
+                                                    }`}
+                                            />
+                                            <img
+                                                src={downarrowIcon}
+                                                alt="desc"
+                                                className={`w-3 h-3 ${sortConfig.key === col.key && sortConfig.direction === "descending"
+                                                        ? "opacity-100"
+                                                        : "opacity-30"
+                                                    }`}
+                                            />
+                                        </span>
+                                    </div>
                                 </th>
                             ))}
                         </tr>
                     </thead>
 
                     <tbody className="text-sm text-black">
-                        {rows.length === 0 ? (
+                        {sortedRows.length === 0 ? (
                             <tr>
-                                <td
-                                    colSpan={columns.length}
-                                    className="py-5 text-center text-black"
-                                >
+                                <td colSpan={columns.length} className="py-5 text-center text-black">
                                     No data available
                                 </td>
                             </tr>
                         ) : (
-                            rows.map((row, rowIndex) => (
-                                <tr
-                                    key={rowIndex}
-                                    className="hover:bg-gray-50 transition"
-                                >
+                            sortedRows.map((row, rowIndex) => (
+                                <tr key={rowIndex} className="hover:bg-gray-50 transition">
                                     {columns.map((col, colIndex) => {
 
                                         const key = col.key || col.toLowerCase();
