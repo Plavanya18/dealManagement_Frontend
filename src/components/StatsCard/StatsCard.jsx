@@ -4,7 +4,7 @@ function StatsCard({ title, value, subChange, icon }) {
   const isCompliance = title === "Compliance Alerts";
   return (
     <div
-      className={`w-[220px] h-[120px] rounded-xl border shadow-sm p-4 flex flex-col justify-between
+      className={`w-[220px] h-[120px] rounded-xl border shadow-sm p-4 flex flex-col justify-between ml-4 mt-6
         ${isCompliance
           ? "border-[#EB1D2EFC] bg-[#FFF1F3]"
           : "border-[#00000033] bg-white"

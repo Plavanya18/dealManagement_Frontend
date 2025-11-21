@@ -81,7 +81,7 @@ function Dashboard() {
 
   console.log("formattedDeals", formattedDeals);
   return (
-    <div className="p-5 w-full min-h-screen bg-[#fffef7]">
+    <div className="w-full min-h-screen bg-[#fffef7]">
 
       <Navbar/> 
       
@@ -122,7 +122,7 @@ function Dashboard() {
         />
       </div>
 
-      <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200">
+      <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 ml-4 mr-4">
         <div className="p-4 flex items-center justify-between">
           <div className="flex flex-col">
             <h2 className="text-lg font-semibold text-gray-800">

@@ -47,7 +47,7 @@ function UniversalTable({
 
     return (
 
-        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 p-6 w-full">
+        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 p-6 w-full mr-4">
             {title && (
                 <h2 className="text-[20px] font-semibold text-black-900">{title}</h2>
             )}
