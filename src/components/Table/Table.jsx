@@ -47,14 +47,7 @@ function UniversalTable({
 
     return (
 
-        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 p-6 w-full mr-4">
-            {title && (
-                <h2 className="text-[20px] font-semibold text-black-900">{title}</h2>
-            )}
-            {subtitle && (
-                <p className="text-sm text-black-500 mb-4">{subtitle}</p>
-            )}
-
+        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200  pt-0 pr-6 pl-6 pb-2 w-full mr-4">
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
 
