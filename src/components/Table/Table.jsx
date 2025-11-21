@@ -27,7 +27,7 @@ function UniversalTable({
                                     key={index}
                                     className="py-3 text-left font-medium whitespace-nowrap"
                                 >
-                                    {col}
+                                    {col.label || col}
                                 </th>
                             ))}
                         </tr>
@@ -50,13 +50,14 @@ function UniversalTable({
                                     className="hover:bg-gray-50 transition"
                                 >
                                     {columns.map((col, colIndex) => {
-                                        const colKey = col.key || col.toLowerCase();
+
+                                        const key = col.key || col.toLowerCase();
 
                                         return (
                                             <td key={colIndex} className="py-4 whitespace-nowrap">
                                                 {renderCell
-                                                    ? renderCell(col, row[colKey], row)
-                                                    : row[colKey]}
+                                                    ? renderCell(col, row[key], row)
+                                                    : row[key]}
                                             </td>
                                         );
                                     })}

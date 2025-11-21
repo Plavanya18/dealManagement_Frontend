@@ -45,12 +45,12 @@ function Dashboard() {
 
   const complianceAlerts = data.complianceAlerts?.total || 0;
   const columns = [
-    "Deal Number",
-    "Type",
-    "Currency",
-    "Amount (TZS)",
-    "Status",
-    "Date",
+    { label: "Deal Number", key: "deal_number" },
+    { label: "Type", key: "type" },
+    { label: "Currency", key: "currency" },
+    { label: "Amount (TZS)", key: "amount" },
+    { label: "Status", key: "status" },
+    { label: "Date", key: "Date" },
   ];
 
   const formattedDeals = deals.map((deal) => ({
