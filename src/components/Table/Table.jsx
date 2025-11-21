@@ -1,51 +1,76 @@
 import React from "react";
 
-function Table({ columns = [], data = [] }) {
-  return (
-    <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
-      <table className="w-full text-left border-collapse">
-        
-        {/* Table Header */}
-        <thead className="bg-gray-100 text-gray-600 text-sm font-medium">
-          <tr>
-            {columns.map((col, index) => (
-              <th key={index} className="px-5 py-3 border-b">
-                {col}
-              </th>
-            ))}
-          </tr>
-        </thead>
+function UniversalTable({
+    title = "",
+    subtitle = "",
+    columns = [],
+    rows = [],
+    renderCell,
+}) {
+    return (
 
-        {/* Table Body */}
-        <tbody className="text-sm text-gray-700">
-          {data.length === 0 ? (
-            <tr>
-              <td
-                colSpan={columns.length}
-                className="text-center py-6 text-gray-400"
-              >
-                No data available
-              </td>
-            </tr>
-          ) : (
-            data.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="hover:bg-gray-50 transition cursor-pointer"
-              >
-                {Object.values(row).map((value, colIndex) => (
-                  <td key={colIndex} className="px-5 py-3 border-b">
-                    {value}
-                  </td>
-                ))}
-              </tr>
-            ))
-          )}
-        </tbody>
+        <div className="bg-white rounded-b-2xl border border-t-0 border-gray-200 p-6 w-full">
+            {title && (
+                <h2 className="text-[20px] font-semibold text-black-900">{title}</h2>
+            )}
+            {subtitle && (
+                <p className="text-sm text-black-500 mb-4">{subtitle}</p>
+            )}
 
-      </table>
-    </div>
-  );
+            <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+
+                    <thead>
+                        <tr className="text-black text-bold text-[16px]">
+                            {columns.map((col, index) => (
+                                <th
+                                    key={index}
+                                    className="py-3 text-left font-medium whitespace-nowrap"
+                                >
+                                    {col}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody className="text-sm text-black">
+                        {rows.length === 0 ? (
+                            <tr>
+                                <td
+                                    colSpan={columns.length}
+                                    className="py-5 text-center text-black"
+                                >
+                                    No data available
+                                </td>
+                            </tr>
+                        ) : (
+                            rows.map((row, rowIndex) => (
+                                <tr
+                                    key={rowIndex}
+                                    className="hover:bg-gray-50 transition"
+                                >
+                                    {columns.map((col, colIndex) => {
+                                        const colKey = col.key || col.toLowerCase();
+
+                                        return (
+                                            <td key={colIndex} className="py-4 whitespace-nowrap">
+                                                {renderCell
+                                                    ? renderCell(col, row[colKey], row)
+                                                    : row[colKey]}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    );
 }
 
-export default Table;
+export default UniversalTable;
