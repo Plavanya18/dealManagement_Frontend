@@ -104,7 +104,7 @@ function Dashboard() {
             </button>
           </div>
           
-          <div className="flex flex-wrap gap-5 mb-10">
+          <div className="flex flex-wrap gap-5 mb-5">
             <StatsCard
               title="Total Deals"
               value={totalDeals}
