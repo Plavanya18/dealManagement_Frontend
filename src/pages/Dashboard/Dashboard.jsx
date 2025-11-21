@@ -7,6 +7,7 @@ import rejectedDealIcon from "../../assets/rejected_deal.svg";
 import candiateIcon from "../../assets/candidate.svg";
 import compilanceIcon from "../../assets/compilance.svg";
 import searchIcon from "../../assets/search.svg";
+import downloadIcon from "../../assets/download.svg";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import { fetchDashboardData } from "../../api/dashboardService";
@@ -90,6 +91,19 @@ function Dashboard() {
           <Sidebar />
         </div>
         <div className="flex-1 p-5">
+
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <h1 className="text-black font-bold text-xl ml-4">Dashboard</h1>
+              <p className="text-gray-500 text-sm ml-4">System oversight and compliance management</p>
+            </div>
+
+            <button className="bg-[#FFCC00] text-black w-[180px] h-10 font-semibold px-4 py-2 rounded-lg shadow hover:brightness-95 flex items-center gap-2 justify-center mr-12">
+              <img src={downloadIcon} alt="download" className="w-5 h-5" />
+              <span>Generate Report</span>
+            </button>
+          </div>
+          
           <div className="flex flex-wrap gap-5 mb-10">
             <StatsCard
               title="Total Deals"

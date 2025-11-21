@@ -14,7 +14,7 @@ function Sidebar() {
   const linkClasses = ({ isActive }) =>
     `flex items-center gap-3 p-3 rounded-lg text-sm text-[16px] transition-colors mt-2 ${
       isActive
-        ? "bg-gradient-to-r from-[#FFCC00] to-[#FFD633] text-black text-[16px]"
+        ? "bg-gradient-to-r from-[#FFCC00] to-[#FFD633] text-black text-[16px] font-bold"
         : "text-black hover:bg-gray-100 hover:text-[#000000]"
     }`;
 
