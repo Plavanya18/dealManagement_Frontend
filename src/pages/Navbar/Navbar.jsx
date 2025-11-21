@@ -39,7 +39,7 @@ function Navbar() {
     };
 
     return (
-        <div className="flex justify-between items-center px-5 py-3 bg-white shadow-sm relative z-20  border-b border-gray-200">
+        <div className="w-[1530px] h-[92px] flex justify-between items-center px-5 py-3 bg-white shadow-sm relative z-20  border-b border-gray-200">
 
             <img src={logoSvg} alt="Logo" className="w-[221.79px] h-11" />
 
