@@ -8,9 +8,33 @@ function getAuthHeaders() {
   };
 }
 
-export async function fetchDeals() {
+export async function fetchDeals({
+  search,
+  baseCurrencyCode,
+  quoteCurrencyCode,
+  startDate,
+  endDate,
+  dealType,
+  statusName,
+  downloadreport,
+  exportType,
+} = {}) {
   try {
-    const response = await fetch(`${API_URL}/deal`, {
+    const params = {};
+
+    if (search) params.search = search;
+    if (baseCurrencyCode) params.baseCurrencyCode = baseCurrencyCode;
+    if (quoteCurrencyCode) params.quoteCurrencyCode = quoteCurrencyCode;
+    if (startDate) params.startDate = startDate;
+    if (endDate) params.endDate = endDate;
+    if (dealType) params.dealType = dealType;
+    if (statusName) params.statusName = statusName;
+    if (downloadreport !== undefined) params.downloadreport = downloadreport;
+    if (exportType) params.exportType = exportType;
+
+    const queryString = new URLSearchParams(params).toString();
+
+    const response = await fetch(`${API_URL}/deal?${queryString}`, {
       method: "GET",
       headers: getAuthHeaders(),
     });

@@ -13,6 +13,7 @@ import { fetchDeals } from "../../api/deal.service";
 function Dashboard() {
   const [data, setData] = useState(null);
   const [deals, setDeals] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     async function loadData() {
@@ -24,6 +25,15 @@ function Dashboard() {
     }
     loadData();
   }, []);
+
+  const handleSearchKeyPress = async (e) => {
+  if (e.key === "Enter") {
+    const dealsResult = await fetchDeals({
+      search: searchValue, 
+    });
+    setDeals(dealsResult || []);
+  }
+};
 
   if (!data) {
     return (
@@ -123,6 +133,9 @@ function Dashboard() {
             <input
               type="text"
               placeholder="Search"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyPress={handleSearchKeyPress}
               className="w-full pl-10 pr-3 py-2 border rounded-lg border-[#E1E1E1] text-sm focus:outline-none focus:border-[#E1E1E1]"
             />
           </div>
