@@ -96,10 +96,10 @@ function ListUser() {
                 <div className="flex-1 p-5">
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex flex-col">
-                            <h1 className="text-black font-bold text-xl">User Management</h1>
-                            <p className="text-gray-500 text-sm">Manage system users and roles</p>
+                            <h1 className="text-black font-bold text-xl ml-4">User Management</h1>
+                            <p className="text-gray-500 text-sm ml-4">Manage system users and roles</p>
                         </div>
-                        <button className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2">
+                        <button className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 mr-12">
                             <img src={addUserIcon} alt="Add User" className="w-5 h-5" />
                             Add User
                         </button>
