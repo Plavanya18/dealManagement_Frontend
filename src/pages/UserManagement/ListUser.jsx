@@ -7,7 +7,7 @@ import UniversalTable from "../../components/Table/Table";
 import { fetchUsers } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 
-function UserManagement() {
+function ListUser() {
     const [users, setUsers] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false);
@@ -143,4 +143,4 @@ function UserManagement() {
     );
 }
 
-export default UserManagement;
+export default ListUser;

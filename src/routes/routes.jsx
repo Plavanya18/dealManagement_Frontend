@@ -7,7 +7,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import IpBlocked from "../pages/Error/IpBlocked";
 import AccountDisabled from "../pages/Error/AccountDeactivated";
 import ForgotPassword from "../pages/Auth/ForgetPassword/ForgotPassword";
-import UserManagement from "../pages/UserManagement/UserManagement";
+import ListUser from "../pages/UserManagement/ListUser";
 
 function AppRoutes() {
 
@@ -20,7 +20,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/account-disabled" element={<AccountDisabled />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/users" element={<UserManagement />} />
+        <Route path="/users" element={<ListUser />} />
     </Routes>
   );
 }
