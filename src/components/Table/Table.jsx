@@ -116,7 +116,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                             {columns.map((col, index) => (
                                 <th
                                     key={index}
-                                    className="py-3 text-left font-medium whitespace-nowrap cursor-pointer select-none"
+                                    className="py-1 text-left font-medium whitespace-nowrap cursor-pointer select-none"
                                     onClick={() => handleSort(col.key)}
                                 >
                                     <div className="flex items-center">
@@ -164,7 +164,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                         return (
                             <td
                             key={colIndex}
-                            className="py-4 px-2 whitespace-nowrap"
+                            className="py-2.5 px-2 whitespace-nowrap"
                             >
                             {renderCell(col, row[key], row)}
                             </td>
