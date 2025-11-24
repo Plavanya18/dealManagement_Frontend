@@ -106,8 +106,6 @@ function Dashboard() {
             <div className="w-[440px] h-11 overflow-hidden bg-white rounded-md flex items-center">
               <div className="animate-marquee whitespace-nowrap">
                 USD/TZS - Buy: 2,493.50 | Sell: 2,496.75 ▲ +0.12% EUR &nbsp;&nbsp;&nbsp;
-                USD/EUR - Buy: 1.12 | Sell: 1.13 ▼ -0.05% GBP &nbsp;&nbsp;&nbsp;
-                {/* Repeat content to make the loop seamless */}
               </div>
             </div>
 
@@ -179,7 +177,7 @@ function Dashboard() {
                 />
               </div>
             </div>
-            <UniversalTable columns={columns} rows={formattedDeals} />
+            <UniversalTable columns={columns} rows={formattedDeals.slice(0, 5)} />
           </div>
         </div>
       </div>
