@@ -3,6 +3,7 @@ import authlogo from "../../assets/authsymbol.svg";
 import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
 import { createUser } from "../../api/user.service";
+import Dropdown from "../../components/DropDown/DropDown";
 
 function AddUser({ onClose, toast, refreshUsers }) {
     const [formData, setFormData] = useState({
@@ -134,40 +135,36 @@ function AddUser({ onClose, toast, refreshUsers }) {
                             <label className="block text-gray-700">
                                 Role <span className="text-red-500">*</span>
                             </label>
-                            <select
-                                name="role"
-                                value={formData.role}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                                required
-                            >
-                                <option value="">Select Role</option>
-                                {roles.map((r) => (
-                                    <option key={r.id} value={r.name}>
-                                        {r.name}
-                                    </option>
-                                ))}
-                            </select>
+                            <Dropdown
+                                options={roles.map((r) => ({ label: r.name, value: r.name }))}
+                                value={formData.role ? { label: formData.role, value: formData.role } : null}
+                                onChange={(val) =>
+                                    setFormData({ ...formData, role: val.value })
+                                }
+                                placeholder="Select Role"
+                                className="mt-1"
+                            />
                         </div>
 
                         <div>
                             <label className="block text-gray-700">
                                 Branch <span className="text-red-500">*</span>
                             </label>
-                            <select
-                                name="branch"
-                                value={formData.branch}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                                required
-                            >
-                                <option value="">Select Branch</option>
-                                {branches.map((b) => (
-                                    <option key={b.id} value={b.name}>
-                                        {b.name}
-                                    </option>
-                                ))}
-                            </select>
+                           <Dropdown
+                                options={branches.map((b) => ({
+                                    label: b.name,
+                                    value: b.name
+                                }))}
+                                value={formData.branch ? { label: formData.branch, value: formData.branch } : null}
+                                onChange={(selected) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        branch: selected.value
+                                    }))
+                                }
+                                placeholder="Select Branch"
+                                className="mt-1"
+                            />
                         </div>
                     </div>
 
