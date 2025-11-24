@@ -35,7 +35,6 @@ function AddUser({ onClose }) {
     const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Assuming roles and branches API give IDs, you need to map names to IDs
     const selectedRole = roles.find((r) => r.name === formData.role);
     const selectedBranch = branches.find((b) => b.name === formData.branch);
 
