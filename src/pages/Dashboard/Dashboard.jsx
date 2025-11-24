@@ -12,11 +12,13 @@ import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import { fetchDashboardData } from "../../api/dashboardService";
 import { fetchDeals } from "../../api/deal.service";
+import { fetchFxRate } from "../../api/fxrate.service";
 
 function Dashboard() {
   const [data, setData] = useState(null);
   const [deals, setDeals] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [fxRate, setFxRate] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -25,6 +27,9 @@ function Dashboard() {
 
       const dealsResult = await fetchDeals();
       setDeals(dealsResult || []);
+
+      const fxResult = await fetchFxRate({ page: 1, limit: 1, orderBy: "created_at" });
+      setFxRate(fxResult?.[0] || null);
     }
     loadData();
   }, []);
@@ -98,16 +103,21 @@ function Dashboard() {
               <p className="text-gray-500 text-sm ml-4">System oversight and compliance management</p>
             </div>
 
-            {/* <div className="w-[440px] h-11 flex items-center justify-center bg-white rounded-md text-sm text-gray-700">
-              USD/TZS - Buy: 2,493.50 | Sell: 2,496.75 
-              ▲
-              +0.12% EUR
-            </div> */}
             <div className="w-[440px] h-11 overflow-hidden bg-white rounded-md flex items-center">
-              <div className="animate-marquee whitespace-nowrap">
-                USD/TZS - Buy: 2,493.50 | Sell: 2,496.75 ▲ +0.12% EUR &nbsp;&nbsp;&nbsp;
-              </div>
+            <div className="animate-marquee whitespace-nowrap text-medium text-gray-700">
+
+              {fxRate ? (
+                <>
+                  {fxRate.baseCurrency?.code}/{fxRate.quoteCurrency?.code}
+                  &nbsp;– Buy: {fxRate.buy_rate} | Sell: {fxRate.sell_rate}
+                  &nbsp;&nbsp;&nbsp;
+                </>
+              ) : (
+                "Loading FX Rate..."
+              )}
+
             </div>
+          </div>
 
             <button className="bg-[#FFCC00] text-black w-[180px] h-10 font-semibold px-4 py-2 rounded-lg shadow hover:brightness-95 flex items-center gap-2 justify-center mr-12">
               <img src={downloadIcon} alt="download" className="w-5 h-5" />
