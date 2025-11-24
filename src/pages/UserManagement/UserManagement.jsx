@@ -54,7 +54,8 @@ function UserManagement() {
         email: user.email,
         branch: user.branch?.name,
         status: user.is_active ? "Active" : "Inactive",
-        last_login: user.last_login,
+        last_login: user.last_login
+            ? new Date(user.last_login).toLocaleDateString("en-US") : "",
     }));
 
     return (
