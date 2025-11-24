@@ -6,11 +6,13 @@ import addUserIcon from "../../assets/add_person.svg";
 import UniversalTable from "../../components/Table/Table";
 import { fetchUsers } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
+import AddUser from "./AddUser"; 
 
 function ListUser() {
     const [users, setUsers] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showAddUser, setShowAddUser] = useState(false); 
 
     const columns = [
         { key: "full_name", label: "Name" },
@@ -87,58 +89,62 @@ function ListUser() {
     }));
 
     return (
-        <div className="min-h-screen bg-[#fffef7]">
-            <Navbar />
-            <div className="flex">
-                <div className="w-[220px]">
-                    <Sidebar />
-                </div>
-                <div className="flex-1 p-5">
-                    <div className="flex items-center justify-between mb-5">
-                        <div className="flex flex-col">
-                            <h1 className="text-black font-bold text-xl ml-4">User Management</h1>
-                            <p className="text-gray-500 text-sm ml-4">Manage system users and roles</p>
-                        </div>
-                        <button className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 mr-12">
-                            <img src={addUserIcon} alt="Add User" className="w-5 h-5" />
-                            Add User
-                        </button>
+        <div className="min-h-screen bg-[#fffef7] relative">
+            <div className={showAddUser ? "filter blur-[0.5px] w-full" : ""}>
+                <Navbar />
+                <div className="flex">
+                    <div className="w-[220px]">
+                        <Sidebar />
                     </div>
-
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 mr-10 ml-4">
-                        <div className="p-4 flex items-center justify-between">
+                    <div className="flex-1 p-5">
+                        <div className="flex items-center justify-between mb-5">
                             <div className="flex flex-col">
-                                <h2 className="text-lg font-semibold text-gray-800">User Management</h2>
-                                <p className="text-medium text-gray-500">
-                                    Review and manage customer accounts
-                                </p>
+                                <h1 className="text-black font-bold text-xl ml-4">User Management</h1>
+                                <p className="text-gray-500 text-sm ml-4">Manage system users and roles</p>
                             </div>
-
-                            <div className="relative mb-5 w-[400px]">
-                                <img
-                                    src={searchIcon}
-                                    alt="search"
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Search user"
-                                    value={searchValue}
-                                    onChange={(e) => setSearchValue(e.target.value)}
-                                    onKeyPress={handleSearchKeyPress}
-                                    className="w-full pl-10 pr-3 py-2 border rounded-lg border-[#E1E1E1] text-sm focus:outline-none focus:border-[#E1E1E1]"
-                                />
-                            </div>
+                            <button
+                                className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 mr-12"
+                                onClick={() => setShowAddUser(true)}
+                            >
+                                <img src={addUserIcon} alt="Add User" className="w-5 h-5" />
+                                Add User
+                            </button>
                         </div>
 
-                        {loading ? (
-                            <p className="p-4 text-gray-500">Loading users...</p>
-                        ) : (
-                            <UniversalTable columns={columns} rows={rows} />
-                        )}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 mr-10 ml-4">
+                            <div className="p-4 flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <h2 className="text-lg font-semibold text-gray-800">User Management</h2>
+                                    <p className="text-medium text-gray-500">Review and manage customer accounts</p>
+                                </div>
+
+                                <div className="relative mb-5 w-[400px]">
+                                    <img
+                                        src={searchIcon}
+                                        alt="search"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Search user"
+                                        value={searchValue}
+                                        onChange={(e) => setSearchValue(e.target.value)}
+                                        onKeyPress={handleSearchKeyPress}
+                                        className="w-full pl-10 pr-3 py-2 border rounded-lg border-[#E1E1E1] text-sm focus:outline-none focus:border-[#E1E1E1]"
+                                    />
+                                </div>
+                            </div>
+
+                            {loading ? (
+                                <p className="p-4 text-gray-500">Loading users...</p>
+                            ) : (
+                                <UniversalTable columns={columns} rows={rows} />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
+            {showAddUser && <AddUser onClose={() => setShowAddUser(false)} />}
         </div>
     );
 }
