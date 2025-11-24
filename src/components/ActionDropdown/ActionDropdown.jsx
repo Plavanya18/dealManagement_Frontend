@@ -37,7 +37,14 @@ function ActionDropdown({ options = [] }) {
       <button
         ref={dropdownRef}
         onClick={toggleDropdown}
-        className="text-[#D8AD00] font-bold text-xl"
+        className="text-[#D8AD00] font-bold text-xl relative flex items-center justify-center w-8 h-8 rounded-full transition-colors"
+        style={{
+          backgroundColor: open ? "rgba(216, 173, 0, 0.2)" : "transparent",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(216, 173, 0, 0.2)")}
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.backgroundColor = open ? "rgba(216, 173, 0, 0.2)" : "transparent")
+        }
       >
         &#8942;
       </button>
