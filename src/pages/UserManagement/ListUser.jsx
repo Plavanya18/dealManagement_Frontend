@@ -8,6 +8,7 @@ import { fetchUsers } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 import AddUser from "./AddUser"; 
 import Toast from "../../components/Common/Toast";
+import Pagination from "../../components/Pagination/Pagination";
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -15,6 +16,10 @@ function ListUser() {
     const [loading, setLoading] = useState(false);
     const [showAddUser, setShowAddUser] = useState(false);
     const [toast, setToast] = useState({ message: "", type: "", show: false });
+    const [page, setPage] = useState(1);
+    const [limit] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+
 
     const showToast = (message, type = "success") => {
         setToast({ message, type, show: true });
@@ -45,6 +50,7 @@ function ListUser() {
                 )
                 : result;
             setUsers(filtered);
+            setTotalPages(result.pagination.totalPages || 1);
         } catch (error) {
             console.error("Failed to load users:", error);
             showToast("Failed to load users", "error");
@@ -54,7 +60,7 @@ function ListUser() {
 
     useEffect(() => {
         loadUsers();
-    }, []);
+    }, [page]);
 
     const handleSearchKeyPress = (e) => {
         if (e.key === "Enter") {
@@ -151,8 +157,16 @@ function ListUser() {
                             {loading ? (
                                 <p className="p-4 text-gray-500">Loading users...</p>
                             ) : (
+                            <>
                                 <UniversalTable columns={columns} rows={rows} />
-                            )}
+
+                                <Pagination
+                                    page={page}
+                                    totalPages={totalPages}
+                                    setPage={setPage}
+                                />
+                            </>
+                        )}
                         </div>
                     </div>
                 </div>
