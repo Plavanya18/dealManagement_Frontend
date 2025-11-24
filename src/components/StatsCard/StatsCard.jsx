@@ -1,42 +1,31 @@
 import React from "react";
 
-function StatsCard({ title, value, change, subChange, changeType, icon }) {
+function StatsCard({ title, value, subChange, icon }) {
+  const isCompliance = title === "Compliance Alerts";
   return (
-    <div className="stat-card">
-      <div className="stat-header">
-        {change && (
-          <span
-            className={
-              changeType === "closing"
-                ? "closing-soon"
-                : `change ${changeType}`
-            }
-          >
-            {change}
-          </span>
-        )}
-        {icon && (
-          <div className="stat-icon-right">
-            <img src={icon} alt="icon" />
-          </div>
-        )}
+    <div
+      className={`w-[220px] h-[120px] rounded-xl border shadow-sm p-4 flex flex-col justify-between ml-4 mt-6
+        ${isCompliance
+          ? "border-[#EB1D2EFC] bg-[#FFF1F3]"
+          : "border-[#00000033] bg-white"
+        }
+      `}
+    >
+
+      <div className="flex justify-between items-center w-full">
+        <h4 className="text-[16px] font-normal text-black">{title}</h4>
+
+        {icon && <img src={icon} alt="icon" className="w-5 h-5" />}
       </div>
 
-      <h4>{title}</h4>
-      <p className="value">{value}</p>
+      <p className="text-[20px] font-bold text-black">{value}</p>
 
-      {subChange && title === "Total Candidates" && (
-        <p className="value-change">
-          <span className="green-text">{subChange.split(" ")[0]}</span>{" "}
-          <span className="grey-text">
-            {subChange.replace(/^\+\d+\s*/, "")}
-          </span>
-        </p>
-      )}
-
-      {subChange && title !== "Total Candidates" && (
-        <p className="value-change grey-text">{subChange}</p>
-      )}
+      <p
+        className={`text-[14px] mt-1 ${isCompliance ? "text-[#EB1D2E]" : "text-[#565656]"
+          }`}
+      >
+        {subChange}
+      </p>
     </div>
   );
 }
