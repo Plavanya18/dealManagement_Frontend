@@ -63,12 +63,9 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
 
         
         if (col.key === "status") {
-            const statusText = row.is_active ? "Active" : "Inactive";
+            const statusText = typeof value === "boolean" ? (value ? "Active" : "Inactive") : value;
             return (
-                <span
-                    className={`px-3 py-1 text-sm font-medium ${pillColors.userStatus[statusText] || ""}`}
-                    style={{ borderRadius: "4px" }}
-                >
+                <span className={`px-3 py-1 text-sm font-medium ${pillColors.userStatus[statusText] || ""}`} style={{ borderRadius: "4px" }}>
                     {statusText}
                 </span>
             );
