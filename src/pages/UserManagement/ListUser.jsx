@@ -7,12 +7,21 @@ import UniversalTable from "../../components/Table/Table";
 import { fetchUsers } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 import AddUser from "./AddUser"; 
+import Toast from "../../components/Common/Toast";
 
 function ListUser() {
     const [users, setUsers] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false);
-    const [showAddUser, setShowAddUser] = useState(false); 
+    const [showAddUser, setShowAddUser] = useState(false);
+    const [toast, setToast] = useState({ message: "", type: "", show: false });
+
+    const showToast = (message, type = "success") => {
+        setToast({ message, type, show: true });
+        setTimeout(() => {
+            setToast({ message: "", type: "", show: false });
+        }, 3000);
+    };
 
     const columns = [
         { key: "full_name", label: "Name" },
@@ -38,6 +47,7 @@ function ListUser() {
             setUsers(filtered);
         } catch (error) {
             console.error("Failed to load users:", error);
+            showToast("Failed to load users", "error");
         }
         setLoading(false);
     };
@@ -90,6 +100,9 @@ function ListUser() {
 
     return (
         <div className="min-h-screen bg-[#fffef7] relative">
+
+            <Toast show={toast.show} message={toast.message} type={toast.type} />
+
             <div className={showAddUser ? "filter blur-[0.5px] w-full" : ""}>
                 <Navbar />
                 <div className="flex">
@@ -144,7 +157,14 @@ function ListUser() {
                     </div>
                 </div>
             </div>
-            {showAddUser && <AddUser onClose={() => setShowAddUser(false)} />}
+
+            {showAddUser && (
+                <AddUser
+                    onClose={() => setShowAddUser(false)}
+                    refreshUsers={loadUsers}
+                    toast={showToast}
+                />
+            )}
         </div>
     );
 }

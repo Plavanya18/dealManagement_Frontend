@@ -4,7 +4,7 @@ import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
 import { createUser } from "../../api/user.service";
 
-function AddUser({ onClose }) {
+function AddUser({ onClose, toast, refreshUsers }) {
     const [formData, setFormData] = useState({
         full_name: "",
         email: "",
@@ -20,7 +20,8 @@ function AddUser({ onClose }) {
     useEffect(() => {
         async function loadData() {
             const roleData = await fetchRoles({ page: 1, limit: 50 });
-            setRoles(roleData); 
+            setRoles(roleData);
+
             const branchData = await fetchBranches({ page: 1, limit: 50 });
             setBranches(branchData);
         }
@@ -33,34 +34,39 @@ function AddUser({ onClose }) {
     };
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const selectedRole = roles.find((r) => r.name === formData.role);
-    const selectedBranch = branches.find((b) => b.name === formData.branch);
+        const selectedRole = roles.find((r) => r.name === formData.role);
+        const selectedBranch = branches.find((b) => b.name === formData.branch);
 
-    const payload = {
-        full_name: formData.full_name,
-        email: formData.email,
-        phone: formData.phone,
-        role_id: selectedRole?.id,
-        branch_id: selectedBranch?.id,
-        is_active: formData.is_active,
-    };
+        const payload = {
+            full_name: formData.full_name,
+            email: formData.email,
+            phone: formData.phone,
+            role_id: selectedRole?.id,
+            branch_id: selectedBranch?.id,
+            is_active: formData.is_active,
+        };
 
-    const result = await createUser(payload);
+        const result = await createUser(payload);
 
-    if (result.success) {
-        console.log("User created successfully:", result.data);
+
         onClose();
-    } else {
-        console.error("Failed to create user:", result.error);
-        alert("Failed to create user. Check console for details.");
-    }
+
+        if (refreshUsers) refreshUsers();
+
+        setTimeout(() => {
+            if (result.success) {
+                toast("User created successfully!", "success");
+            } else {
+                toast("Failed to create user, check details!", "error");
+            }
+        }, 300);
     };
 
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-start p-5">
-            <div className="absolute inset-0 bg-black/1" onClick={onClose} />
+            <div className="absolute inset-0 bg-black/10" onClick={onClose} />
 
             <div className="bg-[#fffef7] rounded-xl shadow-lg w-full max-w-2xl mt-20 relative p-6">
                 <button
