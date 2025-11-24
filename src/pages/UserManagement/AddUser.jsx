@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import authlogo from "../../assets/authsymbol.svg";
+import { fetchRoles } from "../../api/role.service";
+import { fetchBranches } from "../../api/branch.service";
+import { createUser } from "../../api/user.service";
 
 function AddUser({ onClose }) {
     const [formData, setFormData] = useState({
@@ -11,27 +14,54 @@ function AddUser({ onClose }) {
         is_active: true,
     });
 
-    const roles = ["Admin", "Manager", "Staff"];
-    const branches = ["Branch 1", "Branch 2", "Branch 3"];
+    const [roles, setRoles] = useState([]);
+    const [branches, setBranches] = useState([]);
 
+    useEffect(() => {
+        async function loadData() {
+            const roleData = await fetchRoles({ page: 1, limit: 50 });
+            setRoles(roleData); 
+            const branchData = await fetchBranches({ page: 1, limit: 50 });
+            setBranches(branchData);
+        }
+        loadData();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Submitting user data:", formData);
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Assuming roles and branches API give IDs, you need to map names to IDs
+    const selectedRole = roles.find((r) => r.name === formData.role);
+    const selectedBranch = branches.find((b) => b.name === formData.branch);
+
+    const payload = {
+        full_name: formData.full_name,
+        email: formData.email,
+        phone: formData.phone,
+        role_id: selectedRole?.id,
+        branch_id: selectedBranch?.id,
+        is_active: formData.is_active,
+    };
+
+    const result = await createUser(payload);
+
+    if (result.success) {
+        console.log("User created successfully:", result.data);
         onClose();
+    } else {
+        console.error("Failed to create user:", result.error);
+        alert("Failed to create user. Check console for details.");
+    }
     };
 
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-start p-5">
-            <div
-                className="absolute inset-0 bg-black/1"
-                onClick={onClose}
-            />
+            <div className="absolute inset-0 bg-black/1" onClick={onClose} />
 
             <div className="bg-[#fffef7] rounded-xl shadow-lg w-full max-w-2xl mt-20 relative p-6">
                 <button
@@ -108,7 +138,9 @@ function AddUser({ onClose }) {
                             >
                                 <option value="">Select Role</option>
                                 {roles.map((r) => (
-                                    <option key={r} value={r}>{r}</option>
+                                    <option key={r.id} value={r.name}>
+                                        {r.name}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -126,7 +158,9 @@ function AddUser({ onClose }) {
                             >
                                 <option value="">Select Branch</option>
                                 {branches.map((b) => (
-                                    <option key={b} value={b}>{b}</option>
+                                    <option key={b.id} value={b.name}>
+                                        {b.name}
+                                    </option>
                                 ))}
                             </select>
                         </div>

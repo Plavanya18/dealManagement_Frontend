@@ -40,3 +40,25 @@ export async function fetchUsers({ page = 1, limit = 10, orderBy = "full_name", 
     return [];
   }
 }
+
+export async function createUser({ full_name, email, role_id, branch_id, phone, is_active = true }) {
+  try {
+    const response = await fetch(`${API_URL}/user`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ full_name, email, role_id, branch_id, phone, is_active }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to create user:", errorData);
+      return { success: false, error: errorData };
+    }
+
+    const result = await response.json();
+    return { success: true, data: result };
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return { success: false, error };
+  }
+}
