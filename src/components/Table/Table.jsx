@@ -94,7 +94,6 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
             );
         }
 
-        // Last login formatting
         if (col.key === "lastLogin") {
             if (!row.last_login) return "-";
             const d = new Date(row.last_login);
@@ -104,7 +103,6 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                 .padStart(2, "0")}/${d.getFullYear()}`;
         }
 
-        // Default fallback
         return value;
     };
 
@@ -148,30 +146,35 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                         </tr>
                     </thead>
 
-                    <tbody className="text-sm text-black">
-                        {sortedRows.length === 0 ? (
-                            <tr>
-                                <td colSpan={columns.length} className="py-5 text-center text-black">
-                                    No data available
-                                </td>
-                            </tr>
-                        ) : (
-                            sortedRows.map((row, rowIndex) => (
-                                <tr key={rowIndex} className="hover:bg-gray-50 transition">
-                                    {columns.map((col, colIndex) => {
+                <tbody className="text-sm text-black">
+                {sortedRows.length === 0 ? (
+                    <tr>
+                    <td colSpan={columns.length} className="py-5 text-center text-black">
+                        No data available
+                    </td>
+                    </tr>
+                ) : (
+                    sortedRows.map((row, rowIndex) => (
+                    <tr
+                        key={rowIndex}
+                        className="transition duration-200 hover:bg-gray-100 hover:rounded-lg"
+                    >
+                        {columns.map((col, colIndex) => {
+                        const key = col.key || col.toLowerCase();
+                        return (
+                            <td
+                            key={colIndex}
+                            className="py-4 px-2 whitespace-nowrap"
+                            >
+                            {renderCell(col, row[key], row)}
+                            </td>
+                        );
+                        })}
+                    </tr>
+                    ))
+                )}
+                </tbody>
 
-                                        const key = col.key || col.toLowerCase();
-
-                                        return (
-                                            <td key={colIndex} className="py-4 whitespace-nowrap">
-                                                {renderCell(col, row[key], row)}
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
 
                 </table>
             </div>
