@@ -5,6 +5,7 @@ import searchIcon from "../../assets/search.svg";
 import addUserIcon from "../../assets/add_person.svg";
 import UniversalTable from "../../components/Table/Table";
 import { fetchUsers } from "../../api/user.service";
+import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 
 function UserManagement() {
     const [users, setUsers] = useState([]);
@@ -18,6 +19,7 @@ function UserManagement() {
         { key: "branch", label: "Branch" },
         { key: "status", label: "Account Status" },
         { key: "last_login", label: "Last Login" },
+        { key: "actions", label: "Actions" },
     ];
 
     const loadUsers = async (search = "") => {
@@ -56,6 +58,32 @@ function UserManagement() {
         status: user.is_active ? "Active" : "Inactive",
         last_login: user.last_login
             ? new Date(user.last_login).toLocaleDateString("en-US") : "",
+        actions: (
+    <ActionDropdown
+      options={[
+        {
+          label: "View User Details",
+          onClick: () => console.log("View user", user.id),
+        },
+         {
+          label: "Edit User Details",
+          onClick: () => console.log("Edit user", user.id),
+        },
+        {
+          label: "Deactivate User",
+          onClick: () => console.log("View user", user.id),
+        },
+        {
+          label: "Delete User",
+          onClick: () => console.log("Delete user", user.id),
+        },
+        {
+          label: "Reset Password",
+          onClick: () => console.log("View user", user.id),
+        },
+      ]}
+    />
+  ),
     }));
 
     return (
