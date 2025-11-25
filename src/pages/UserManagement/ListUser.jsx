@@ -10,6 +10,7 @@ import AddUser from "./AddUser";
 import Toast from "../../components/Common/Toast";
 import Pagination from "../../components/Pagination/Pagination";
 import ViewUser from "./ViewUser";
+import NotificationCard from "../../components/Common/Notification";
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -21,6 +22,7 @@ function ListUser() {
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [viewUser, setViewUser] = useState({ id: null, edit: false });
+    const [confirmModal, setConfirmModal] = useState({open: false, userId: null, actionType: "", title: "", message: ""});
 
 
     const showToast = (message, type = "success") => {
@@ -64,6 +66,27 @@ function ListUser() {
         setLoading(false);
     };
 
+    const handleConfirmAction = () => {
+        const { userId, actionType } = confirmModal;
+
+        if (actionType === "deactivate") {
+            console.log("DEACTIVATE USER:", userId);
+        }
+
+        if (actionType === "delete") {
+            console.log("DELETE USER:", userId);
+        }
+
+        setConfirmModal({
+            open: false,
+            userId: null,
+            actionType: "",
+            title: "",
+            message: "",
+        });
+        loadUsers();
+    };
+
     useEffect(() => {
         loadUsers();
     }, [page]);
@@ -95,7 +118,16 @@ function ListUser() {
                     },
                     {
                         label: "Deactivate User",
-                        onClick: () => console.log("View user", user.id),
+                        onClick: () =>
+                            setConfirmModal({
+                                open: true,
+                                userId: user.id,
+                                actionType: "deactivate",
+                                title: "Are you sure you want to deactivate this user account?",
+                                message:
+                                    "You are about to deactivate this user account. The user will be unable to log in or perform any actions until reactivated. Do you wish to continue?",
+                            }),
+
                     },
                     {
                         label: "Delete User",
@@ -197,6 +229,19 @@ function ListUser() {
                     initialEditMode={viewUser.edit}
                 />
             )}
+            <NotificationCard
+                confirmModal={confirmModal}
+                onConfirm={handleConfirmAction}
+                onCancel={() =>
+                    setConfirmModal({
+                        open: false,
+                        userId: null,
+                        actionType: "",
+                        title: "",
+                        message: "",
+                    })
+                }
+            />
         </div>
     );
 }
