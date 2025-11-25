@@ -9,7 +9,10 @@ function ViewUser({ userId, onClose }) {
         const loadUser = async () => {
             setLoading(true);
             const result = await fetchUserById(userId);
-            if (result.success) setUser(result.data);
+            console.log(result, "result")
+        if (result.success && result.data?.user) {
+          setUser(result.data.user);
+        }
             setLoading(false);
         };
         loadUser();
@@ -48,62 +51,62 @@ function ViewUser({ userId, onClose }) {
                     <>
                         <div className="grid grid-cols-2 gap-4 mb-4">
                             <div>
-                                <label className="text-gray-500 text-sm">Full Name</label>
+                                <label className="text-black text-sm">Full Name</label>
                                 <input
                                     type="text"
-                                    value={user.full_name}
+                                    value={user?.full_name}
                                     readOnly
-                                    className="w-full mt-1 px-3 py-2 border rounded-lg bg-white text-black"
+                                    className="w-full mt-1 px-3 py-2 rounded-lg bg-white text-black"
                                 />
                             </div>
                             <div>
-                                <label className="text-gray-500 text-sm">Email</label>
+                                <label className="text-black text-sm">Email</label>
                                 <input
                                     type="text"
-                                    value={user.email}
+                                    value={user?.email}
                                     readOnly
-                                    className="w-full mt-1 px-3 py-2 border rounded-lg bg-white text-black"
+                                    className="w-full mt-1 px-3 py-2 rounded-lg bg-white text-black"
                                 />
                             </div>
                             <div>
-                                <label className="text-gray-500 text-sm">Phone</label>
+                                <label className="text-black text-sm">Phone</label>
                                 <input
                                     type="text"
-                                    value={user.phone || "+255 xxx xxx xxx"}
+                                    value={user?.phone}
                                     readOnly
-                                    className="w-full mt-1 px-3 py-2 border rounded-lg bg-white text-black"
+                                    className="w-full mt-1 px-3 py-2 rounded-lg bg-white text-black"
                                 />
                             </div>
                             <div>
-                                <label className="text-gray-500 text-sm">Branch</label>
+                                <label className="text-black text-sm">Branch</label>
                                 <input
                                     type="text"
-                                    value={user.branch?.name || ""}
+                                    value={user?.branch?.name || ""}
                                     readOnly
-                                    className="w-full mt-1 px-3 py-2 border rounded-lg bg-white text-black"
+                                    className="w-full mt-1 px-3 py-2 rounded-lg bg-white text-black"
                                 />
                             </div>
                             <div>
-                                <label className="text-gray-500 text-sm">Role</label>
+                                <label className="text-black text-sm">Role</label>
                                 <input
                                     type="text"
-                                    value={user.role?.name || ""}
+                                    value={user?.role?.name || ""}
                                     readOnly
-                                    className="w-full mt-1 px-3 py-2 border rounded-lg bg-white text-black"
+                                    className="w-full mt-1 px-3 py-2 rounded-lg bg-white text-black"
                                 />
                             </div>
                         </div>
 
                         <div className="mb-4">
-                            <h3 className="text-gray-700 font-semibold mb-2">Account Status</h3>
-                            <div className="flex items-center justify-between p-3 border rounded-lg bg-white">
+                            <h3 className="text-black font-semibold mb-2">Account Status</h3>
+                            <div className="flex items-center justify-between p-3  rounded-lg bg-white">
                                 <span className="text-gray-500 text-sm">
-                                    {user.is_active ? "Account Active" : "Account Inactive"}
+                                    {user?.is_active ? "Account Active" : "Account Inactive"}
                                 </span>
                                 <label className="inline-flex relative items-center cursor-pointer">
                                     <input
                                         type="checkbox"
-                                        checked={user.is_active}
+                                        checked={user?.is_active}
                                         readOnly
                                         className="sr-only peer"
                                     />
@@ -112,9 +115,9 @@ function ViewUser({ userId, onClose }) {
                             </div>
                         </div>
 
-                        <div>
-                            <h3 className="text-gray-700 font-semibold mb-2">Security Actions</h3>
-                            <div className="flex gap-3">
+                        <div className="mb-4">
+                            <h3 className="text-black font-semibold mb-2">Security Actions</h3>
+                            <div className="flex gap-3 mb-4">
                                 <button className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md">
                                     Reset Password
                                 </button>
@@ -122,6 +125,7 @@ function ViewUser({ userId, onClose }) {
                                     Delete Account
                                 </button>
                             </div>
+
                         </div>
                     </>
                 )}
