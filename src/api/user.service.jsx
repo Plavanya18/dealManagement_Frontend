@@ -29,15 +29,19 @@ export async function fetchUsers({ page = 1, limit = 10, orderBy = "full_name", 
 
     if (!response.ok) {
       console.error("Failed to fetch users:", response.status);
-      return [];
+      return { data: [], pagination: { totalPages: 1 } };
     }
 
     const result = await response.json();
-    return result?.data || [];
+    
+    return {
+      data: result.data || [],
+      pagination: result.pagination || { totalPages: 1 },
+    };
 
   } catch (error) {
     console.error("Error fetching users:", error);
-    return [];
+    return { data: [], pagination: { totalPages: 1 } };
   }
 }
 

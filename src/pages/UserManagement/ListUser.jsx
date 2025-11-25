@@ -41,16 +41,20 @@ function ListUser() {
     const loadUsers = async (search = "") => {
         setLoading(true);
         try {
-            const result = await fetchUsers({ page: 1, limit: 7, orderBy: "full_name" });
-            const filtered = search
-                ? result.filter(
-                    (u) =>
-                        u.full_name?.toLowerCase().includes(search.toLowerCase()) ||
-                        u.email?.toLowerCase().includes(search.toLowerCase())
-                )
-                : result;
-            setUsers(filtered);
-            setTotalPages(result.pagination?.totalPages || 1);
+            const response = await fetchUsers({ page, limit: 7, orderBy: "full_name" });
+
+            let filteredUsers = response.data;
+
+            if (search) {
+                filteredUsers = filteredUsers.filter(u =>
+                    u.full_name?.toLowerCase().includes(search.toLowerCase()) ||
+                    u.email?.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+
+            setUsers(filteredUsers);
+            setTotalPages(response.pagination.totalPages);
+
         } catch (error) {
             console.error("Failed to load users:", error);
             showToast("Failed to load users", "error");
