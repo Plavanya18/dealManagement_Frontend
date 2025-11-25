@@ -19,39 +19,37 @@ function Toast({ show, message, type }) {
                     `}
                     style={{ boxShadow: "0px 4px 20px rgba(0,0,0,0.15)" }}
                 >
-
-                    <div
-                        className={`
-                            w-8 h-8 rounded-full 
-                            flex items-center justify-center
-                            shadow-md
-                            ${type === "success" ? "bg-green-500" : "bg-red-500"}
-                        `}
-                    >
-                        {type === "success" ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="white"
-                                className="w-5 h-5"
+                    <div className="relative flex items-center justify-center w-8 h-8">
+                        <div className="absolute inset-0 rounded-full border-6 border-gray-300/60 pointer-events-none"></div>
+                            <div
+                                className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center
+                                ${type === "success" ? "bg-green-500" : "bg-red-500"}`}
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                        ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="white"
-                                className="w-5 h-5"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        )}
-                    </div>
+                                {type === "success" ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={2}
+                                    stroke="white"
+                                    className="w-4 h-4"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                                ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={2}
+                                    stroke="white"
+                                    className="w-4 h-4"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                )}
+                            </div>
+                        </div>
 
                     <span className="text-[16px] font-medium">
                         {message}
