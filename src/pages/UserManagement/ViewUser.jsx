@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from "react";
+import Dropdown from "../../components/DropDown/DropDown";
 import { fetchUserById } from "../../api/user.service";
+import { fetchRoles } from "../../api/role.service";
+import { fetchBranches } from "../../api/branch.service";
 
 function ViewUser({ userId, onClose, initialEditMode = false }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState(initialEditMode);
     const [formData, setFormData] = useState({});
+    const [roles, setRoles] = useState([]);
+    const [branches, setBranches] = useState([]);
 
     useEffect(() => {
         const loadUser = async () => {
             setLoading(true);
-            const result = await fetchUserById(userId);
-            if (result.success && result.data?.user) {
-                setUser(result.data.user);
-                setFormData(result.data.user);
+            const userResult = await fetchUserById(userId);
+            if (userResult.success && userResult.data?.user) {
+                setUser(userResult.data.user);
+                setFormData(userResult.data.user);
             }
+
+            const rolesData = await fetchRoles({ page: 1, limit: 50 });
+            setRoles(rolesData);
+
+            const branchesData = await fetchBranches({ page: 1, limit: 50 });
+            setBranches(branchesData);
+
             setLoading(false);
         };
         loadUser();
@@ -23,13 +35,44 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
     if (!userId) return null;
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
 
-    const handleSave = () => {
-        setUser(formData);
-        setEditMode(false);
+    const handleSave = async () => {
+        try {
+            const selectedRole = roles.find((r) => r.name === formData.role);
+            const selectedBranch = branches.find((b) => b.name === formData.branch);
+
+            const payload = {
+                full_name: formData.full_name,
+                email: formData.email,
+                phone: formData.phone,
+                is_active: formData.is_active,
+                role_id: selectedRole?.id,
+                branch_id: selectedBranch?.id,
+            };
+
+            const result = await updateUser(userId, payload);
+
+            if (result.success) {
+                setUser(result.data);
+                setFormData(result.data);
+                setEditMode(false);
+
+                if (refreshUsers) refreshUsers();
+                alert("User updated successfully!");
+            } else {
+                console.error("Update failed:", result.error);
+                alert("Failed to update user!");
+            }
+        } catch (error) {
+            console.error("Error updating user:", error);
+            alert("Error updating user!");
+        }
     };
 
     const handleCancel = () => {
@@ -120,27 +163,49 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                             </div>
                             <div>
                                 <label className="text-black text-sm">Branch</label>
-                                <input
-                                    type="text"
-                                    name="branch"
-                                    value={formData?.branch?.name || ""}
-                                    onChange={handleChange}
-                                    readOnly={!editMode}
-                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black ${editMode ? "bg-white border border-gray-300" : "bg-white"
-                                        }`}
-                                />
+                                {editMode ? (
+                                    <Dropdown
+                                        options={branches.map((b) => ({ label: b.name, value: b.name }))}
+                                        value={
+                                            formData.branch
+                                                ? { label: formData.branch?.name || formData.branch, value: formData.branch?.name || formData.branch }
+                                                : null
+                                        }
+                                        onChange={(val) => setFormData((prev) => ({ ...prev, branch: val.value }))}
+                                        placeholder="Select Branch"
+                                        isDisabled={!editMode}
+                                    />
+                                ) : (
+                                    <input
+                                        type="text"
+                                        value={formData?.branch?.name || formData?.branch || ""}
+                                        readOnly
+                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black bg-white border border-gray-200"
+                                    />
+                                )}
                             </div>
                             <div>
                                 <label className="text-black text-sm">Role</label>
-                                <input
-                                    type="text"
-                                    name="role"
-                                    value={formData?.role?.name || ""}
-                                    onChange={handleChange}
-                                    readOnly={!editMode}
-                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black ${editMode ? "bg-white border border-gray-300" : "bg-white"
-                                        }`}
-                                />
+                                {editMode ? (
+                                    <Dropdown
+                                        options={roles.map((r) => ({ label: r.name, value: r.name }))}
+                                        value={
+                                            formData.role
+                                                ? { label: formData.role?.name || formData.role, value: formData.role?.name || formData.role }
+                                                : null
+                                        }
+                                        onChange={(val) => setFormData((prev) => ({ ...prev, role: val.value }))}
+                                        placeholder="Select Role"
+                                        isDisabled={!editMode}
+                                    />
+                                ) : (
+                                    <input
+                                        type="text"
+                                        value={formData?.role?.name || formData?.role || ""}
+                                        readOnly
+                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black bg-white border border-gray-200"
+                                    />
+                                )}
                             </div>
                         </div>
 

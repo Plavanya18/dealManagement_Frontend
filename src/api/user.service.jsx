@@ -8,15 +8,6 @@ function getAuthHeaders() {
   };
 }
 
-/**
- * Fetch users from API with pagination and sorting
- * @param {Object} options
- * @param {number} options.page - page number
- * @param {number} options.limit - items per page
- * @param {string} options.orderBy - field to sort by
- * @param {string} options.direction - sort direction ("asc" or "desc")
- * @returns {Promise<Array>} array of users
- */
 export async function fetchUsers({ page = 1, limit = 10, orderBy = "full_name", direction = "asc" } = {}) {
   try {
     const params = { page, limit, orderBy, direction };
@@ -84,6 +75,28 @@ export async function fetchUserById(id) {
     return { success: true, data: result };
   } catch (error) {
     console.error(`Error fetching user with ID ${id}:`, error);
+    return { success: false, error };
+  }
+}
+
+export async function updateUser(id, { full_name, email, role_id, branch_id, phone, is_active }) {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ full_name, email, role_id, branch_id, phone, is_active }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Failed to update user with ID ${id}:`, errorData);
+      return { success: false, error: errorData };
+    }
+
+    const result = await response.json();
+    return { success: true, data: result };
+  } catch (error) {
+    console.error(`Error updating user with ID ${id}:`, error);
     return { success: false, error };
   }
 }
