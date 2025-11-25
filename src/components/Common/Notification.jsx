@@ -54,7 +54,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                             <>
                                 <button
                                     onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] hover:bg-[#FFF7D1]"
+                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] transition-all duration-200 hover:bg-yellow-500 hover:text-white"
                                 >
                                     Cancel
                                 </button>
@@ -77,7 +77,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
 
                                 <button
                                     onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] hover:bg-[#FFF7D1]"
+                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] transition-all duration-200 hover:bg-yellow-500 hover:text-white"
                                 >
                                     Cancel
                                 </button>

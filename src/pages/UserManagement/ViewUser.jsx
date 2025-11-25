@@ -273,7 +273,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                         <div className="mb-4">
                             <h3 className="text-black font-semibold mb-2">Security Actions</h3>
                             <div className="flex gap-3 mb-4">
-                                <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md"
+                                <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
                                 onClick={() => {
                                         if (!editMode) return;
 
@@ -288,7 +288,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         Reset Password
                                     </button>
                                 <button
-                                    className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md"
+                                    className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md transition-all duration-200 hover:bg-red-500 hover:text-white"
                                     onClick={() => {
                                         if (!editMode) return; 
                                         setConfirmModal({
@@ -306,13 +306,13 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                 <div className="flex justify-end gap-3 mb-4 pt-4 border-t border-gray-300">
                                     <button
                                         onClick={handleCancel}
-                                        className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md"
+                                        className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         onClick={handleSave}
-                                        className="px-4 py-2 bg-[#FFCC00] text-black rounded-md"
+                                        className="px-4 py-2 bg-[#FFCC00] text-black font-bold rounded-md"
                                     >
                                         Save Changes
                                     </button>
