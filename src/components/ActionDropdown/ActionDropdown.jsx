@@ -1,13 +1,51 @@
 import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 function ActionDropdown({ options = [] }) {
   const [open, setOpen] = useState(false);
+  const [dropdownStyle, setDropdownStyle] = useState({});
+  const buttonRef = useRef();
   const dropdownRef = useRef();
 
-  const toggleDropdown = () => setOpen(!open);
+  const toggleDropdown = () => {
+    if (!open && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const dropdownHeight = options.length * 20;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      let top;
+      if (spaceBelow >= dropdownHeight) {
+        top = rect.bottom;
+      } else if (spaceAbove >= dropdownHeight) {
+        top = rect.top - dropdownHeight;
+      } else if (spaceBelow >= spaceAbove) {
+        top = rect.bottom;
+      } else {
+        top = 0;
+      }
+
+      setDropdownStyle({
+        position: "fixed",
+        top,
+        left: rect.left,
+        minWidth: rect.width,
+        maxHeight: "300px",
+        overflowY: "auto",
+        zIndex: 9999,
+      });
+    }
+
+    setOpen(!open);
+  };
 
   const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    if (
+      buttonRef.current &&
+      dropdownRef.current &&
+      !buttonRef.current.contains(e.target) &&
+      !dropdownRef.current.contains(e.target)
+    ) {
       setOpen(false);
     }
   };
@@ -18,31 +56,38 @@ function ActionDropdown({ options = [] }) {
   }, []);
 
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
+    <>
       <button
+        ref={buttonRef}
         onClick={toggleDropdown}
-        className="text-[#D8AD00] font-bold text-xl w-8 h-8 rounded-full flex items-center justify-center"
+        className="text-[#D8AD00] font-bold text-xl w-8 h-8 rounded-full flex items-center justify-center relative z-10"
       >
         &#8942;
       </button>
 
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg z-50">
-          {options.map((opt, idx) => (
-            <button
-              key={idx}
-              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              onClick={() => {
-                opt.onClick();
-                setOpen(false);
-              }}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      {open &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            style={dropdownStyle}
+            className="bg-white rounded shadow-lg pointer-events-auto"
+          >
+            {options.map((opt, idx) => (
+              <button
+                key={idx}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap"
+                onClick={() => {
+                  opt.onClick();
+                  setOpen(false);
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>,
+          document.body
+        )}
+    </>
   );
 }
 
