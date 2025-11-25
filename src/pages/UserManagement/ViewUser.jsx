@@ -272,6 +272,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                 <button
                                     className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md"
                                     onClick={() => {
+                                        if (!editMode) return; 
                                         setConfirmModal({
                                             open: true,
                                             actionType: "delete",
