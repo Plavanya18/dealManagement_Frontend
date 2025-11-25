@@ -97,8 +97,9 @@ function ListUser() {
             if (selectedUser) {
                 const response = await sendResetPasswordEmail(selectedUser.email);
 
-                if (response?.success) {
-                    showToast("Password reset link sent successfully!");
+                console.log("res", response)
+                if (response && response.message?.includes("successfully")) {
+                    showToast("Password reset email sent to user.");
                 } else {
                     showToast("Failed to send reset email", "error");
                 }
