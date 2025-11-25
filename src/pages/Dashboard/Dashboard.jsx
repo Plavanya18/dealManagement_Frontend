@@ -68,7 +68,7 @@ function Dashboard() {
     { label: "Type", key: "type" },
     { label: "Currency", key: "currency" },
     { label: "Amount (TZS)", key: "amount" },
-    { label: "Status", key: "status" },
+    { label: "Status", key: "dealStatus" },
     { label: "Date", key: "Date" },
   ];
 
@@ -82,7 +82,7 @@ function Dashboard() {
     type: capitalize(deal.deal_type),
     currency: deal.baseCurrency?.code || "N/A",
     amount: deal.amount,
-    status: deal.status?.name || "N/A",
+    dealStatus: deal.status?.name || "N/A",
     Date: new Date(deal.created_at).toLocaleDateString(),
   }));
 
