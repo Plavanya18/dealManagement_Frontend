@@ -4,12 +4,13 @@ import NotificationCard from "../../components/Common/Notification";
 import { deleteUser, fetchUserById, updateUser } from "../../api/user.service";
 import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
+import { sendResetPasswordEmail } from "../../api/auth.service";
 
 function ViewUser({ userId, onClose, initialEditMode = false }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState(initialEditMode);
-    const [formData, setFormData] = useState({ deleteRequested: false });
+    const [formData, setFormData] = useState({ deleteRequested: false,  resetRequested: false });
     const [roles, setRoles] = useState([]);
     const [branches, setBranches] = useState([]);
     const [confirmModal, setConfirmModal] = useState({ open: false });
@@ -69,14 +70,17 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
             const result = await updateUser(userId, payload);
 
             if (result.success) {
+                if (formData.resetRequested) {
+                    const resetResponse = await sendResetPasswordEmail(formData.email);
+                }
                 setUser(result.data);
                 setFormData(result.data);
                 setEditMode(false);
-                onClose?.(true);
             }
-
         } catch (err) {
-            console.error("Error:", err);
+            console.error("Save Error:", err);
+        } finally {
+            onClose?.(true);
         }
     };
 
@@ -89,6 +93,9 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
         }
         else if (confirmModal.actionType === "delete") {
             setFormData(prev => ({ ...prev, deleteRequested: true }));
+        }
+        else if (confirmModal.actionType === "resetPassword") {
+            setFormData(prev => ({ ...prev, resetRequested: true }));
         }
 
         setConfirmModal({ open: false });
@@ -266,9 +273,20 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                         <div className="mb-4">
                             <h3 className="text-black font-semibold mb-2">Security Actions</h3>
                             <div className="flex gap-3 mb-4">
-                                <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md">
-                                    Reset Password
-                                </button>
+                                <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md"
+                                onClick={() => {
+                                        if (!editMode) return;
+
+                                        setConfirmModal({
+                                            open: true,
+                                            actionType: "resetPassword",
+                                            title: "Are you sure you want to send a password reset link?",
+                                            message: "You want to send a password reset link to this user’s registered email address? The user will be able to create a new password from their email.",
+                                        });
+                                    }}
+                                >
+                                        Reset Password
+                                    </button>
                                 <button
                                     className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md"
                                     onClick={() => {
