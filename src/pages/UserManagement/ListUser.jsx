@@ -139,7 +139,6 @@ function ListUser() {
             },
         ];
 
-        // Add Activate / Deactivate conditionally
         if (user.is_active) {
             actionOptions.push({
                 label: "Deactivate User",
@@ -168,7 +167,6 @@ function ListUser() {
             });
         }
 
-        //Delete Action
         actionOptions.push({
             label: "Delete User",
             onClick: () =>
@@ -182,7 +180,6 @@ function ListUser() {
                 }),
         });
 
-        // Reset Password
         actionOptions.push({
         label: "Reset Password",
         onClick: () =>
