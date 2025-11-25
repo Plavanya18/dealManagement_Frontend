@@ -190,7 +190,7 @@ function ListUser() {
 
             <Toast show={toast.show} message={toast.message} type={toast.type} />
 
-            <div className={`${showAddUser || toast.show  || viewUser || NotificationCard ? "backdrop-blur-sm backdrop-brightness-90 w-full" : ""}`}>
+            <div className={`${showAddUser || toast.show ? "filter blur-[0.5px] w-full" : ""}`}>
                 <Navbar />
                 <div className="flex">
                     <div className="w-[220px]">
