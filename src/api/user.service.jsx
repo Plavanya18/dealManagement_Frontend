@@ -66,3 +66,24 @@ export async function createUser({ full_name, email, role_id, branch_id, phone, 
     return { success: false, error };
   }
 }
+
+export async function fetchUserById(id) {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "GET",
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Failed to fetch user with ID ${id}:`, errorData);
+      return { success: false, error: errorData };
+    }
+
+    const result = await response.json();
+    return { success: true, data: result };
+  } catch (error) {
+    console.error(`Error fetching user with ID ${id}:`, error);
+    return { success: false, error };
+  }
+}
