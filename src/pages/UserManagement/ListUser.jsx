@@ -4,7 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import searchIcon from "../../assets/search.svg";
 import addUserIcon from "../../assets/add_person.svg";
 import UniversalTable from "../../components/Table/Table";
-import { fetchUsers } from "../../api/user.service";
+import { deleteUser, fetchUsers, updateUserStatus } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 import AddUser from "./AddUser";
 import Toast from "../../components/Common/Toast";
@@ -66,15 +66,22 @@ function ListUser() {
         setLoading(false);
     };
 
-    const handleConfirmAction = () => {
+
+    const handleConfirmAction = async () => {
         const { userId, actionType } = confirmModal;
 
+        let response;
+
         if (actionType === "deactivate") {
-            console.log("DEACTIVATE USER:", userId);
+            response = await updateUserStatus(userId, false);
+            if (response.success) showToast("User deactivated successfully");
+            else showToast("Failed to deactivate user", "error");
         }
 
         if (actionType === "delete") {
-            console.log("DELETE USER:", userId);
+            response = await deleteUser(userId);
+            if (response.success) showToast("User deleted successfully");
+            else showToast("Failed to delete user", "error");
         }
 
         setConfirmModal({
@@ -84,6 +91,7 @@ function ListUser() {
             title: "",
             message: "",
         });
+
         loadUsers();
     };
 

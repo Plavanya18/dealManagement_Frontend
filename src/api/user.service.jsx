@@ -100,3 +100,47 @@ export async function updateUser(id, { full_name, email, role_id, branch_id, pho
     return { success: false, error };
   }
 }
+
+export async function updateUserStatus(id, is_active) {
+  try {
+    const response = await fetch(`${API_URL}/user/status/${id}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ is_active }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Failed to update user status for ID ${id}:`, errorData);
+      return { success: false, error: errorData };
+    }
+
+    const result = await response.json();
+    return { success: true, data: result };
+
+  } catch (error) {
+    console.error(`Error updating user status for ID ${id}:`, error);
+    return { success: false, error };
+  }
+}
+
+export async function deleteUser(id) {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "DELETE",
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Failed to delete user with ID ${id}:`, errorData);
+      return { success: false, error: errorData };
+    }
+
+    return { success: true };
+
+  } catch (error) {
+    console.error(`Error deleting user with ID ${id}:`, error);
+    return { success: false, error };
+  }
+}
