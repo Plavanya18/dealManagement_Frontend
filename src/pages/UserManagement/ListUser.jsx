@@ -130,9 +130,17 @@ function ListUser() {
 
                     },
                     {
-                        label: "Delete User",
-                        onClick: () => console.log("Delete user", user.id),
-                    },
+                    label: "Delete User",
+                    onClick: () =>
+                        setConfirmModal({
+                            open: true,
+                            userId: user.id,
+                            actionType: "delete",
+                            title: "Are you sure you want to delete this account?",
+                            message:
+                                "You are about to delete this user account. Once deleted, the user will lose all system access. Do you wish to continue?",
+                        }),
+                },
                     {
                         label: "Reset Password",
                         onClick: () => console.log("View user", user.id),
