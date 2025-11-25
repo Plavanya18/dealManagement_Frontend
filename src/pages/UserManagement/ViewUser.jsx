@@ -63,13 +63,9 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                 setFormData(result.data);
                 setEditMode(false);
                 if (onClose) onClose(true);
-            } else {
-                console.error("Update failed:", result.error);
-                alert("Failed to update user!");
-            }
+            } 
         } catch (error) {
             console.error("Error updating user:", error);
-            alert("Error updating user!");
         }
     };
 
