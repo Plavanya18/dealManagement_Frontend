@@ -2,6 +2,7 @@ import React from "react";
 import deactivateIcon from "../../assets/deactivate_person.svg";
 import activateIcon from "../../assets/add_person.svg";
 import deleteIcon from "../../assets/delete.svg";
+import resetIcon from "../../assets/reset_lock.svg";
 
 function NotificationCard({ confirmModal, onConfirm, onCancel }) {
     if (!confirmModal.open) return null;
@@ -12,17 +13,23 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
         actionType === "delete"
             ? "Delete Account"
             : actionType === "deactivate"
-            ? "Deactivate Account"
-            : actionType === "activate"
-            ? "Activate Account"
-            : "Confirm";
+                ? "Deactivate Account"
+                : actionType === "activate"
+                    ? "Activate Account"
+                    : actionType === "resetPassword"
+                        ? "Send Link"
+                        : "Confirm";
 
     const iconToShow =
         actionType === "delete"
             ? deleteIcon
             : actionType === "activate"
-            ? activateIcon
-            : deactivateIcon;
+                ? activateIcon
+                : actionType === "deactivate"
+                    ? deactivateIcon
+                    : actionType === "resetPassword"
+                        ? resetIcon
+                        : deactivateIcon;
 
     return (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -43,19 +50,39 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                     </p>
 
                     <div className="flex justify-center gap-4">
-                        <button
-                            onClick={onConfirm}
-                            className={`bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]`}
-                        >
-                            {confirmLabel}
-                        </button>
+                        {actionType === "resetPassword" ? (
+                            <>
+                                <button
+                                    onClick={onCancel}
+                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] hover:bg-[#FFF7D1]"
+                                >
+                                    Cancel
+                                </button>
 
-                        <button
-                            onClick={onCancel}
-                            className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] hover:bg-[#FFF7D1]"
-                        >
-                            Cancel
-                        </button>
+                                <button
+                                    onClick={onConfirm}
+                                    className="bg-[#FFCC00] text-black px-8 py-3 rounded-xl font-bold min-w-[200px] text-[15px] hover:bg-[#e6b800]"
+                                >
+                                    Send Link
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={onConfirm}
+                                    className="bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]"
+                                >
+                                    {confirmLabel}
+                                </button>
+
+                                <button
+                                    onClick={onCancel}
+                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] hover:bg-[#FFF7D1]"
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
 
