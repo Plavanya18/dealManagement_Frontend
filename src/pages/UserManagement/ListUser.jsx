@@ -11,6 +11,7 @@ import Toast from "../../components/Common/Toast";
 import Pagination from "../../components/Pagination/Pagination";
 import ViewUser from "./ViewUser";
 import NotificationCard from "../../components/Common/Notification";
+import { sendResetPasswordEmail } from "../../api/auth.service";
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -90,6 +91,20 @@ function ListUser() {
             else showToast("Failed to delete user", "error");
         }
 
+        if (actionType === "resetPassword") {
+            const selectedUser = users.find((u) => u.id === userId);
+
+            if (selectedUser) {
+                const response = await sendResetPasswordEmail(selectedUser.email);
+
+                if (response?.success) {
+                    showToast("Password reset link sent successfully!");
+                } else {
+                    showToast("Failed to send reset email", "error");
+                }
+            } 
+        }
+
         setConfirmModal({
             open: false,
             userId: null,
@@ -123,7 +138,7 @@ function ListUser() {
             },
         ];
 
-        // 👉 Add Activate / Deactivate conditionally
+        // Add Activate / Deactivate conditionally
         if (user.is_active) {
             actionOptions.push({
                 label: "Deactivate User",
@@ -152,7 +167,7 @@ function ListUser() {
             });
         }
 
-        // 👉 Delete Action
+        //Delete Action
         actionOptions.push({
             label: "Delete User",
             onClick: () =>
@@ -166,11 +181,19 @@ function ListUser() {
                 }),
         });
 
-        // 👉 Reset Password
+        // Reset Password
         actionOptions.push({
-            label: "Reset Password",
-            onClick: () => console.log("Reset password for user", user.id),
-        });
+        label: "Reset Password",
+        onClick: () =>
+            setConfirmModal({
+                open: true,
+                actionType: "resetPassword",
+                userId: user.id,
+                title: "Are you sure you want to send a password reset link?",
+                message:
+                    "You want to send a password reset link to this user’s registered email address? The user will be able to create a new password from their email.",
+            }),
+    });
 
         return {
             full_name: user.full_name,
