@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../components/DropDown/DropDown";
-import { fetchUserById } from "../../api/user.service";
+import { fetchUserById, updateUser } from "../../api/user.service";
 import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
 
@@ -62,9 +62,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                 setUser(result.data);
                 setFormData(result.data);
                 setEditMode(false);
-
-                if (refreshUsers) refreshUsers();
-                alert("User updated successfully!");
+                if (onClose) onClose(true);
             } else {
                 console.error("Update failed:", result.error);
                 alert("Failed to update user!");

@@ -190,7 +190,10 @@ function ListUser() {
             {viewUser.id && (
                 <ViewUser
                     userId={viewUser.id}
-                    onClose={() => setViewUser({ id: null, edit: false })}
+                    onClose={() => {
+                        setViewUser({ id: null, edit: false });
+                        loadUsers(searchValue);
+                    }}
                     initialEditMode={viewUser.edit}
                 />
             )}
