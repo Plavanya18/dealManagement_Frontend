@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../components/DropDown/DropDown";
+import NotificationCard from "../../components/Common/Notification";
 import { fetchUserById, updateUser } from "../../api/user.service";
 import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
@@ -11,6 +12,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
     const [formData, setFormData] = useState({});
     const [roles, setRoles] = useState([]);
     const [branches, setBranches] = useState([]);
+    const [confirmModal, setConfirmModal] = useState({ open: false });
 
     useEffect(() => {
         const loadUser = async () => {
@@ -63,15 +65,42 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                 setFormData(result.data);
                 setEditMode(false);
                 if (onClose) onClose(true);
-            } 
+            }
         } catch (error) {
             console.error("Error updating user:", error);
+        }
+    };
+
+    const handleConfirm = async () => {
+        const { actionType, userId } = confirmModal;
+
+        const payload = {
+            is_active: actionType === "activate" ? true : false,
+        };
+
+        try {
+            const result = await updateUser(userId, payload);
+
+            if (result.success) {
+                setFormData((prev) => ({
+                    ...prev,
+                    is_active: payload.is_active,
+                }));
+
+                setConfirmModal({ open: false });
+            }
+        } catch (err) {
+            console.error(err);
         }
     };
 
     const handleCancel = () => {
         setFormData(user);
         setEditMode(false);
+    };
+
+    const handleCancelPopup = () => {
+        setConfirmModal({ open: false });
     };
 
     return (
@@ -214,12 +243,23 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         type="checkbox"
                                         checked={formData?.is_active}
                                         readOnly={!editMode}
-                                        onChange={() =>
-                                            setFormData((prev) => ({
-                                                ...prev,
-                                                is_active: !prev.is_active,
-                                            }))
-                                        }
+                                        onChange={() => {
+                                            const nextStatus = !formData.is_active;
+
+                                            setConfirmModal({
+                                                open: true,
+                                                actionType: nextStatus
+                                                    ? "activate"
+                                                    : "deactivate",
+                                                title: nextStatus
+                                                    ? "Activate Account"
+                                                    : "Deactivate Account",
+                                                message: nextStatus
+                                                    ? "Are you sure you want to activate this user?"
+                                                    : "Are you sure you want to deactivate this user?",
+                                                userId: userId,
+                                            });
+                                        }}
                                         className="sr-only peer"
                                     />
                                     <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-yellow-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
@@ -257,6 +297,11 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                     </>
                 )}
             </div>
+            <NotificationCard
+                confirmModal={confirmModal}
+                onConfirm={handleConfirm}
+                onCancel={handleCancelPopup}
+            />
         </div>
     );
 }
