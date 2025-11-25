@@ -74,19 +74,19 @@ function ListUser() {
 
         if (actionType === "deactivate") {
             response = await updateUserStatus(userId, false);
-            if (response.success) showToast("User deactivated successfully");
+            if (response.success) showToast("User Deactivated!", "error");
             else showToast("Failed to deactivate user", "error");
         }
 
         if (actionType === "activate") {
             response = await updateUserStatus(userId, true);
-            if (response.success) showToast("User activated successfully");
+            if (response.success) showToast("User Activated!");
             else showToast("Failed to deactivate user", "error");
         }
 
         if (actionType === "delete") {
             response = await deleteUser(userId);
-            if (response.success) showToast("User deleted successfully");
+            if (response.success) showToast("Account Deleted!", "error");
             else showToast("Failed to delete user", "error");
         }
 
