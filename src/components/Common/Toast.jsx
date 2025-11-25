@@ -6,7 +6,7 @@ function Toast({ show, message, type }) {
             {show && (
                 <div
                     className={`
-                        fixed top-5 right-5 z-[9999]
+                        fixed top-5 right-5 z-9999
                         flex items-center gap-3
                         px-5 py-3
                         rounded-xl shadow-lg

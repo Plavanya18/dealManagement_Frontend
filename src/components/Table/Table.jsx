@@ -61,7 +61,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
             );
         }
 
-        
+
         if (col.key === "status") {
             const statusText = typeof value === "boolean" ? (value ? "Active" : "Inactive") : value;
             return (
@@ -117,11 +117,11 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                 <th
                                     key={index}
                                     className="py-1 text-left font-medium whitespace-nowrap cursor-pointer select-none"
-                                    onClick={() => handleSort(col.key)}
+                                    onClick={() => col.key !== "actions" && handleSort(col.key)}
                                 >
                                     <div className="flex items-center">
                                         {col.label || col}
-
+                                        {col.key !== "actions" && (
                                         <span className="flex ml-1">
                                             <img
                                                 src={uparrowIcon}
@@ -140,6 +140,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                                     }`}
                                             />
                                         </span>
+                                    )}
                                     </div>
                                 </th>
                             ))}
