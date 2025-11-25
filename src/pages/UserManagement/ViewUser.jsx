@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserById } from "../../api/user.service";
 
-function ViewUser({ userId, onClose }) {
+function ViewUser({ userId, onClose, initialEditMode = false }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(initialEditMode);
     const [formData, setFormData] = useState({});
 
     useEffect(() => {

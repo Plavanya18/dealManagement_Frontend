@@ -20,7 +20,7 @@ function ListUser() {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
-    const [viewUserId, setViewUserId] = useState(null);
+    const [viewUser, setViewUser] = useState({ id: null, edit: false });
 
 
     const showToast = (message, type = "success") => {
@@ -87,11 +87,11 @@ function ListUser() {
                 options={[
                     {
                         label: "View User Details",
-                        onClick: () => setViewUserId(user.id),
+                        onClick: () => setViewUser({ id: user.id, edit: false }),
                     },
                     {
                         label: "Edit User Details",
-                        onClick: () => console.log("Edit user", user.id),
+                        onClick: () => setViewUser({ id: user.id, edit: true }),
                     },
                     {
                         label: "Deactivate User",
@@ -187,11 +187,12 @@ function ListUser() {
                     toast={showToast}
                 />
             )}
-           {viewUserId && (
-            <ViewUser
-                userId={viewUserId}
-                onClose={() => setViewUserId(null)}
-            />
+            {viewUser.id && (
+                <ViewUser
+                    userId={viewUser.id}
+                    onClose={() => setViewUser({ id: null, edit: false })}
+                    initialEditMode={viewUser.edit}
+                />
             )}
         </div>
     );
