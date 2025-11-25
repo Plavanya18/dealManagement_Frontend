@@ -267,7 +267,9 @@ function ListUser() {
                     userId={viewUser.id}
                     onClose={(updated) => {
                         setViewUser({ id: null, edit: false });
-                        if (updated) showToast("Changes saved successfully!");
+                        if (updated === true) {
+                            showToast("Changes saved successfully!");
+                        }
                         loadUsers(searchValue);
                     }}
                     initialEditMode={viewUser.edit}

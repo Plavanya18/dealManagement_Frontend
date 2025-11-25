@@ -244,6 +244,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         checked={formData?.is_active}
                                         readOnly={!editMode}
                                         onChange={() => {
+                                             if (!editMode) return; 
                                             const nextStatus = !formData.is_active;
 
                                             setConfirmModal({
