@@ -4,8 +4,8 @@ import { fetchUserById } from "../../api/user.service";
 function ViewUser({ userId, onClose }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [editMode, setEditMode] = useState(false); // Track edit state
-    const [formData, setFormData] = useState({}); // Editable form data
+    const [editMode, setEditMode] = useState(false);
+    const [formData, setFormData] = useState({});
 
     useEffect(() => {
         const loadUser = async () => {
@@ -13,7 +13,7 @@ function ViewUser({ userId, onClose }) {
             const result = await fetchUserById(userId);
             if (result.success && result.data?.user) {
                 setUser(result.data.user);
-                setFormData(result.data.user); // Initialize editable data
+                setFormData(result.data.user);
             }
             setLoading(false);
         };
@@ -28,14 +28,12 @@ function ViewUser({ userId, onClose }) {
     };
 
     const handleSave = () => {
-        // Add save API logic here
-        console.log("Save Changes", formData);
         setUser(formData);
         setEditMode(false);
     };
 
     const handleCancel = () => {
-        setFormData(user); // Reset to original
+        setFormData(user);
         setEditMode(false);
     };
 
