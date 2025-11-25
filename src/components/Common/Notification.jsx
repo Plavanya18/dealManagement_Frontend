@@ -1,4 +1,5 @@
 import React from "react";
+import deactivateIcon from "../../assets/deactivate_person.svg"
 
 function NotificationCard({ confirmModal, onConfirm, onCancel }) {
     if (!confirmModal.open) return null;
@@ -14,38 +15,43 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
 
     return (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-            <div className="bg-white rounded-2xl shadow-lg p-8 w-[420px] text-center">
+            <div className="bg-white w-[480px] rounded-3xl shadow-xl overflow-hidden">
 
-                <div className="flex justify-center mb-4">
-                    <img
-                        src="/mnt/data/5f737ede-03d5-4fc7-8df7-710449263b57.png"
-                        alt="alert"
-                        className="w-24 h-24"
-                    />
+                <div className="relative h-40 flex justify-center items-center bg-linear-to-b from-[#FFEFEE] to-transparent">
+                    <div className="absolute top-6 w-28 h-28 rounded-full bg-[#FF3B30] flex justify-center items-center shadow-xl">
+                        <img
+                            src={deactivateIcon}
+                            alt="alert"
+                            className="w-10 h-10"
+                        />
+                    </div>
                 </div>
 
-                <h2 className="text-xl font-bold mb-3 text-gray-900">
-                    {title}
-                </h2>
+                <div className="px-8 pb-8 -mt-4 text-center">
 
-                <p className="text-gray-600 mb-6 px-3">
-                    {message}
-                </p>
+                    <h2 className="text-[20px] font-bold text-gray-900 mb-3 leading-tight">
+                        {title}
+                    </h2>
 
-                <div className="flex justify-center gap-4">
-                    <button
-                        onClick={onConfirm}
-                        className="bg-[#FF3B30] hover:bg-[#e13229] text-white px-6 py-2 rounded-lg font-semibold"
-                    >
-                        {confirmButtonLabel}
-                    </button>
+                    <p className="text-gray-600 text-[15px] leading-relaxed mb-8">
+                        {message}
+                    </p>
 
-                    <button
-                        onClick={onCancel}
-                        className="border border-[#D8AD00] text-[#D8AD00] px-6 py-2 rounded-lg font-semibold hover:bg-yellow-50"
-                    >
-                        Cancel
-                    </button>
+                    <div className="flex justify-center gap-4">
+                        <button
+                            onClick={onConfirm}
+                            className="bg-[#FF3B30] hover:bg-[#d9322a] text-white px-6 py-3 rounded-xl font-semibold min-w-[180px]"
+                        >
+                            {confirmButtonLabel}
+                        </button>
+
+                        <button
+                            onClick={onCancel}
+                            className="border border-[#D8AD00] text-[#D8AD00] px-6 py-3 rounded-xl font-semibold min-w-[140px] hover:bg-[#FFF8E1]"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
 
             </div>
