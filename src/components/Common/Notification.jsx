@@ -1,6 +1,7 @@
 import React from "react";
 import deactivateIcon from "../../assets/deactivate_person.svg";
-import deleteIcon from "../../assets/delete.svg"
+import activateIcon from "../../assets/add_person.svg";
+import deleteIcon from "../../assets/delete.svg";
 
 function NotificationCard({ confirmModal, onConfirm, onCancel }) {
     if (!confirmModal.open) return null;
@@ -11,39 +12,31 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
         actionType === "delete"
             ? "Delete Account"
             : actionType === "deactivate"
-                ? "Deactivate Account"
-                : "Confirm";
+            ? "Deactivate Account"
+            : actionType === "activate"
+            ? "Activate Account"
+            : "Confirm";
 
     const iconToShow =
         actionType === "delete"
             ? deleteIcon
+            : actionType === "activate"
+            ? activateIcon
             : deactivateIcon;
 
     return (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
             <div className="w-[520px] rounded-3xl shadow-2xl overflow-hidden relative bg-white">
 
-                <div className="relative h-52 w-full flex justify-center items-start pt-8 bg-linear-to-b from-white via-white/40 to-[#fdeeee]
-                ">
-
+                <div className="relative h-52 w-full flex justify-center items-start pt-8 bg-linear-to-b from-white via-white/40 to-[#fdeeee]">
                     <div className="w-40 h-40 rounded-full bg-[#E21E26] shadow-[0_25px_50px_rgba(226,30,38,0.45)] flex items-center justify-center relative">
-
                         <div className="absolute top-2 left-4 w-16 h-10 bg-white/40 rounded-full blur-md"></div>
-
-                        <img
-                            src={iconToShow}
-                            alt="icon"
-                            className="w-14 h-14"
-                        />
+                        <img src={iconToShow} alt="icon" className="w-14 h-14" />
                     </div>
                 </div>
 
-                <div
-                    className="backdrop-blur-xl bg-white/0 rounded-t-[100px] -mt-12 pt-12 pb-10 px-10 border border-white/40 text-center shadow-[0_-15px_40px_rgba(0,0,0,0.08)]"
-                >
-                    <h2 className="text-[22px] font-bold text-black mb-3">
-                        {title}
-                    </h2>
+                <div className="backdrop-blur-xl bg-white/0 rounded-t-[100px] -mt-12 pt-12 pb-10 px-10 border border-white/40 text-center shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
+                    <h2 className="text-[22px] font-bold text-black mb-3">{title}</h2>
 
                     <p className="text-gray-600 text-[15px] leading-relaxed mb-10">
                         {message}
@@ -52,7 +45,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                     <div className="flex justify-center gap-4">
                         <button
                             onClick={onConfirm}
-                            className="bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]"
+                            className={`bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]`}
                         >
                             {confirmLabel}
                         </button>

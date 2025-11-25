@@ -78,6 +78,12 @@ function ListUser() {
             else showToast("Failed to deactivate user", "error");
         }
 
+        if (actionType === "activate") {
+            response = await updateUserStatus(userId, true);
+            if (response.success) showToast("User activated successfully");
+            else showToast("Failed to deactivate user", "error");
+        }
+
         if (actionType === "delete") {
             response = await deleteUser(userId);
             if (response.success) showToast("User deleted successfully");
@@ -105,58 +111,79 @@ function ListUser() {
         }
     };
 
-    const rows = users.map((user) => ({
-        full_name: user.full_name,
-        role: user.role?.name,
-        email: user.email,
-        branch: user.branch?.name,
-        status: user.is_active ? "Active" : "Inactive",
-        last_login: user.last_login
-            ? new Date(user.last_login).toLocaleDateString("en-US") : "",
-        actions: (
-            <ActionDropdown
-                options={[
-                    {
-                        label: "View User Details",
-                        onClick: () => setViewUser({ id: user.id, edit: false }),
-                    },
-                    {
-                        label: "Edit User Details",
-                        onClick: () => setViewUser({ id: user.id, edit: true }),
-                    },
-                    {
-                        label: "Deactivate User",
-                        onClick: () =>
-                            setConfirmModal({
-                                open: true,
-                                userId: user.id,
-                                actionType: "deactivate",
-                                title: "Are you sure you want to deactivate this user account?",
-                                message:
-                                    "You are about to deactivate this user account. The user will be unable to log in or perform any actions until reactivated. Do you wish to continue?",
-                            }),
+    const rows = users.map((user) => {
+        const actionOptions = [
+            {
+                label: "View User Details",
+                onClick: () => setViewUser({ id: user.id, edit: false }),
+            },
+            {
+                label: "Edit User Details",
+                onClick: () => setViewUser({ id: user.id, edit: true }),
+            },
+        ];
 
-                    },
-                    {
-                    label: "Delete User",
-                    onClick: () =>
-                        setConfirmModal({
-                            open: true,
-                            userId: user.id,
-                            actionType: "delete",
-                            title: "Are you sure you want to delete this account?",
-                            message:
-                                "You are about to delete this user account. Once deleted, the user will lose all system access. Do you wish to continue?",
-                        }),
-                },
-                    {
-                        label: "Reset Password",
-                        onClick: () => console.log("View user", user.id),
-                    },
-                ]}
-            />
-        ),
-    }));
+        // 👉 Add Activate / Deactivate conditionally
+        if (user.is_active) {
+            actionOptions.push({
+                label: "Deactivate User",
+                onClick: () =>
+                    setConfirmModal({
+                        open: true,
+                        userId: user.id,
+                        actionType: "deactivate",
+                        title: "Are you sure you want to deactivate this user?",
+                        message:
+                            "This user will be unable to log in or perform any actions until reactivated.",
+                    }),
+            });
+        } else {
+            actionOptions.push({
+                label: "Activate User",
+                onClick: () =>
+                    setConfirmModal({
+                        open: true,
+                        userId: user.id,
+                        actionType: "activate",
+                        title: "Are you sure you want to activate this user?",
+                        message:
+                            "This user will regain access to the system and be able to perform actions.",
+                    }),
+            });
+        }
+
+        // 👉 Delete Action
+        actionOptions.push({
+            label: "Delete User",
+            onClick: () =>
+                setConfirmModal({
+                    open: true,
+                    userId: user.id,
+                    actionType: "delete",
+                    title: "Are you sure you want to delete this account?",
+                    message:
+                        "You are about to delete this user account. Once deleted, the user will lose all system access.",
+                }),
+        });
+
+        // 👉 Reset Password
+        actionOptions.push({
+            label: "Reset Password",
+            onClick: () => console.log("Reset password for user", user.id),
+        });
+
+        return {
+            full_name: user.full_name,
+            role: user.role?.name,
+            email: user.email,
+            branch: user.branch?.name,
+            status: user.is_active ? "Active" : "Inactive",
+            last_login: user.last_login
+                ? new Date(user.last_login).toLocaleDateString("en-US")
+                : "",
+            actions: <ActionDropdown options={actionOptions} />,
+        };
+    });
 
     return (
         <div className="min-h-screen bg-[#fffef7] relative">
