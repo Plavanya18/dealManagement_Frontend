@@ -49,7 +49,7 @@ function ViewUser({ userId, onClose }) {
                     <p className="text-gray-500">Loading user details...</p>
                 ) : (
                     <>
-                        <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="grid grid-cols-2 pb-4 border-b border-gray-300 gap-4 mb-4">
                             <div>
                                 <label className="text-black text-sm">Full Name</label>
                                 <input
@@ -97,7 +97,7 @@ function ViewUser({ userId, onClose }) {
                             </div>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-4   border-b pb-4 border-gray-300">
                             <h3 className="text-black font-semibold mb-2">Account Status</h3>
                             <div className="flex items-center justify-between p-3  rounded-lg bg-white">
                                 <span className="text-gray-500 text-sm">
@@ -118,10 +118,10 @@ function ViewUser({ userId, onClose }) {
                         <div className="mb-4">
                             <h3 className="text-black font-semibold mb-2">Security Actions</h3>
                             <div className="flex gap-3 mb-4">
-                                <button className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md">
+                                <button className="px-4 py-2 text-2xl border border-yellow-400 text-yellow-500 rounded-md">
                                     Reset Password
                                 </button>
-                                <button className="px-4 py-2 border border-red-400 text-red-500 rounded-md">
+                                <button className="px-4 py-2 text-2xlborder border-red-400 text-red-500 rounded-md">
                                     Delete Account
                                 </button>
                             </div>
