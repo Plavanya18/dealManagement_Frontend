@@ -22,7 +22,7 @@ function ListUser() {
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [viewUser, setViewUser] = useState({ id: null, edit: false });
-    const [confirmModal, setConfirmModal] = useState({open: false, userId: null, actionType: "", title: "", message: ""});
+    const [confirmModal, setConfirmModal] = useState({ open: false, userId: null, actionType: "", title: "", message: "" });
 
 
     const showToast = (message, type = "success") => {
@@ -265,8 +265,9 @@ function ListUser() {
             {viewUser.id && (
                 <ViewUser
                     userId={viewUser.id}
-                    onClose={() => {
+                    onClose={(updated) => {
                         setViewUser({ id: null, edit: false });
+                        if (updated) showToast("Changes saved successfully!");
                         loadUsers(searchValue);
                     }}
                     initialEditMode={viewUser.edit}
