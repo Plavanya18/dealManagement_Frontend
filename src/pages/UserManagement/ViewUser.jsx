@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../components/DropDown/DropDown";
 import NotificationCard from "../../components/Common/Notification";
-import { fetchUserById, updateUser } from "../../api/user.service";
+import { deleteUser, fetchUserById, updateUser } from "../../api/user.service";
 import { fetchRoles } from "../../api/role.service";
 import { fetchBranches } from "../../api/branch.service";
 
@@ -9,7 +9,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState(initialEditMode);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({ deleteRequested: false });
     const [roles, setRoles] = useState([]);
     const [branches, setBranches] = useState([]);
     const [confirmModal, setConfirmModal] = useState({ open: false });
@@ -46,8 +46,16 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
 
     const handleSave = async () => {
         try {
-            const selectedRole = roles.find((r) => r.name === formData.role);
-            const selectedBranch = branches.find((b) => b.name === formData.branch);
+            if (formData.deleteRequested) {
+                const result = await deleteUser(userId);
+                if (result.success) {
+                    onClose?.(true);
+                }
+                return;
+            }
+
+            const selectedRole = roles.find(r => r.name === formData.role);
+            const selectedBranch = branches.find(b => b.name === formData.branch);
 
             const payload = {
                 full_name: formData.full_name,
@@ -64,34 +72,26 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                 setUser(result.data);
                 setFormData(result.data);
                 setEditMode(false);
-                if (onClose) onClose(true);
+                onClose?.(true);
             }
-        } catch (error) {
-            console.error("Error updating user:", error);
+
+        } catch (err) {
+            console.error("Error:", err);
         }
     };
 
-    const handleConfirm = async () => {
-        const { actionType, userId } = confirmModal;
-
-        const payload = {
-            is_active: actionType === "activate" ? true : false,
-        };
-
-        try {
-            const result = await updateUser(userId, payload);
-
-            if (result.success) {
-                setFormData((prev) => ({
-                    ...prev,
-                    is_active: payload.is_active,
-                }));
-
-                setConfirmModal({ open: false });
-            }
-        } catch (err) {
-            console.error(err);
+    const handleConfirm = () => {
+        if (confirmModal.actionType === "activate") {
+            setFormData(prev => ({ ...prev, is_active: true }));
         }
+        else if (confirmModal.actionType === "deactivate") {
+            setFormData(prev => ({ ...prev, is_active: false }));
+        }
+        else if (confirmModal.actionType === "delete") {
+            setFormData(prev => ({ ...prev, deleteRequested: true }));
+        }
+
+        setConfirmModal({ open: false });
     };
 
     const handleCancel = () => {
@@ -127,8 +127,8 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                         <div className="flex items-center gap-2">
                             <span
                                 className={`px-3 py-1 rounded-full text-sm font-semibold ${user?.is_active
-                                        ? "bg-green-100 text-green-700"
-                                        : "bg-red-100 text-red-700"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-red-100 text-red-700"
                                     }`}
                             >
                                 {user?.is_active ? "Active" : "Inactive"}
@@ -248,16 +248,11 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
 
                                             setConfirmModal({
                                                 open: true,
-                                                actionType: nextStatus
-                                                    ? "activate"
-                                                    : "deactivate",
-                                                title: nextStatus
-                                                    ? "Activate Account"
-                                                    : "Deactivate Account",
+                                                actionType: nextStatus ? "activate" : "deactivate",
+                                                title: nextStatus ? "Activate Account" : "Deactivate Account",
                                                 message: nextStatus
                                                     ? "Are you sure you want to activate this user?"
                                                     : "Are you sure you want to deactivate this user?",
-                                                userId: userId,
                                             });
                                         }}
                                         className="sr-only peer"
@@ -273,7 +268,17 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                 <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md">
                                     Reset Password
                                 </button>
-                                <button className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md">
+                                <button
+                                    className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md"
+                                    onClick={() => {
+                                        setConfirmModal({
+                                            open: true,
+                                            actionType: "delete",
+                                            title: "Delete Account",
+                                            message: "Are you sure you want to delete this user?",
+                                        });
+                                    }}
+                                >
                                     Delete Account
                                 </button>
                             </div>
