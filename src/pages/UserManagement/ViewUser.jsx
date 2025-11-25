@@ -184,13 +184,13 @@ function ViewUser({ userId, onClose }) {
                                 <div className="flex justify-end gap-3 mb-4 pt-4 border-t border-gray-300">
                                     <button
                                         onClick={handleCancel}
-                                        className="px-4 py-2 border border-gray-400 text-gray-700 rounded-md"
+                                        className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         onClick={handleSave}
-                                        className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md"
+                                        className="px-4 py-2 bg-[#FFCC00] text-black rounded-md"
                                     >
                                         Save Changes
                                     </button>
