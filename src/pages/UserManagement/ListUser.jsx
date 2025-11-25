@@ -6,7 +6,7 @@ import addUserIcon from "../../assets/add_person.svg";
 import UniversalTable from "../../components/Table/Table";
 import { fetchUsers } from "../../api/user.service";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
-import AddUser from "./AddUser"; 
+import AddUser from "./AddUser";
 import Toast from "../../components/Common/Toast";
 import Pagination from "../../components/Pagination/Pagination";
 
@@ -41,7 +41,7 @@ function ListUser() {
     const loadUsers = async (search = "") => {
         setLoading(true);
         try {
-            const result = await fetchUsers({ page: 1, limit: 10, orderBy: "full_name" });
+            const result = await fetchUsers({ page: 1, limit: 7, orderBy: "full_name" });
             const filtered = search
                 ? result.filter(
                     (u) =>
@@ -50,7 +50,7 @@ function ListUser() {
                 )
                 : result;
             setUsers(filtered);
-            setTotalPages(result.pagination.totalPages || 1);
+            setTotalPages(result.pagination?.totalPages || 1);
         } catch (error) {
             console.error("Failed to load users:", error);
             showToast("Failed to load users", "error");
@@ -77,31 +77,31 @@ function ListUser() {
         last_login: user.last_login
             ? new Date(user.last_login).toLocaleDateString("en-US") : "",
         actions: (
-    <ActionDropdown
-      options={[
-        {
-          label: "View User Details",
-          onClick: () => console.log("View user", user.id),
-        },
-         {
-          label: "Edit User Details",
-          onClick: () => console.log("Edit user", user.id),
-        },
-        {
-          label: "Deactivate User",
-          onClick: () => console.log("View user", user.id),
-        },
-        {
-          label: "Delete User",
-          onClick: () => console.log("Delete user", user.id),
-        },
-        {
-          label: "Reset Password",
-          onClick: () => console.log("View user", user.id),
-        },
-      ]}
-    />
-  ),
+            <ActionDropdown
+                options={[
+                    {
+                        label: "View User Details",
+                        onClick: () => console.log("View user", user.id),
+                    },
+                    {
+                        label: "Edit User Details",
+                        onClick: () => console.log("Edit user", user.id),
+                    },
+                    {
+                        label: "Deactivate User",
+                        onClick: () => console.log("View user", user.id),
+                    },
+                    {
+                        label: "Delete User",
+                        onClick: () => console.log("Delete user", user.id),
+                    },
+                    {
+                        label: "Reset Password",
+                        onClick: () => console.log("View user", user.id),
+                    },
+                ]}
+            />
+        ),
     }));
 
     return (
@@ -130,7 +130,7 @@ function ListUser() {
                             </button>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 mr-10 ml-4">
+                        <div className="bg-white rounded-t-xl rounded-b-none shadow-sm border border-b-0 border-gray-200 mr-10 ml-4">
                             <div className="p-4 flex items-center justify-between">
                                 <div className="flex flex-col">
                                     <h2 className="text-lg font-semibold text-gray-800">User Management</h2>
@@ -153,20 +153,22 @@ function ListUser() {
                                     />
                                 </div>
                             </div>
-
+                        </div>
+                        <div className="rounded-xl mr-10 ml-4">
                             {loading ? (
                                 <p className="p-4 text-gray-500">Loading users...</p>
                             ) : (
-                            <>
-                                <UniversalTable columns={columns} rows={rows} />
-
-                                <Pagination
-                                    page={page}
-                                    totalPages={totalPages}
-                                    setPage={setPage}
-                                />
-                            </>
-                        )}
+                                <>
+                                    <UniversalTable columns={columns} rows={rows} />
+                                    <div className="px-4 pb-4 flex justify-end">
+                                        <Pagination
+                                            page={page}
+                                            totalPages={totalPages}
+                                            setPage={setPage}
+                                        />
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
