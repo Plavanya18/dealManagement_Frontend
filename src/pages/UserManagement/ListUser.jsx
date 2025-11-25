@@ -9,6 +9,7 @@ import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 import AddUser from "./AddUser";
 import Toast from "../../components/Common/Toast";
 import Pagination from "../../components/Pagination/Pagination";
+import ViewUser from "./ViewUser";
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -19,6 +20,7 @@ function ListUser() {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
+    const [viewUserId, setViewUserId] = useState(null);
 
 
     const showToast = (message, type = "success") => {
@@ -85,7 +87,7 @@ function ListUser() {
                 options={[
                     {
                         label: "View User Details",
-                        onClick: () => console.log("View user", user.id),
+                        onClick: () => setViewUserId(user.id),
                     },
                     {
                         label: "Edit User Details",
@@ -184,6 +186,12 @@ function ListUser() {
                     refreshUsers={loadUsers}
                     toast={showToast}
                 />
+            )}
+           {viewUserId && (
+            <ViewUser
+                userId={viewUserId}
+                onClose={() => setViewUserId(null)}
+            />
             )}
         </div>
     );
