@@ -4,8 +4,8 @@ import settingIcon from "../../assets/setting.svg";
 import dashboardIcon from "../../assets/home.svg";
 import userCandidateIcon from "../../assets/user_candidates.svg";
 import newsIcon from "../../assets/news.svg";
-import candidateIcon from "../../assets/candidate.svg";
-import dealIcon from "../../assets/join_hand.svg";
+import candidateIcon from "../../assets/black_candidate.svg";
+import dealIcon from "../../assets/black_deals.svg";
 
 function Sidebar() {
   const user = JSON.parse(localStorage.getItem("user"));
