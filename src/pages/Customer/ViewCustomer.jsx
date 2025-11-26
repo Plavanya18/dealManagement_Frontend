@@ -270,10 +270,43 @@ function CustomerDetails() {
                         </div>
                     )}
 
+                    {activeTab === "documents" && (
+                    <div className="p-5">
+                        <h2 className="text-[16px] font-semibold mb-3">Customer Documents</h2>
+
+                        <div className="space-y-3">
+                        {customer.documents.map((doc) => {
+                            const ext = doc.file_name.split('.').pop().toUpperCase();
+                            const uploadedDate = new Date(doc.uploaded_at).toLocaleString();
+                            const uploadedBy = doc.uploadedBy
+                            ? `${doc.uploadedBy.full_name}${doc.uploadedBy.role ? ` (${doc.uploadedBy.role.name})` : ""}`
+                            : "N/A";
+
+                            return (
+                            <div
+                                key={doc.id}
+                                className="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm"
+                            >
+                                <div>
+                                <p className="font-semibold">{doc.file_name}</p>
+                                <p className="text-gray-500 text-sm">{doc.document_type}</p>
+                                <p className="text-gray-400 text-xs">
+                                    Uploaded: {uploadedDate} by {uploadedBy}
+                                </p>
+                                </div>
+                                <div className="text-gray-500 text-sm font-bold bg-gray-100 px-3 py-1 rounded-md">
+                                {ext}
+                                </div>
+                            </div>
+                            );
+                        })}
+                        </div>
+                    </div>
+                    )}
+
                     {/* OTHER TABS */}
                     {activeTab !== "basic" && (
                         <div className="bg-white p-10 rounded-xl text-center text-gray-500">
-                            {activeTab === "documents" && "Documents Section Coming Soon"}
                             {activeTab === "deals" && "Deals Section Coming Soon"}
                             {activeTab === "compliance" && "Compliance Section Coming Soon"}
                         </div>
