@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
-import backArrow from "../../assets/back_arrow.svg";
+import backArrowIcon from "../../assets/back_arrow.svg";
+import retailIcon from "../../assets/retail.svg";
+import corporateIcon from "../../assets/corporate.svg";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -57,7 +59,7 @@ function CustomerDetails() {
     if (!customer) return null;
 
     return (
-<div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
+        <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
             <Navbar />
 
             <div className="flex">
@@ -65,20 +67,35 @@ function CustomerDetails() {
                     <Sidebar />
                 </div>
 
-                <div className="flex-1 px-10 py-8">
+                <div className="flex-1 px-10 py-5">
                     <div className="flex items-center gap-3 mb-1">
                         <button onClick={() => window.history.back()}>
-                            <img src={backArrow} alt="back" className="w-5 h-5" />
+                            <img src={backArrowIcon} alt="back" className="w-5 h-5" />
                         </button>
 
                         <h1 className="text-[22px] font-semibold">{customer.name}</h1>
 
-                        <span className="px-2 py-1 text-xs rounded-md bg-[#8A38F526] text-[#8A38F5]">
+                        <span
+                            className={`flex items-center gap-1 px-2 ml-5 py-1 text-xs rounded-md border 
+                                ${customer.type?.toLowerCase() === "retail"
+                                    ? "border-[#9850F6]"
+                                    : "border-[#0381CA]"
+                                } text-black`}
+                        >
+                            <img
+                                src={
+                                    customer.type?.toLowerCase() === "retail"
+                                        ? retailIcon
+                                        : corporateIcon
+                                }
+                                alt="type icon"
+                                className="w-3 h-3"
+                            />
                             {customer.type}
                         </span>
 
                         {customer.verified && (
-                            <span className="px-2 py-1 text-xs rounded-md bg-green-100 text-green-700">
+                            <span className="px-2 ml-5 py-1 text-xs rounded-md bg-green-100 text-green-700">
                                 Verified
                             </span>
                         )}
@@ -88,8 +105,8 @@ function CustomerDetails() {
                         Created by: {customer.created_by} &nbsp; | &nbsp; Created on: {customer.created_on}
                     </p>
 
-                    <div className="border-b border-gray-300 mb-4">
-                        <div className="flex gap-10 text-[15px] ml-8">
+                    <div className="border-b border-gray-300 mb-1 mt-2">
+                        <div className="flex gap-50 text-[15px] ml-8">
                             <button
                                 onClick={() => setActiveTab("basic")}
                                     className={`pb-2 text-[#D8AD00] ${activeTab === "basic" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
@@ -125,13 +142,13 @@ function CustomerDetails() {
                     </div>
 
                     {activeTab === "basic" && (
-                        <div className="p-2">
-                            <h2 className="text-[16px] font-semibold mb-1">Customer Information</h2>
+                        <div className="p-2 py-0">
+                            <h2 className="text-[16px] font-semibold mt-2 mb-1">Customer Information</h2>
                             <div className="grid grid-cols-3 gap-5">
                                 <div>
                                     <label className="text-xs text-gray-500">Company Name</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.name}
                                         readOnly
                                     />
@@ -140,7 +157,7 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">Business License</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.business_license}
                                         readOnly
                                     />
@@ -149,19 +166,19 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">TIN</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.tin}
                                         readOnly
                                     />
                                 </div>
                             </div>
 
-                            <h2 className="text-[16px] font-semibold mt-4 mb-1">Contact Information</h2>
+                            <h2 className="text-[16px] font-semibold mt-2 mb-1">Contact Information</h2>
                             <div className="grid grid-cols-3 gap-5">
                                 <div>
                                     <label className="text-xs text-gray-500">Contact Person</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.contact_person}
                                         readOnly
                                     />
@@ -170,7 +187,7 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">Email</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.email}
                                         readOnly
                                     />
@@ -179,19 +196,19 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">Phone</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.phone}
                                         readOnly
                                     />
                                 </div>
                             </div>
 
-                            <h2 className="text-[16px] font-semibold mt-4 mb-1">Bank Accounts</h2>
+                            <h2 className="text-[16px] font-semibold mt-2 mb-1">Bank Accounts</h2>
                             <div className="space-y-3">
                                 {customer.bankAccounts.map((acc, i) => (
                                     <div
                                         key={i}
-                                        className="bg-white rounded-xl  p-4 flex justify-between items-center"
+                                        className="bg-white rounded-xl px-4 py-2 flex justify-between items-center"
                                     >
                                         <div>
                                             <p className="font-semibold">{acc.name}</p>
@@ -207,12 +224,12 @@ function CustomerDetails() {
                                 ))}
                             </div>
 
-                            <h2 className="text-[16px] font-semibold mt-4 mb-1">Address</h2>
-                            <div className="grid grid-cols-4 gap-5">
-                                <div className="col-span-2">
+                            <h2 className="text-[16px] font-semibold mt-2 mb-1">Address</h2>
+                            <div className="grid grid-cols-5 gap-5">
+                                <div>
                                     <label className="text-xs text-gray-500">Street Address</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.address.street}
                                         readOnly
                                     />
@@ -221,7 +238,7 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">City</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.address.city}
                                         readOnly
                                     />
@@ -230,7 +247,7 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">Country</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.address.country}
                                         readOnly
                                     />
@@ -239,7 +256,7 @@ function CustomerDetails() {
                                 <div>
                                     <label className="text-xs text-gray-500">Postal Code</label>
                                     <input
-                                        className="w-full bg-white rounded-lg px-3 py-2"
+                                        className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.address.postal}
                                         readOnly
                                     />

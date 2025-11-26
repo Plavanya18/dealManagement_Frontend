@@ -163,7 +163,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                     value={formData?.full_name || ""}
                                     onChange={handleChange}
                                     readOnly={!editMode}
-                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black ${editMode ? "bg-white border border-gray-300" : "bg-white"
+                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black focus:outline-none focus:ring-0 focus:border-transparent ${editMode ? "bg-white border border-gray-300" : "bg-white"
                                         }`}
                                 />
                             </div>
@@ -175,7 +175,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                     value={formData?.email || ""}
                                     onChange={handleChange}
                                     readOnly={!editMode}
-                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black ${editMode ? "bg-white border border-gray-300" : "bg-white"
+                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black focus:outline-none focus:ring-0 focus:border-transparent ${editMode ? "bg-white border border-gray-300" : "bg-white"
                                         }`}
                                 />
                             </div>
@@ -187,7 +187,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                     value={formData?.phone || ""}
                                     onChange={handleChange}
                                     readOnly={!editMode}
-                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black ${editMode ? "bg-white border border-gray-300" : "bg-white"
+                                    className={`w-full mt-1 px-3 py-2 rounded-lg text-black focus:outline-none focus:ring-0 focus:border-transparent ${editMode ? "bg-white border border-gray-300" : "bg-white"
                                         }`}
                                 />
                             </div>
@@ -210,7 +210,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         type="text"
                                         value={formData?.branch?.name || formData?.branch || ""}
                                         readOnly
-                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black bg-white border border-gray-200"
+                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black focus:outline-none focus:ring-0 focus:border-transparent"
                                     />
                                 )}
                             </div>
@@ -233,7 +233,7 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         type="text"
                                         value={formData?.role?.name || formData?.role || ""}
                                         readOnly
-                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black bg-white border border-gray-200"
+                                        className="w-full mt-1 px-3 py-2 rounded-lg text-black focus:outline-none focus:ring-0 focus:border-transparent bg-white"
                                     />
                                 )}
                             </div>
