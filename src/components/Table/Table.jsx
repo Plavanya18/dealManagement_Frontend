@@ -26,23 +26,55 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
         return sorted;
     }, [rows, sortConfig]);
 
-    const renderCell = (col, value) => {
+    const renderCell = (col, value, row) => {
         const pillColors = {
+            role: {
+                Maker: "text-[#03CA9C] bg-[#03CA9C26]",
+                Admin: "text-[#8A38F5] bg-[#8A38F526]",
+                Super_Admin: "text-[#FF9F0A] bg-[#FF9F0A26]",
+            },
+            userStatus: {
+                Active: "text-[#10B935] bg-[#10B9351A]",
+                Inactive: "text-[#EB1D2E] bg-[#EB1D2E1A]",
+            },
             type: {
                 Buy: "text-green-800 bg-green-100 border-green-800",
                 Sell: "text-yellow-800 bg-yellow-100 border-yellow-800",
             },
-            status: {
+            dealStatus: {
                 Pending: "text-yellow-800 bg-yellow-100",
                 Rejected: "text-red-800 bg-red-100",
                 Approved: "text-green-800 bg-green-100",
                 Closed: "text-gray-800 bg-gray-200",
             },
         };
-        if (col.key === "type" && pillColors.type[value]) {
+
+        if (col.key === "role") {
+            const roleName = row.role?.name || value;
             return (
                 <span
-                    className={`px-4 py-2 text-sm font-medium border ${pillColors.type[value]} shadow-sm`}
+                    className={`px-4 py-2 text-sm font-medium border ${pillColors.role[roleName] || ""} shadow-sm`}
+                    style={{ borderRadius: "7px" }}
+                >
+                    {roleName}
+                </span>
+            );
+        }
+
+
+        if (col.key === "status") {
+            const statusText = typeof value === "boolean" ? (value ? "Active" : "Inactive") : value;
+            return (
+                <span className={`px-3 py-1 text-sm font-medium ${pillColors.userStatus[statusText] || ""}`} style={{ borderRadius: "4px" }}>
+                    {statusText}
+                </span>
+            );
+        }
+
+        if (col.key === "type") {
+            return (
+                <span
+                    className={`px-4 py-2 text-sm font-medium border ${pillColors.type[value] || ""} shadow-sm`}
                     style={{ borderRadius: "7px" }}
                 >
                     {value}
@@ -51,15 +83,24 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
         }
 
 
-        if (col.key === "status" && pillColors.status[value]) {
+        if (col.key === "dealStatus") {
             return (
                 <span
-                    className={`px-3 py-1 text-sm font-medium ${pillColors.status[value]}`}
+                    className={`px-3 py-1 text-sm font-medium ${pillColors.dealStatus[value] || ""}`}
                     style={{ borderRadius: "4px" }}
                 >
                     {value}
                 </span>
             );
+        }
+
+        if (col.key === "lastLogin") {
+            if (!row.last_login) return "-";
+            const d = new Date(row.last_login);
+            return `${(d.getMonth() + 1).toString().padStart(2, "0")}/${d
+                .getDate()
+                .toString()
+                .padStart(2, "0")}/${d.getFullYear()}`;
         }
 
         return value;
@@ -75,12 +116,12 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                             {columns.map((col, index) => (
                                 <th
                                     key={index}
-                                    className="py-3 text-left font-medium whitespace-nowrap cursor-pointer select-none"
-                                    onClick={() => handleSort(col.key)}
+                                    className="py-1 text-left font-medium whitespace-nowrap cursor-pointer select-none"
+                                    onClick={() => col.key !== "actions" && handleSort(col.key)}
                                 >
                                     <div className="flex items-center">
                                         {col.label || col}
-
+                                        {col.key !== "actions" && (
                                         <span className="flex ml-1">
                                             <img
                                                 src={uparrowIcon}
@@ -99,36 +140,42 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                                     }`}
                                             />
                                         </span>
+                                    )}
                                     </div>
                                 </th>
                             ))}
                         </tr>
                     </thead>
 
-                    <tbody className="text-sm text-black">
-                        {sortedRows.length === 0 ? (
-                            <tr>
-                                <td colSpan={columns.length} className="py-5 text-center text-black">
-                                    No data available
-                                </td>
-                            </tr>
-                        ) : (
-                            sortedRows.map((row, rowIndex) => (
-                                <tr key={rowIndex} className="hover:bg-gray-50 transition">
-                                    {columns.map((col, colIndex) => {
+                <tbody className="text-sm text-black">
+                {sortedRows.length === 0 ? (
+                    <tr>
+                    <td colSpan={columns.length} className="py-5 text-center text-black">
+                        No data available
+                    </td>
+                    </tr>
+                ) : (
+                    sortedRows.map((row, rowIndex) => (
+                    <tr
+                        key={rowIndex}
+                        className="transition duration-200 hover:bg-gray-100 hover:rounded-lg"
+                    >
+                        {columns.map((col, colIndex) => {
+                        const key = col.key || col.toLowerCase();
+                        return (
+                            <td
+                            key={colIndex}
+                            className="py-2.5 px-2 whitespace-nowrap"
+                            >
+                            {renderCell(col, row[key], row)}
+                            </td>
+                        );
+                        })}
+                    </tr>
+                    ))
+                )}
+                </tbody>
 
-                                        const key = col.key || col.toLowerCase();
-
-                                        return (
-                                            <td key={colIndex} className="py-4 whitespace-nowrap">
-                                                {renderCell(col, row[key], row)}
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
 
                 </table>
             </div>
