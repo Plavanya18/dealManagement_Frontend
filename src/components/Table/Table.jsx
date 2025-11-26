@@ -49,6 +49,10 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
             },
         };
 
+        if (col.key === "deal_number") {
+            return <span className="font-semibold">{value}</span>;
+        }
+
         if (col.key === "role") {
             const roleName = row.role?.name || value;
             return (
