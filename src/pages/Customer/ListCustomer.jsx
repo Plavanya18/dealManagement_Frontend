@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import searchIcon from "../../assets/search.svg";
-import { fetchCustomers } from "../../api/customer.service"; 
+import { fetchCustomers } from "../../api/customer.service";
+import addUserIcon from "../../assets/add_person.svg";
 
 function ListCustomer() {
     const [search, setSearch] = useState("");
@@ -59,6 +60,12 @@ function ListCustomer() {
                                 View all customers and their deals
                             </p>
                         </div>
+                        <button
+                            className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 mr-12"
+                        >
+                            <img src={addUserIcon} alt="Add Customer" className="w-5 h-5" />
+                            Add Customer
+                        </button>
                     </div>
 
                     <div className="relative mb-5 w-[1230px] ml-4">
