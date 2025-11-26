@@ -207,7 +207,7 @@ function ListUser() {
     });
 
     return (
-        <div className="min-h-screen bg-[#fffef7] relative">
+        <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
 
             <Toast show={toast.show} message={toast.message} type={toast.type} />
 

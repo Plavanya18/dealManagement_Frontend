@@ -88,7 +88,7 @@ function Dashboard() {
 
   console.log("formattedDeals", formattedDeals);
   return (
-    <div className="min-h-screen bg-[#fffef7]">
+    <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
       <Navbar />
 
       <div className="flex">

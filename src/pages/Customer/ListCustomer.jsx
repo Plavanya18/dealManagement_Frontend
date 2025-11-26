@@ -4,12 +4,14 @@ import Sidebar from "../Sidebar/Sidebar";
 import searchIcon from "../../assets/search.svg";
 import { fetchCustomers } from "../../api/customer.service";
 import addUserIcon from "../../assets/add_person.svg";
+import { useNavigate } from "react-router-dom";
 
 function ListCustomer() {
     const [search, setSearch] = useState("");
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [typingTimeout, setTypingTimeout] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!search.trim()) {
@@ -44,7 +46,7 @@ function ListCustomer() {
     };
 
     return (
-        <div className="min-h-screen bg-[#fffef7] relative">
+        <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
             <Navbar />
 
             <div className="flex">
@@ -116,7 +118,8 @@ function ListCustomer() {
                                         {customers.map((c, idx) => (
                                             <div
                                                 key={idx}
-                                                className="grid grid-cols-6 items-center bg-white rounded-lg px-2 py-3"
+                                                onClick={() => navigate(`/customers/${c.id}`)}
+                                                className="cursor-pointer hover:bg-gray-50 grid grid-cols-6 items-center bg-white rounded-lg px-2 py-3"
                                             >
                                                 <p className="font-bold text-sm">{`cus00${c.id}`}</p>
 
