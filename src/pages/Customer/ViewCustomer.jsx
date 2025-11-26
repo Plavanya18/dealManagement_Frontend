@@ -15,15 +15,12 @@ function CustomerDetails() {
     useEffect(() => {
         const loadCustomer = async () => {
             const data = await fetchCustomerById(id);
-            if (!data) return; // if fetch fails
-            console.log("API customer data:", data); // debug
-
             setCustomer({
                 id: data.id,
                 name: data.name,
                 type: data.customer_type,
                 verified: data.verified,
-                created_by: "User ID " + data.created_by,
+                created_by: `${data.createdBy?.full_name} (${data.createdBy?.role?.name})`,
                 created_on: new Date(data.created_at).toLocaleDateString(),
 
                 business_license: data.business_license_no || "-",
@@ -37,7 +34,8 @@ function CustomerDetails() {
                     name: b.bank_name,
                     number: b.account_number,
                     bank: `${b.bank_name}, ${b.branch_name}`,
-                    currency: b.currency_id === 3 ? "INR" : "USD",
+                    country: b.country,
+                    currency: b.currency?.code || "-",
                 })) || [],
 
                 address: {
@@ -108,8 +106,8 @@ function CustomerDetails() {
                         )}
                     </div>
 
-                    <p className="text-gray-500 text-sm mb-1 ml-8">
-                        Created by: {customer.created_by} &nbsp; | &nbsp; Created on: {customer.created_on}
+                    <p className="text-gray-400 text-sm mb-1 ml-8">
+                        Created by: {customer.created_by}  &nbsp;  &nbsp; Created on: {customer.created_on}
                     </p>
 
                     <div className="border-b border-gray-300 mb-1 mt-2">
@@ -221,7 +219,7 @@ function CustomerDetails() {
                                             <p className="font-semibold">{acc.name}</p>
                                             <p className="text-gray-600 text-sm">{acc.number}</p>
                                             <p className="text-gray-500 text-xs">
-                                                {acc.bank}, Tanzania
+                                                {acc.bank}, {acc.country}
                                             </p>
                                         </div>
                                         <p className="px-4 py-1 rounded-md bg-gray-100 border text-sm">
