@@ -6,6 +6,7 @@ import backArrowIcon from "../../assets/back_arrow.svg";
 import retailIcon from "../../assets/retail.svg";
 import corporateIcon from "../../assets/corporate.svg";
 import { fetchCustomerById } from "../../api/customer.service";
+import UniversalTable from "../../components/Table/Table";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -114,7 +115,7 @@ function CustomerDetails() {
                         <div className="flex gap-50 text-[15px] ml-8">
                             <button
                                 onClick={() => setActiveTab("basic")}
-                                    className={`pb-2 text-[#D8AD00] ${activeTab === "basic" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
+                                className={`pb-2 text-[#D8AD00] ${activeTab === "basic" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
                                     }`}
                             >
                                 Basic Details
@@ -130,7 +131,7 @@ function CustomerDetails() {
 
                             <button
                                 onClick={() => setActiveTab("deals")}
-                                className={`pb-2 text-[#D8AD00] ${activeTab === "deals" ? "border-b-2 border-[#D8AD00] font-medium"  : "text-gray-500"
+                                className={`pb-2 text-[#D8AD00] ${activeTab === "deals" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
                                     }`}
                             >
                                 Deals
@@ -138,7 +139,7 @@ function CustomerDetails() {
 
                             <button
                                 onClick={() => setActiveTab("compliance")}
-                                className={`pb-2 text-[#D8AD00] ${activeTab === "compliance" ? "border-b-2 border-[#D8AD00] font-medium"  : "text-gray-500"
+                                className={`pb-2 text-[#D8AD00] ${activeTab === "compliance" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
                                     }`}
                             >
                                 Compliance
@@ -271,44 +272,91 @@ function CustomerDetails() {
                     )}
 
                     {activeTab === "documents" && (
-                    <div className="p-5">
-                        <h2 className="text-[16px] font-semibold mb-3">Customer Documents</h2>
+                        <div className="p-5">
+                            <h2 className="text-[16px] font-semibold mb-3">Customer Documents</h2>
 
-                        <div className="space-y-3">
-                        {customer.documents.map((doc) => {
-                            const ext = doc.file_name.split('.').pop().toUpperCase();
-                            const uploadedDate = new Date(doc.uploaded_at).toLocaleString();
-                            const uploadedBy = doc.uploadedBy
-                            ? `${doc.uploadedBy.full_name}${doc.uploadedBy.role ? ` (${doc.uploadedBy.role.name})` : ""}`
-                            : "N/A";
+                            <div className="space-y-3">
+                                {customer.documents.map((doc) => {
+                                    const ext = doc.file_name.split('.').pop().toUpperCase();
+                                    const uploadedDate = new Date(doc.uploaded_at).toLocaleString();
+                                    const uploadedBy = doc.uploadedBy
+                                        ? `${doc.uploadedBy.full_name}${doc.uploadedBy.role ? ` (${doc.uploadedBy.role.name})` : ""}`
+                                        : "N/A";
 
-                            return (
-                            <div
-                                key={doc.id}
-                                className="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm"
-                            >
-                                <div>
-                                <p className="font-semibold">{doc.file_name}</p>
-                                <p className="text-gray-500 text-sm">{doc.document_type}</p>
-                                <p className="text-gray-400 text-xs">
-                                    Uploaded: {uploadedDate} by {uploadedBy}
-                                </p>
-                                </div>
-                                <div className="text-gray-500 text-sm font-bold bg-gray-100 px-3 py-1 rounded-md">
-                                {ext}
-                                </div>
+                                    return (
+                                        <div
+                                            key={doc.id}
+                                            className="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm"
+                                        >
+                                            <div>
+                                                <p className="font-semibold">{doc.file_name}</p>
+                                                <p className="text-gray-500 text-sm">{doc.document_type}</p>
+                                                <p className="text-gray-400 text-xs">
+                                                    Uploaded: {uploadedDate} by {uploadedBy}
+                                                </p>
+                                            </div>
+                                            <div className="text-gray-500 text-sm font-bold bg-gray-100 px-3 py-1 rounded-md">
+                                                {ext}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
-                            );
-                        })}
                         </div>
-                    </div>
                     )}
 
-                    {/* OTHER TABS */}
-                    {activeTab !== "basic" && (
+                    {activeTab === "deals" && (
+                        <div>
+                            <div className="flex flex-wrap">
+                                {["Pending", "Approved", "Rejected"].map((status) => (
+                                    <div
+                                        key={status}
+                                        className="w-[390px] h-22 rounded-xl border p-4 flex flex-col justify-between ml-4 mt-6 border-[#E1E1E1] bg-white"
+                                    >
+                                        <div className="flex justify-between items-center w-full">
+                                            <h4 className="text-[16px] font-normal text-black">{status}</h4>
+                                        </div>
+                                        <p className="text-[20px] font-bold text-black">
+                                            {customer.deals.filter((d) => d.status.name === status).length || 0}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="bg-white rounded-t-xl rounded-b-none shadow-sm border border-b-0 border-gray-200 mr-10 ml-4 mt-8">
+                                <div className="p-4 flex items-center justify-between">
+                                    <div className="flex flex-col">
+                                        <h2 className="text-lg font-semibold text-gray-800">Customer Deals History</h2>
+                                        <p className="text-medium text-gray-500">All deals for this customer</p>
+                                    </div>
+                                </div>
+                                <UniversalTable
+                                    columns={[
+                                        { key: "deal_number", label: "Deal Number" },
+                                        { key: "deal_type", label: "Type" },
+                                        { key: "baseCurrency", label: "Currency" },
+                                        { key: "amount", label: "Amount" },
+                                        { key: "totalQuote", label: "Total (TZS)" },
+                                        { key: "status", label: "Status" },
+                                        { key: "deal_date", label: "Date" },
+                                    ]}
+                                    rows={customer.deals.map((deal) => ({
+                                        deal_number: deal.deal_number,
+                                        deal_type: deal.deal_type.toUpperCase(),
+                                        baseCurrency: deal.baseCurrency.code,
+                                        amount: parseFloat(deal.amount).toLocaleString(),
+                                        totalQuote: (parseFloat(deal.amount) * parseFloat(deal.rate)).toLocaleString(),
+                                        status: deal.status.name,
+                                        deal_date: new Date(deal.deal_date).toLocaleDateString(),
+                                    }))}
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === "compliance" && (
                         <div className="bg-white p-10 rounded-xl text-center text-gray-500">
-                            {activeTab === "deals" && "Deals Section Coming Soon"}
-                            {activeTab === "compliance" && "Compliance Section Coming Soon"}
+                            Compliance Section Coming Soon
                         </div>
                     )}
                 </div>
