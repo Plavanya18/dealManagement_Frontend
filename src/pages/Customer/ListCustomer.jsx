@@ -123,7 +123,7 @@ function ListCustomer() {
                                                 <p className="text-sm font-bold">{c.name}</p>
 
                                                 <p className="text-xs w-20 px-3 py-1 rounded-md border border-gray-400 inline-block text-center">
-                                                    {c.customer_type}
+                                                    {c.customer_type.charAt(0).toUpperCase() + c.customer_type.slice(1).toLowerCase()}
                                                 </p>
                                                 <p
                                                     className={`text-sm font-semibold w-24 text-center rounded-md px-2 py-1 ${c.deactivated_at
