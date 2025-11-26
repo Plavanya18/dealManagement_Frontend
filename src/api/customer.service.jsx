@@ -42,3 +42,25 @@ export async function fetchCustomers({
     return { data: [], pagination: { totalPages: 1 } };
   }
 }
+
+export async function fetchCustomerById(id) {
+  try {
+    const response = await fetch(`${API_URL}/customer/${id}`, {
+      method: "GET",
+      headers: getAuthHeaders(),
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      console.error("Failed to fetch customer:", response.status);
+      return null;
+    }
+
+    const result = await response.json();
+    return result || null;
+
+  } catch (error) {
+    console.error("Error fetching customer:", error);
+    return null;
+  }
+}

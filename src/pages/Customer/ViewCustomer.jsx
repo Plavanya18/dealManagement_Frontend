@@ -5,6 +5,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import backArrowIcon from "../../assets/back_arrow.svg";
 import retailIcon from "../../assets/retail.svg";
 import corporateIcon from "../../assets/corporate.svg";
+import { fetchCustomerById } from "../../api/customer.service";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -12,51 +13,57 @@ function CustomerDetails() {
     const [customer, setCustomer] = useState(null);
 
     useEffect(() => {
+        const loadCustomer = async () => {
+            const data = await fetchCustomerById(id);
+            if (!data) return; // if fetch fails
+            console.log("API customer data:", data); // debug
+
+            setCustomer({
+                id: data.id,
+                name: data.name,
+                type: data.customer_type,
+                verified: data.verified,
+                created_by: "User ID " + data.created_by,
+                created_on: new Date(data.created_at).toLocaleDateString(),
+
+                business_license: data.business_license_no || "-",
+                tin: data.tax_id || "-",
+
+                contact_person: data.contact_number,
+                email: data.email,
+                phone: data.phone_number,
+
+                bankAccounts: data.banks?.map(b => ({
+                    name: b.bank_name,
+                    number: b.account_number,
+                    bank: `${b.bank_name}, ${b.branch_name}`,
+                    currency: b.currency_id === 3 ? "INR" : "USD",
+                })) || [],
+
+                address: {
+                    street: data.address,
+                    city: data.city,
+                    state: data.state,
+                    postal: data.postal_code,
+                    country: data.country,
+                },
+
+                documents: data.kycDocuments || [],
+                deals: data.deals || [],
+            });
+        };
+
         loadCustomer();
     }, [id]);
 
-    const loadCustomer = async () => {
-        // replace with API
-        setCustomer({
-            id,
-            name: "Johnson Trading Ltd",
-            type: "Corporate",
-            verified: true,
-            created_by: "John (Maker)",
-            created_on: "27/10/2025",
 
-            business_license: "BL-2023-0045",
-            tin: "TIN-123456789",
-
-            contact_person: "Miriam Joseph (Branch Manager)",
-            email: "miriam.joseph@tnbank.co.tz",
-            phone: "+255 713 222 110",
-
-            bankAccounts: [
-                {
-                    name: "Johnson Trading Ltd",
-                    number: "012******88",
-                    bank: "Tanzania National Bank",
-                    currency: "USD",
-                },
-                {
-                    name: "Johnson Trading Ltd",
-                    number: "012******88",
-                    bank: "Tanzania National Bank",
-                    currency: "TZS",
-                },
-            ],
-
-            address: {
-                street: "123 Uhuru Street, Plot 456",
-                city: "Dar es Salaam",
-                country: "Tanzania",
-                postal: "14111",
-            },
-        });
-    };
-
-    if (!customer) return null;
+    if (!customer) {
+        return (
+            <div className="flex justify-center items-center h-screen text-gray-500">
+                Loading customer details...
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
