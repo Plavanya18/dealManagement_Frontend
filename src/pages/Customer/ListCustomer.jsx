@@ -84,10 +84,10 @@ function ListCustomer() {
                         />
                     </div>
                     {search.trim() === "" && (
-                        <div className="bg-white rounded-xl py-16 flex flex-col items-center justify-center">
+                        <div className="bg-white mr-10 ml-5 rounded-2xl py-16 flex flex-col items-center justify-center">
                             <img src={searchIcon} className="w-10 h-10 opacity-50 mb-3" />
-                            <h2 className="font-semibold text-lg">Search for Customers</h2>
-                            <p className="text-gray-500 text-sm mt-2">
+                            <h2 className="font-semibold text-[20px]">Search for Customers</h2>
+                            <p className="text-gray-500 text-[16px] mt-2">
                                 Enter a customer name, email, or phone number in the search box above to find customers
                             </p>
                         </div>
