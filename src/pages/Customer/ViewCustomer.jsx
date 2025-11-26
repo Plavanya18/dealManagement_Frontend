@@ -445,6 +445,12 @@ function CustomerDetails() {
                                 src={highriskIcon}
                                 alt="Risk Icon"
                                 className="w-10 h-10"
+                                style={{
+                                    filter:
+                                    customer.risk_level === "medium"
+                                        ? "invert(75%) sepia(90%) saturate(900%) hue-rotate(5deg) brightness(90%) contrast(100%)"
+                                        : "invert(27%) sepia(93%) saturate(7480%) hue-rotate(355deg) brightness(92%) contrast(119%)",
+                                }}
                                 />
 
                                 <div>
