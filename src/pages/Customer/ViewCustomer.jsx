@@ -10,6 +10,8 @@ import UniversalTable from "../../components/Table/Table";
 import dealIcon from "../../assets/black_deals.svg";
 import warnIcon from "../../assets/black_warn.svg";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
+import lowriskIcon from "../../assets/g_compilance.svg";
+import highriskIcon from "../../assets/warning.svg";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -59,6 +61,11 @@ function CustomerDetails() {
 
                 documents: data.kycDocuments || [],
                 deals: data.deals || [],
+
+                risk_level: data.risk_level,
+                risk_reason: data.risk_reason,
+                compliance_remarks: data.compliance_remarks,
+
             });
         };
 
@@ -376,7 +383,8 @@ function CustomerDetails() {
                                         { key: "totalQuote", label: "Total (TZS)" },
                                         { key: "dealStatus", label: "Status" },
                                         { key: "deal_date", label: "Date" },
-{ key: "deal_action", label: "" },                                    ]}
+                                        { key: "deal_action", label: "" },
+                                    ]}
                                     rows={customer.deals.map((deal) => ({
                                         deal_number: deal.deal_number,
                                         type: deal.deal_type.charAt(0).toUpperCase() + deal.deal_type.slice(1).toLowerCase(),
@@ -393,8 +401,67 @@ function CustomerDetails() {
                     )}
 
                     {activeTab === "compliance" && (
-                        <div className="bg-white p-10 rounded-xl text-center text-gray-500">
-                            Compliance Section Coming Soon
+                        <div className="p-5">
+                            <div className="flex items-center justify-between mb-3">
+                            <h2 className="text-[16px] font-semibold">Compliance Alerts</h2>
+
+                            <span
+                                className="px-3 py-1 rounded-md text-xs font-semibold capitalize"
+                                style={{
+                                backgroundColor:
+                                    !customer?.risk_level || customer.risk_level === "low"
+                                    ? "#E6F9EC"
+                                    : customer.risk_level === "medium"
+                                    ? "#FFF3CC"
+                                    : "#FFE5E7", 
+                                color:
+                                    !customer?.risk_level || customer.risk_level === "low"
+                                    ? "#10B935"
+                                    : customer.risk_level === "medium"
+                                    ? "#D8AD00" 
+                                    : "#EB1D2E",
+                                }}
+                            >
+                                {customer?.risk_level || "low"}
+                            </span>
+                            </div>
+                            {!customer?.risk_level || customer.risk_level === "low" ? (
+                            <div className="flex flex-col items-center justify-center mt-10">
+                                <img src={lowriskIcon} alt="Low Risk" className="w-[112.5px] h-[125px] mb-2 mr-40 opacity-70" />
+                                <p className="text-green-500 mr-40 text-lg">No compliance alerts</p>
+                                <p className="text-gray-500 mr-40 text-sm">This customer has a clean compliance record</p>
+                            </div>
+                            ) : (
+                            <div
+                                className="w-full p-4 rounded-xl bg-white flex items-center gap-4 border-2 shadow-sm"
+                                style={{
+                                borderColor:
+                                    customer.risk_level === "medium"
+                                    ? "#D8AD00"
+                                    : "#EB1D2E",
+                                }}
+                            >
+                                <img
+                                src={highriskIcon}
+                                alt="Risk Icon"
+                                className="w-10 h-10"
+                                />
+
+                                <div>
+                                <p className="font-semibold text-[14px] capitalize">
+                                    {customer.compliance_remarks}
+                                </p>
+
+                                <p className="text-gray-600 text-sm">
+                                    Date: {customer.created_on}
+                                </p>
+
+                                <p className="text-gray-500 text-xs mt-1">
+                                    {customer.risk_reason}
+                                </p>
+                                </div>
+                            </div>
+                            )}
                         </div>
                     )}
                 </div>
