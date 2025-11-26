@@ -8,6 +8,7 @@ import IpBlocked from "../pages/Error/IpBlocked";
 import AccountDisabled from "../pages/Error/AccountDeactivated";
 import ForgotPassword from "../pages/Auth/ForgetPassword/ForgotPassword";
 import ListUser from "../pages/UserManagement/ListUser";
+import ListCustomer from "../pages/Customer/ListCustomer";
 
 function AppRoutes() {
 
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/account-disabled" element={<AccountDisabled />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/users" element={<ListUser />} />
+        <Route path="customers" element={<ListCustomer />} />
     </Routes>
   );
 }
