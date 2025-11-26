@@ -140,9 +140,9 @@ function ListCustomer() {
                                                             : "Pending"}
                                                 </p>
 
-                                                <p className="text-sm text-gray-700">{c.email}</p>
+                                                <p className="text-sm text-gray-500">{c.email}</p>
 
-                                                <p className="text-sm text-gray-700">{c.contact_number}</p>
+                                                <p className="text-sm text-gray-500">{c.contact_number}</p>
                                             </div>
                                         ))}
                                     </div>
