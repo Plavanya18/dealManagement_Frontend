@@ -144,7 +144,7 @@ function CustomerDetails() {
                                 className={`pb-2 text-[#D8AD00] ${activeTab === "deals" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
                                     }`}
                             >
-                                Deals
+                                Deals ({customer.deals.filter(d => d.status.name !== "Rejected").length})
                             </button>
 
                             <button
