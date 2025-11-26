@@ -144,3 +144,26 @@ export async function deleteUser(id) {
     return { success: false, error };
   }
 }
+
+export async function logoutUser() {
+  try {
+    const response = await fetch(`${API_URL}/user/logout`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to logout:", errorData);
+      return { success: false, error: errorData };
+    }
+
+    localStorage.removeItem("token");
+
+    return { success: true };
+
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return { success: false, error };
+  }
+}

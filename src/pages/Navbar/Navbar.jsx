@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logoSvg from "../../assets/logo.svg";
 import bellIcon from "../../assets/bell.svg";
 import searchIcon from "../../assets/search.svg";
+import { logoutUser } from "../../api/user.service";
 
 function Navbar() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,7 +33,8 @@ function Navbar() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const res = await logoutUser();
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/login");
