@@ -8,6 +8,7 @@ import corporateIcon from "../../assets/corporate.svg";
 import { fetchCustomerById } from "../../api/customer.service";
 import UniversalTable from "../../components/Table/Table";
 import dealIcon from "../../assets/black_deals.svg";
+import warnIcon from "../../assets/black_warn.svg";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -319,6 +320,9 @@ function CustomerDetails() {
                                         ? "#10B935"
                                         : "#EB1D2E";
 
+                                        const icon =
+                                            status === "Rejected" ? warnIcon : dealIcon;
+
                                     return (
                                     <div
                                         key={status}
@@ -326,13 +330,13 @@ function CustomerDetails() {
                                     >
                                         <div className="flex justify-between items-center w-full">
                                         <h4
-                                            className="text-[16px] font-semibold"
+                                            className="text-[16px] font-normal"
                                             style={{ color: statusColor }}
                                         >
                                             {status}
                                         </h4>
 
-                                        <img src={dealIcon} alt="deal icon" className="w-6 h-6" />
+                                        <img src={icon} alt="status icon" className="w-6 h-6" />
                                         </div>
 
                                         <p className="text-[20px] mt-2 border-[#E1E1E1]">
