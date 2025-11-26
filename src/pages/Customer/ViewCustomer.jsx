@@ -355,6 +355,7 @@ function CustomerDetails() {
                                     </div>
                                 </div>
                                 <UniversalTable
+                                    disableSort={true}
                                     columns={[
                                         { key: "deal_number", label: "Deal Number" },
                                         { key: "deal_type", label: "Type" },

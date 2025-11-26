@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import uparrowIcon from "../../assets/up_arrow.svg";
 import downarrowIcon from "../../assets/down_arrow.svg";
 
-function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) {
+function UniversalTable({ title = "", subtitle = "", columns = [], rows = [], disableSort = false }) {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
     const handleSort = (colKey) => {
@@ -112,11 +112,11 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                                 <th
                                     key={index}
                                     className="py-1 text-left font-medium whitespace-nowrap cursor-pointer select-none"
-                                    onClick={() => col.key !== "actions" && handleSort(col.key)}
+                                    onClick={() => !disableSort && col.key !== "actions" && handleSort(col.key)}
                                 >
                                     <div className="flex items-center">
                                         {col.label || col}
-                                        {col.key !== "actions" && (
+                                        {!disableSort && col.key !== "actions" && (
                                         <span className="flex ml-1">
                                             <img
                                                 src={uparrowIcon}
