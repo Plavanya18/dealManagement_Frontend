@@ -49,8 +49,8 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
             },
         };
 
-        if (col.key === "deal_number") {
-            return <span className="font-semibold">{value}</span>;
+        if (col.key === "deal_number" || col.key === "full_name") {
+            return <span className="text-medium font-bold">{value}</span>;
         }
 
         if (col.key === "role") {
@@ -96,15 +96,6 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [] }) 
                     {value}
                 </span>
             );
-        }
-
-        if (col.key === "lastLogin") {
-            if (!row.last_login) return "-";
-            const d = new Date(row.last_login);
-            return `${(d.getMonth() + 1).toString().padStart(2, "0")}/${d
-                .getDate()
-                .toString()
-                .padStart(2, "0")}/${d.getFullYear()}`;
         }
 
         return value;
