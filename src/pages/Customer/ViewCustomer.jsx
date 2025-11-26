@@ -91,7 +91,8 @@ function CustomerDetails() {
                 </div>
 
                 <div className="flex-1 px-10 py-5">
-                    <div className="flex items-center gap-3 mb-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-3">
                         <button onClick={() => window.history.back()}>
                             <img src={backArrowIcon} alt="back" className="w-5 h-5" />
                         </button>
@@ -123,6 +124,19 @@ function CustomerDetails() {
                             </span>
                         )}
                     </div>
+
+                    <button
+                        className="px-14 py-1.5  mr-4 text-lg font-bold rounded-md border"
+                        style={{
+                            borderColor: "#D8AD00",
+                            color: "#D8AD00",
+                            backgroundColor: "transparent",
+                        }}
+                        onClick={() => console.log("Edit clicked")}
+                    >
+                        Edit
+                    </button>
+                </div>
 
                     <p className="text-gray-400 text-sm mb-1 ml-8">
                         Created by: {customer.created_by}  &nbsp;  &nbsp; Created on: {customer.created_on}
@@ -422,7 +436,7 @@ function CustomerDetails() {
                                     : "#EB1D2E",
                                 }}
                             >
-                                {customer?.risk_level || "low"}
+                                {customer?.risk_level || "low"} Risk Level
                             </span>
                             </div>
                             {!customer?.risk_level || customer.risk_level === "low" ? (
