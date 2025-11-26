@@ -9,11 +9,19 @@ import { fetchCustomerById } from "../../api/customer.service";
 import UniversalTable from "../../components/Table/Table";
 import dealIcon from "../../assets/black_deals.svg";
 import warnIcon from "../../assets/black_warn.svg";
+import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 
 function CustomerDetails() {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState("basic");
     const [customer, setCustomer] = useState(null);
+
+    const actionOptions = [
+        { label: "View Deal", value: "view" },
+        { label: "Edit Deal", value: "edit" },
+        { label: "Download Receipt", value: "download" },
+        { label: "Cancel Deal", value: "cancel" },
+    ];
 
     useEffect(() => {
         const loadCustomer = async () => {
@@ -353,6 +361,10 @@ function CustomerDetails() {
                                         <h2 className="text-lg font-semibold text-gray-800">Customer Deals History</h2>
                                         <p className="text-medium text-gray-500">All deals for this customer</p>
                                     </div>
+                                        <p className="text-black text-sm font-bold mr-10">
+                                            Total: {customer.deals.filter(d => d.status.name !== "Rejected").length}{" "}
+                                            {customer.deals.filter(d => d.status.name !== "Rejected").length === 1 ? "deal" : "deals"}
+                                        </p>
                                 </div>
                                 <UniversalTable
                                     disableSort={true}
@@ -364,7 +376,7 @@ function CustomerDetails() {
                                         { key: "totalQuote", label: "Total (TZS)" },
                                         { key: "dealStatus", label: "Status" },
                                         { key: "deal_date", label: "Date" },
-                                    ]}
+{ key: "deal_action", label: "" },                                    ]}
                                     rows={customer.deals.map((deal) => ({
                                         deal_number: deal.deal_number,
                                         type: deal.deal_type.charAt(0).toUpperCase() + deal.deal_type.slice(1).toLowerCase(),
@@ -373,6 +385,7 @@ function CustomerDetails() {
                                         totalQuote: (parseFloat(deal.amount) * parseFloat(deal.rate)).toLocaleString(),
                                         dealStatus: deal.status.name,
                                         deal_date: new Date(deal.deal_date).toLocaleDateString(),
+                                        deal_action: <ActionDropdown options={actionOptions} />
                                     }))}
                                 />
                             </div>

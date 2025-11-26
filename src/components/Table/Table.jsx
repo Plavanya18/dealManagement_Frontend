@@ -115,7 +115,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [], di
                                     onClick={() => !disableSort && col.key !== "actions" && handleSort(col.key)}
                                 >
                                     <div className="flex items-center">
-                                        {col.label || col}
+                                        {col.label}
                                         {!disableSort && col.key !== "actions" && (
                                         <span className="flex ml-1">
                                             <img
