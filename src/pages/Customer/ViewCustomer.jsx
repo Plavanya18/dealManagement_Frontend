@@ -358,20 +358,20 @@ function CustomerDetails() {
                                     disableSort={true}
                                     columns={[
                                         { key: "deal_number", label: "Deal Number" },
-                                        { key: "deal_type", label: "Type" },
+                                        { key: "type", label: "Type" },
                                         { key: "baseCurrency", label: "Currency" },
                                         { key: "amount", label: "Amount" },
                                         { key: "totalQuote", label: "Total (TZS)" },
-                                        { key: "status", label: "Status" },
+                                        { key: "dealStatus", label: "Status" },
                                         { key: "deal_date", label: "Date" },
                                     ]}
                                     rows={customer.deals.map((deal) => ({
                                         deal_number: deal.deal_number,
-                                        deal_type: deal.deal_type.toUpperCase(),
+                                        type: deal.deal_type.charAt(0).toUpperCase() + deal.deal_type.slice(1).toLowerCase(),
                                         baseCurrency: deal.baseCurrency.code,
                                         amount: parseFloat(deal.amount).toLocaleString(),
                                         totalQuote: (parseFloat(deal.amount) * parseFloat(deal.rate)).toLocaleString(),
-                                        status: deal.status.name,
+                                        dealStatus: deal.status.name,
                                         deal_date: new Date(deal.deal_date).toLocaleDateString(),
                                     }))}
                                 />
