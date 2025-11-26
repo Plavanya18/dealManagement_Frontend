@@ -7,6 +7,7 @@ import retailIcon from "../../assets/retail.svg";
 import corporateIcon from "../../assets/corporate.svg";
 import { fetchCustomerById } from "../../api/customer.service";
 import UniversalTable from "../../components/Table/Table";
+import dealIcon from "../../assets/black_deals.svg";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -308,19 +309,38 @@ function CustomerDetails() {
                     {activeTab === "deals" && (
                         <div>
                             <div className="flex flex-wrap">
-                                {["Pending", "Approved", "Rejected"].map((status) => (
+                                {["Pending", "Approved", "Rejected"].map((status) => {
+                                    const count = customer.deals.filter((d) => d.status.name === status).length;
+
+                                    const statusColor =
+                                    status === "Pending"
+                                        ? "#D8AD00"
+                                        : status === "Approved"
+                                        ? "#10B935"
+                                        : "#EB1D2E";
+
+                                    return (
                                     <div
                                         key={status}
                                         className="w-[390px] h-22 rounded-xl border p-4 flex flex-col justify-between ml-4 mt-6 border-[#E1E1E1] bg-white"
                                     >
                                         <div className="flex justify-between items-center w-full">
-                                            <h4 className="text-[16px] font-normal text-black">{status}</h4>
+                                        <h4
+                                            className="text-[16px] font-semibold"
+                                            style={{ color: statusColor }}
+                                        >
+                                            {status}
+                                        </h4>
+
+                                        <img src={dealIcon} alt="deal icon" className="w-6 h-6" />
                                         </div>
-                                        <p className="text-[20px] font-bold text-black">
-                                            {customer.deals.filter((d) => d.status.name === status).length || 0}
+
+                                        <p className="text-[20px] mt-2 border-[#E1E1E1]">
+                                        {count || 0}
                                         </p>
                                     </div>
-                                ))}
+                                    );
+                                })}
                             </div>
 
                             <div className="bg-white rounded-t-xl rounded-b-none shadow-sm border border-b-0 border-gray-200 mr-10 ml-4 mt-8">
