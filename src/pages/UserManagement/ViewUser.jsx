@@ -239,12 +239,15 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                             </div>
                         </div>
 
-                        <div className="mb-4 pb-4 border-b border-gray-300">
+                        <div className={`mb-4 pb-4 ${editMode ? "border-b border-gray-300" : ""}`}>
                             <h3 className="text-black font-semibold mb-2">Account Status</h3>
                             <div className="flex items-center justify-between p-3 rounded-lg bg-white">
-                                <span className="text-gray-500 text-sm">
+                                <div>
+                                <span className="text-black font-bold">
                                     {formData?.is_active ? "Account Active" : "Account Inactive"}
                                 </span>
+                                   <p className="text-gray-500 text-sm">User can login and access the system</p>
+                                </div>
                                 <label className="inline-flex relative items-center cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -265,60 +268,59 @@ function ViewUser({ userId, onClose, initialEditMode = false }) {
                                         }}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-yellow-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    <div className="w-11 h-6 bg-gray-800 rounded-full peer peer-checked:bg-green-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                                 </label>
                             </div>
                         </div>
 
+                        {editMode && (
                         <div className="mb-4">
                             <h3 className="text-black font-semibold mb-2">Security Actions</h3>
                             <div className="flex gap-3 mb-4">
-                                <button className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
+                            <button
+                                className="px-4 py-2 text-xl border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
                                 onClick={() => {
-                                        if (!editMode) return;
-
-                                        setConfirmModal({
-                                            open: true,
-                                            actionType: "resetPassword",
-                                            title: "Are you sure you want to send a password reset link?",
-                                            message: "You want to send a password reset link to this user’s registered email address? The user will be able to create a new password from their email.",
-                                        });
-                                    }}
-                                >
-                                        Reset Password
-                                    </button>
-                                <button
-                                    className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md transition-all duration-200 hover:bg-red-500 hover:text-white"
-                                    onClick={() => {
-                                        if (!editMode) return; 
-                                        setConfirmModal({
-                                            open: true,
-                                            actionType: "delete",
-                                            title: "Delete Account",
-                                            message: "Are you sure you want to delete this user?",
-                                        });
-                                    }}
-                                >
-                                    Delete Account
-                                </button>
+                                setConfirmModal({
+                                    open: true,
+                                    actionType: "resetPassword",
+                                    title: "Are you sure you want to send a password reset link?",
+                                    message:
+                                    "You want to send a password reset link to this user’s registered email address? The user will be able to create a new password from their email.",
+                                });
+                                }}
+                            >
+                                Reset Password
+                            </button>
+                            <button
+                                className="px-4 py-2 text-xl border border-red-400 text-red-500 rounded-md transition-all duration-200 hover:bg-red-500 hover:text-white"
+                                onClick={() => {
+                                setConfirmModal({
+                                    open: true,
+                                    actionType: "delete",
+                                    title: "Delete Account",
+                                    message: "Are you sure you want to delete this user?",
+                                });
+                                }}
+                            >
+                                Delete Account
+                            </button>
                             </div>
-                            {editMode && (
-                                <div className="flex justify-end gap-3 mb-4 pt-4 border-t border-gray-300">
-                                    <button
-                                        onClick={handleCancel}
-                                        className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        onClick={handleSave}
-                                        className="px-4 py-2 bg-[#FFCC00] text-black font-bold rounded-md"
-                                    >
-                                        Save Changes
-                                    </button>
-                                </div>
-                            )}
+                            <div className="flex justify-end gap-3 mb-4 pt-4 border-t border-gray-300">
+                            <button
+                                onClick={handleCancel}
+                                className="px-4 py-2 border border-yellow-400 text-yellow-500 rounded-md transition-all duration-200 hover:bg-yellow-500 hover:text-white"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSave}
+                                className="px-4 py-2 bg-[#FFCC00] text-black font-bold rounded-md"
+                            >
+                                Save Changes
+                            </button>
+                            </div>
                         </div>
+                        )}
                     </>
                 )}
             </div>
