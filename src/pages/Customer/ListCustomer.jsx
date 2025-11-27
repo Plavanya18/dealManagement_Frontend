@@ -12,6 +12,8 @@ function ListCustomer() {
     const [loading, setLoading] = useState(false);
     const [typingTimeout, setTypingTimeout] = useState(null);
     const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
 
     useEffect(() => {
         if (!search.trim()) {
@@ -32,8 +34,8 @@ function ListCustomer() {
         try {
             setLoading(true);
             const res = await fetchCustomers({
-                page: 1,
-                limit: 10,
+                page: page,
+                limit: limit,
                 search: search,
                 status: ""
             });
