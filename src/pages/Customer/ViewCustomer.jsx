@@ -25,6 +25,15 @@ function CustomerDetails() {
         { label: "Cancel Deal", value: "cancel" },
     ];
 
+    const maskAccountNumber = (num) => {
+        if (!num) return "";
+        if (num.length <= 7) return num; 
+        
+        const first = num.slice(0, 4);
+        const last = num.slice(-3);
+        return `${first}******${last}`;
+    };
+
     useEffect(() => {
         const loadCustomer = async () => {
             const data = await fetchCustomerById(id);
@@ -165,15 +174,29 @@ function CustomerDetails() {
                                 className={`pb-2 text-[#D8AD00] ${activeTab === "deals" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
                                     }`}
                             >
-                                Deals ({customer.deals.filter(d => d.status.name !== "Rejected").length})
+                                Deals ({customer.deals.filter(d => d.status.name !== "Approved").length})
                             </button>
 
                             <button
                                 onClick={() => setActiveTab("compliance")}
-                                className={`pb-2 text-[#D8AD00] ${activeTab === "compliance" ? "border-b-2 border-[#D8AD00] font-medium" : "text-gray-500"
-                                    }`}
+                                className={`pb-2 flex items-center gap-2 ${
+                                    activeTab === "compliance"
+                                        ? "border-b-2 border-[#D8AD00] font-medium text-[#D8AD00]"
+                                        : "text-gray-500"
+                                }`}
                             >
                                 Compliance
+                                {customer.risk_level !== "low" && (
+                                    <span
+                                        className="px-2 py-1 rounded-md text-xs font-semibold"
+                                        style={{
+                                            backgroundColor: "#EB1D2E",
+                                            color: "white",
+                                        }}
+                                    >
+                                        {customer.risk_level ? 1 : 0}
+                                    </span>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -183,7 +206,7 @@ function CustomerDetails() {
                             <h2 className="text-[16px] font-semibold mt-2 mb-1">Customer Information</h2>
                             <div className="grid grid-cols-3 gap-5">
                                 <div>
-                                    <label className="text-xs text-gray-500">Company Name</label>
+                                    <label className="text-xs text-gray-500">{customer.type?.toLowerCase() === "retail" ? "Customer Name" : "Company Name"}</label>
                                     <input
                                         className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-0 focus:border-transparent"
                                         value={customer.name}
@@ -249,7 +272,7 @@ function CustomerDetails() {
                                     >
                                         <div>
                                             <p className="font-semibold">{acc.name}</p>
-                                            <p className="text-gray-600 text-sm">{acc.number}</p>
+                                            <p className="text-gray-600 text-sm">{maskAccountNumber(acc.number)}</p>
                                             <p className="text-gray-500 text-xs">
                                                 {acc.bank}, {acc.country}
                                             </p>
@@ -383,8 +406,8 @@ function CustomerDetails() {
                                         <p className="text-medium text-gray-500">All deals for this customer</p>
                                     </div>
                                         <p className="text-black text-sm font-bold mr-10">
-                                            Total: {customer.deals.filter(d => d.status.name !== "Rejected").length}{" "}
-                                            {customer.deals.filter(d => d.status.name !== "Rejected").length === 1 ? "deal" : "deals"}
+                                            Total: {customer.deals.filter(d => d.status.name !== "Approved").length}{" "}
+                                            {customer.deals.filter(d => d.status.name !== "Approved").length === 1 ? "deal" : "deals"}
                                         </p>
                                 </div>
                                 <UniversalTable
