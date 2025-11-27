@@ -124,8 +124,7 @@ function CustomerDetails() {
                                 alt="type icon"
                                 className="w-3 h-3"
                             />
-                            {customer.type}
-                        </span>
+                            {customer.type ? customer.type.charAt(0).toUpperCase() + customer.type.slice(1).toLowerCase(): ""}</span>
 
                         {customer.verified && (
                             <span className="px-2 ml-5 py-1 text-xs rounded-md bg-green-100 text-green-700">
