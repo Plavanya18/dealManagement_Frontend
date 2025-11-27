@@ -252,7 +252,7 @@ function CustomerDetails() {
                     {activeTab === "basic" && (
                         <div className="p-2 py-0">
                             {status === "Rejected" && (
-                                <div className="bg-red-50  border-red-500 rounded-xl p-4 flex items-center gap-4 mt-4 mb-2">
+                                <div className="bg-red-50  border-red-500 rounded-xl p-4 flex items-center gap-4 mt-4 mb-4">
                                     <img src={rejectIcon} alt="Rejected" className="w-8 h-8" style={{ filter: "invert(27%) sepia(93%) saturate(7480%) hue-rotate(355deg) brightness(92%) contrast(119%)" }} />
                                     <div className="flex flex-col">
                                         <p className="font-bold text-black text-sm">
