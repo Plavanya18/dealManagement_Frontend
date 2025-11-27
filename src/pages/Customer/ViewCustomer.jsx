@@ -12,6 +12,8 @@ import warnIcon from "../../assets/black_warn.svg";
 import ActionDropdown from "../../components/ActionDropdown/ActionDropdown";
 import lowriskIcon from "../../assets/g_compilance.svg";
 import highriskIcon from "../../assets/warning.svg";
+import rejectIcon from "../../assets/reject.svg";
+import verifyIcon from "../../assets/verify.svg";
 
 function CustomerDetails() {
     const { id } = useParams();
@@ -33,6 +35,13 @@ function CustomerDetails() {
         const last = num.slice(-3);
         return `${first}******${last}`;
     };
+
+    const getCustomerStatus = (customer) => {
+        if (customer.deactivated_at) return "Rejected";
+        if (customer.verified) return "Verified";
+        return "Pending";
+    };
+
 
     useEffect(() => {
         const loadCustomer = async () => {
@@ -133,17 +142,39 @@ function CustomerDetails() {
                         )}
                     </div>
 
+                    <div className="flex items-center gap-2">
                     <button
-                        className="px-14 py-1.5  mr-4 text-lg font-bold rounded-md border"
+                        className="px-14 py-1.5 text-lg font-bold rounded-md border"
                         style={{
-                            borderColor: "#D8AD00",
-                            color: "#D8AD00",
-                            backgroundColor: "transparent",
+                        borderColor: "#D8AD00",
+                        color: "#D8AD00",
+                        backgroundColor: "transparent",
                         }}
                         onClick={() => console.log("Edit clicked")}
                     >
                         Edit
                     </button>
+
+                        {getCustomerStatus(customer) === "Pending" && (
+                            <>
+                            <button
+                                onClick={() => console.log("Reject clicked")}
+                                className="px-4 py-1.5 text-lg font-normal rounded-md bg-red-500 text-white hover:bg-red-600 flex items-center gap-2"
+                            >
+                                <img src={rejectIcon} alt="reject" className="w-5 h-5" />
+                                Reject Account
+                            </button>
+
+                            <button
+                                onClick={() => console.log("Verify clicked")}
+                                className="px-4 py-1.5 text-lg font-normal rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
+                            >
+                                <img src={verifyIcon} alt="verify" className="w-5 h-5" />
+                                Verify Account
+                            </button>
+                            </>
+                        )}
+                    </div>
                 </div>
 
                     <p className="text-gray-400 text-sm mb-1 ml-8">
