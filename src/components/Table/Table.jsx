@@ -78,7 +78,7 @@ function UniversalTable({ title = "", subtitle = "", columns = [], rows = [], di
         if (col.key === "type") {
             return (
                 <span
-                    className={`px-4 py-2 text-sm font-medium border ${pillColors.type[value] || ""} shadow-sm`}
+                className={`px-3 py-1 text-sm border font-medium -ml-2 ${pillColors.type[value] || ""}`}
                     style={{ borderRadius: "7px" }}
                 >
                     {value}
