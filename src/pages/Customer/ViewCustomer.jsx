@@ -37,8 +37,13 @@ function CustomerDetails() {
     };
 
     const getCustomerStatus = (customer) => {
-        if (customer.deactivated_at) return "Rejected";
-        if (customer.verified) return "Verified";
+        const isRejected =
+            customer.deactivated_at !== null &&
+            customer.deactivated_at !== undefined &&
+            customer.deactivated_at !== "";
+
+        if (isRejected) return "Rejected";
+        if (customer.verified === 1 || customer.verified === true) return "Verified";
         return "Pending";
     };
 
@@ -80,6 +85,7 @@ function CustomerDetails() {
                 documents: data.kycDocuments || [],
                 deals: data.deals || [],
 
+                deactivated_at: data.deactivated_at,
                 risk_level: data.risk_level,
                 risk_reason: data.risk_reason,
                 compliance_remarks: data.compliance_remarks,
@@ -98,6 +104,9 @@ function CustomerDetails() {
             </div>
         );
     }
+
+    const status = getCustomerStatus(customer);
+
 
     return (
         <div className="min-h-screen bg-[#fffef7] overflow-x-hidden">
@@ -134,12 +143,19 @@ function CustomerDetails() {
                                 className="w-3 h-3"
                             />
                             {customer.type ? customer.type.charAt(0).toUpperCase() + customer.type.slice(1).toLowerCase(): ""}</span>
-
-                        {customer.verified && (
-                            <span className="px-2 ml-5 py-1 text-xs rounded-md bg-green-100 text-green-700">
-                                Verified
+                            <span
+                                className={`px-2 ml-5 py-1 text-xs rounded-md
+                                    ${
+                                        status === "Rejected"
+                                            ? "bg-red-100 text-red-600"
+                                            : status === "Verified"
+                                            ? "bg-green-100 text-green-600"
+                                            : "bg-[#D8AD001A] text-[#D8AD00]"
+                                    }
+                                `}
+                            >
+                                {status}
                             </span>
-                        )}
                     </div>
 
                     <div className="flex items-center gap-2">
