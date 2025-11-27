@@ -86,6 +86,8 @@ function CustomerDetails() {
                 deals: data.deals || [],
 
                 deactivated_at: data.deactivated_at,
+                deactivated_by: data.deactivatedBy || null,
+                deactivated_reason: data.deactivation_reason,
                 risk_level: data.risk_level,
                 risk_reason: data.risk_reason,
                 compliance_remarks: data.compliance_remarks,
@@ -249,6 +251,33 @@ function CustomerDetails() {
 
                     {activeTab === "basic" && (
                         <div className="p-2 py-0">
+                            {status === "Rejected" && (
+                                <div className="bg-red-50  border-red-500 rounded-xl px-4 py-1 flex items-center gap-4 mb-1">
+                                    <img src={rejectIcon} alt="Rejected" className="w-8 h-8" style={{ filter: "invert(27%) sepia(93%) saturate(7480%) hue-rotate(355deg) brightness(92%) contrast(119%)" }} />
+                                    <div className="flex flex-col">
+                                        <p className="font-bold text-black text-sm">
+                                            Rejected by: {customer.deactivated_by?.full_name || "N/A"}
+                                        </p>
+                                        <p className="text-black text-sm">
+                                            {customer.deactivated_at 
+                                                ? new Date(customer.deactivated_at).toLocaleString("en-US", {
+                                                    month: "2-digit",
+                                                    day: "2-digit",
+                                                    year: "numeric",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                    second: "2-digit",
+                                                    hour12: true,
+                                                }) 
+                                                : "-"}
+                                        </p>
+                                        <p className="text-red-500 text-sm">
+                                            Reason: {customer.deactivated_reason || "-"}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
                             <h2 className="text-[16px] font-semibold mt-2 mb-1">Customer Information</h2>
                             <div className="grid grid-cols-3 gap-5">
                                 <div>
