@@ -7,7 +7,7 @@ import newsIcon from "../../assets/news.svg";
 import candidateIcon from "../../assets/black_candidate.svg";
 import dealIcon from "../../assets/black_deals.svg";
 
-function Sidebar() {
+function Sidebar({fixed = true }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role?.toLowerCase();
 
@@ -19,7 +19,10 @@ function Sidebar() {
     }`;
 
   return (
-    <aside className="w-[220px] h-[600px] bg-white p-1 flex flex-col shadow-md">
+      <aside className={`w-[220px] bg-white p-1 flex flex-col shadow-md ${
+            fixed
+              ? "h-[600px]"
+              : "h-auto min-h-screen overflow-y-auto"}`}>
       <ul className="flex flex-col gap-1">
         <li>
           <NavLink to="/dashboard" className={linkClasses}>

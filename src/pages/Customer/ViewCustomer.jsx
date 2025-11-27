@@ -116,7 +116,7 @@ function CustomerDetails() {
 
             <div className="flex">
                 <div className="w-[220px]">
-                    <Sidebar />
+                    <Sidebar fixed={status !== "Rejected"} />
                 </div>
 
                 <div className="flex-1 px-10 py-5">
@@ -252,7 +252,7 @@ function CustomerDetails() {
                     {activeTab === "basic" && (
                         <div className="p-2 py-0">
                             {status === "Rejected" && (
-                                <div className="bg-red-50  border-red-500 rounded-xl px-4 py-1 flex items-center gap-4 mb-1">
+                                <div className="bg-red-50  border-red-500 rounded-xl p-4 flex items-center gap-4 mt-4 mb-2">
                                     <img src={rejectIcon} alt="Rejected" className="w-8 h-8" style={{ filter: "invert(27%) sepia(93%) saturate(7480%) hue-rotate(355deg) brightness(92%) contrast(119%)" }} />
                                     <div className="flex flex-col">
                                         <p className="font-bold text-black text-sm">
