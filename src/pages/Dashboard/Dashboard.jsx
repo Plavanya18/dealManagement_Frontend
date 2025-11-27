@@ -105,11 +105,22 @@ function Dashboard() {
 
             <div className="w-[440px] h-11 overflow-hidden bg-white rounded-md flex items-center">
             <div className="animate-marquee whitespace-nowrap text-medium text-gray-700">
-
               {fxRate ? (
                 <>
                   {fxRate.baseCurrency?.code}/{fxRate.quoteCurrency?.code}
-                  &nbsp;– Buy: {fxRate.buy_rate} | Sell: {fxRate.sell_rate}
+                  &nbsp;–&nbsp;
+                  <span style={{ color: "#10B935", fontWeight: 600 }}>
+                    Buy:
+                  </span>
+                  &nbsp;
+                  <span>{fxRate.buy_rate}</span>
+                  &nbsp;&nbsp;|&nbsp;&nbsp;
+                  <span style={{ color: "#D8AD00", fontWeight: 600 }}>
+                    Sell:
+                  </span>
+                  &nbsp;
+                  <span>{fxRate.sell_rate}</span>
+
                   &nbsp;&nbsp;&nbsp;
                 </>
               ) : (
