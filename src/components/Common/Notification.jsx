@@ -53,7 +53,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                         </div>
                 </div>
 
-                <div className="backdrop-blur-xl bg-white/0 rounded-t-[100px] -mt-12 pt-12 pb-10 px-10 border border-white/40 text-center shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
+                <div className="backdrop-blur-xl bg-white/0 rounded-t-[100px] -mt-12 pt-12 pb-10 px-10 border-2 border-[#E1E1E1] text-center shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
                     <h2 className="text-[22px] font-bold text-black mb-3">{title}</h2>
 
                     <p className="text-gray-600 text-[15px] leading-relaxed mb-10">
