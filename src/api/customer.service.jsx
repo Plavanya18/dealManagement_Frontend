@@ -64,3 +64,30 @@ export async function fetchCustomerById(id) {
     return null;
   }
 }
+
+export async function verifyCustomer(id, status = true, reason = "") {
+  try {
+    const body = status
+      ? { status: true }                
+      : { status: false, reason: reason }; 
+
+    const response = await fetch(`${API_URL}/customer/verify/${id}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      cache: "no-store",
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to update customer status:", response.status);
+      return { status: false, reason: "Failed to update status" };
+    }
+
+    const result = await response.json();
+    return result || { status: false, reason: "Unknown error" };
+
+  } catch (error) {
+    console.error("Error updating customer status:", error);
+    return { status: false, reason: "Error updating status" };
+  }
+}

@@ -5,7 +5,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import backArrowIcon from "../../assets/back_arrow.svg";
 import retailIcon from "../../assets/retail.svg";
 import corporateIcon from "../../assets/corporate.svg";
-import { fetchCustomerById } from "../../api/customer.service";
+import { fetchCustomerById, verifyCustomer } from "../../api/customer.service";
 import UniversalTable from "../../components/Table/Table";
 import dealIcon from "../../assets/black_deals.svg";
 import warnIcon from "../../assets/black_warn.svg";
@@ -14,11 +14,67 @@ import lowriskIcon from "../../assets/g_compilance.svg";
 import highriskIcon from "../../assets/warning.svg";
 import rejectIcon from "../../assets/reject.svg";
 import verifyIcon from "../../assets/verify.svg";
+import NotificationCard from "../../components/Common/Notification";
 
 function CustomerDetails() {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState("basic");
     const [customer, setCustomer] = useState(null);
+    const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    actionType: "",
+    title: "",
+    message: "",
+    });
+    const [showRejectReason, setShowRejectReason] = useState(false);
+    const [rejectReason, setRejectReason] = useState("");
+
+
+
+    const openConfirmation = (actionType) => {
+    setConfirmModal({
+        open: true,
+        actionType,
+        title:
+        actionType === "verify"
+            ? "Are you sure you want to approve this customer account?"
+            : actionType === "reject"
+            ? "Are you sure you want to reject this customer account?"
+            : "",
+        message:
+        actionType === "verify"
+            ? "You are about to approve this customer’s account. Once approved, the account will become active and available for transactions."
+            : "You are about to reject this customer’s account. Once rejected, the account request will be sent back to the maker for review or correction.",
+    });
+    };
+
+    const handleConfirm = async () => {
+    if (confirmModal.actionType === "verify") {
+        await verifyCustomer(customer.id, true);
+        setConfirmModal({ ...confirmModal, open: false });
+        return;
+    }
+
+    if (confirmModal.actionType === "reject") {
+        setConfirmModal({ ...confirmModal, open: false });
+
+        setShowRejectReason(true);
+        return;
+    }
+    };
+
+const handleCancel = () => {
+  setConfirmModal({ ...confirmModal, open: false });
+};
+
+const submitRejectReason = async () => {
+  if (!rejectReason.trim()) return alert("Please enter a reason");
+
+  await verifyCustomer(customer.id, false, rejectReason);
+
+  setShowRejectReason(false);
+};
+
 
     const actionOptions = [
         { label: "View Deal", value: "view" },
@@ -176,7 +232,7 @@ function CustomerDetails() {
                         {getCustomerStatus(customer) === "Pending" && (
                             <>
                             <button
-                                onClick={() => console.log("Reject clicked")}
+                            onClick={() => openConfirmation("reject")}
                                 className="px-4 py-1.5 text-lg font-normal rounded-md bg-red-500 text-white hover:bg-red-600 flex items-center gap-2"
                             >
                                 <img src={rejectIcon} alt="reject" className="w-5 h-5" />
@@ -184,7 +240,7 @@ function CustomerDetails() {
                             </button>
 
                             <button
-                                onClick={() => console.log("Verify clicked")}
+                            onClick={() => openConfirmation("verify")}
                                 className="px-4 py-1.5 text-lg font-normal rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
                             >
                                 <img src={verifyIcon} alt="verify" className="w-5 h-5" />
@@ -584,6 +640,50 @@ function CustomerDetails() {
                     )}
                 </div>
             </div>
+            {showRejectReason && (
+                <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+                    <div className="bg-[#fffef7] rounded-2xl w-[520px] p-8 shadow-xl">
+
+                    <h2 className="text-[16px] font-semibold text-black mb-2">
+                        Please provide a reason for rejecting this customer account
+                    </h2>
+
+                    <p className="text-gray-500 mb-5 text-sm">
+                        Our feedback helps the maker review and correct the customer’s account details.
+                    </p>
+
+                    <textarea
+                        className="w-[470px] h-[257px] border border-gray-300 rounded-xl p-4 text-medium outline-none"
+                        placeholder="Enter reason for rejection..."
+                        value={rejectReason}
+                        onChange={(e) => setRejectReason(e.target.value)}
+                    />
+
+                    <div className="flex justify-end gap-4 mt-6">
+                        <button
+                        onClick={() => setShowRejectReason(false)}
+                        className="border border-[#D8AD00] text-[#D8AD00] font-normal px-6 py-2 rounded-xl"
+                        >
+                        Back to customer details
+                        </button>
+
+                        <button
+                        onClick={submitRejectReason}
+                        className="bg-[#FFCC00] text-black font-semibold px-6 py-2 rounded-xl"
+                        >
+                        Submit reason
+                        </button>
+                    </div>
+
+                    </div>
+                </div>
+            )}
+
+            <NotificationCard
+                confirmModal={confirmModal}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
+            />
         </div>
     );
 }
