@@ -104,7 +104,7 @@ function Dashboard() {
             </div>
 
             <div className="w-[440px] h-11 overflow-hidden bg-white rounded-md flex items-center">
-            <div className="animate-marquee whitespace-nowrap text-medium text-gray-700">
+            <div className="animate-marquee whitespace-nowrap text-medium text-gray-850">
               {fxRate ? (
                 <>
                   {fxRate.baseCurrency?.code}/{fxRate.quoteCurrency?.code}
