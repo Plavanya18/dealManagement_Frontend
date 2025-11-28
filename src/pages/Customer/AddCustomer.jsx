@@ -396,7 +396,7 @@ function AddCustomer({ onClose }) {
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2 rounded-md bg-yellow-500 hover:bg-yellow-600 text-white font-semibold"
+                            className="px-4 py-2 rounded-md bg-[#FFCC00] hover:bg-yellow-600 text-black font-semibold"
                         >
                             Continue
                         </button>
