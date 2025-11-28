@@ -152,7 +152,7 @@ function AddCustomer({ onClose }) {
                             ></div>
 
                             <p>Choose a file or drag & drop it here</p>
-
+                            <p className="text-gray-500">JPEG, PNG, PDG, and MP4 formats, up to 50MB</p>
                             <input
                                 type="file"
                                 name="tinFile"
@@ -202,6 +202,7 @@ function AddCustomer({ onClose }) {
                                 }}
                             ></div>
                             <p>Choose a file or drag & drop it here</p>
+                            <p className="text-gray-500">JPEG, PNG, PDG, and MP4 formats, up to 50MB</p>
                             <input
                                 type="file"
                                 name="tinFile"
