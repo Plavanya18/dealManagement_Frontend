@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FileUpload } from "../../components/Common/Upload";
 
 function AddCustomer({ onClose }) {
     const [customerType, setCustomerType] = useState("retail");
@@ -135,29 +136,11 @@ function AddCustomer({ onClose }) {
                                 padding: "16px",
                             }}
                             >
-                            <div
-                                style={{
-                                position: "absolute",
-                                inset: 0,
-                                borderRadius: "8px",
-                                padding: "2px",
-                                background: `
-                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) top/100% 2px no-repeat,
-                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) bottom/100% 2px no-repeat,
-                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) left/2px 100% no-repeat,
-                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) right/2px 100% no-repeat
-                                `,
-                                pointerEvents: "none",
-                                }}
-                            ></div>
-
-                            <p>Choose a file or drag & drop it here</p>
-                            <p className="text-gray-500">JPEG, PNG, PDG, and MP4 formats, up to 50MB</p>
-                            <input
-                                type="file"
-                                name="tinFile"
-                                onChange={handleFileChange}
-                                className="mt-2"
+                            
+                            <FileUpload
+                                label="Choose a file or drag & drop it here"
+                                name="iforBusinessLicense"
+                                handleFileChange={handleFileChange}
                             />
                             </div>
                             </div>
@@ -186,28 +169,11 @@ function AddCustomer({ onClose }) {
                                     padding: "16px",
                                 }}
                             >
-                            <div
-                                style={{
-                                position: "absolute",
-                                inset: 0,
-                                borderRadius: "8px",
-                                padding: "2px",
-                                background: `
-                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) top/100% 2px no-repeat,
-                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) bottom/100% 2px no-repeat,
-                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) left/2px 100% no-repeat,
-                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) right/2px 100% no-repeat
-                                `,
-                                pointerEvents: "none",
-                                }}
-                            ></div>
-                            <p>Choose a file or drag & drop it here</p>
-                            <p className="text-gray-500">JPEG, PNG, PDG, and MP4 formats, up to 50MB</p>
-                            <input
-                                type="file"
+                            
+                            <FileUpload
+                                label="Choose a file or drag & drop it here"
                                 name="tinFile"
-                                onChange={handleFileChange}
-                                className="mt-2"
+                                handleFileChange={handleFileChange}
                             />
                             </div>
                             </div>
@@ -215,7 +181,7 @@ function AddCustomer({ onClose }) {
                         </div>
 
                         <div>
-                        <h3 className="font-semibold mb-2">Contact Information</h3>
+                        <h3 className="font-semiboldmb-2">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="flex flex-col">
                             <div className="flex items-center gap-1 mb-1">
