@@ -55,6 +55,9 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
     const shadeIcon =
         isVerify || isActivate ? greenShadeIcon : redShadeIcon;
 
+    const cancelBtnClass =
+        "border-2 border-[#D8AD00] text-[#D8AD00] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] transition-all duration-200 hover:bg-[#D8AD00] hover:text-white";
+
     return (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
             <div className="w-[520px] rounded-3xl shadow-2xl overflow-hidden relative bg-white">
@@ -98,10 +101,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                     <div className="flex justify-center gap-4">
                         {actionType === "resetPassword" && (
                             <>
-                                <button
-                                    onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px]"
-                                >
+                                <button onClick={onCancel} className={cancelBtnClass}>
                                     Cancel
                                 </button>
 
@@ -116,10 +116,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
 
                         {actionType === "activate" && (
                             <>
-                                <button
-                                    onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px]"
-                                >
+                                <button onClick={onCancel} className={cancelBtnClass}>
                                     Cancel
                                 </button>
 
@@ -132,7 +129,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                             </>
                         )}
 
-                            {(actionType === "delete" || actionType === "deactivate") && (
+                        {(actionType === "delete" || actionType === "deactivate") && (
                             <>
                                 <button
                                     onClick={onConfirm}
@@ -140,11 +137,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                                 >
                                     {confirmLabel}
                                 </button>
-
-                                <button
-                                    onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] transition-all duration-200 hover:bg-yellow-500 hover:text-white"
-                                >
+                                <button onClick={onCancel} className={cancelBtnClass}>
                                     Cancel
                                 </button>
                             </>
@@ -152,10 +145,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
 
                         {isReject && (
                             <>
-                                <button
-                                    onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px]"
-                                >
+                                <button onClick={onCancel} className={cancelBtnClass}>
                                     Cancel
                                 </button>
 
@@ -170,10 +160,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
 
                         {isVerify && (
                             <>
-                                <button
-                                    onClick={onCancel}
-                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px]"
-                                >
+                                <button onClick={onCancel} className={cancelBtnClass}>
                                     Cancel
                                 </button>
 
