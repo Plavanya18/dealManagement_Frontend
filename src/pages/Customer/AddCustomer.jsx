@@ -95,8 +95,11 @@ function AddCustomer({ onClose }) {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                         <h3 className="font-semibold mb-2">Customer Information</h3>
-                        <span className="text-gray-500 text-sm">Customer Name</span>
-                        <input
+                            <div className="flex items-center gap-1 mb-1">
+                                <span className="text-gray-500 text-sm">Cutomer Name</span>
+                                <span className="text-red-500">*</span>
+                            </div>
+                            <input
                             type="text"
                             name="name"
                             placeholder="Enter full Name"
@@ -108,7 +111,10 @@ function AddCustomer({ onClose }) {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                            <span className="text-gray-500 text-sm">ID Number</span>
+                            <div className="flex items-center gap-1 mb-1">
+                                <span className="text-gray-500 text-sm">ID Number</span>
+                                <span className="text-red-500">*</span>
+                            </div>
                             <input
                                 type="text"
                                 name="idNumber"
@@ -156,7 +162,10 @@ function AddCustomer({ onClose }) {
                         <h3 className="font-semibold mb-2">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="flex flex-col">
-                            <span className="text-gray-500 text-sm mb-1">Email</span>
+                            <div className="flex items-center gap-1 mb-1">
+                                <span className="text-gray-500 text-sm">Email</span>
+                                <span className="text-red-500">*</span>
+                            </div>
                             <input
                                 type="email"
                                 name="email"
@@ -168,7 +177,10 @@ function AddCustomer({ onClose }) {
                             />
                             </div>
                             <div className="flex flex-col">
-                            <span className="text-gray-500 text-sm mb-1">Phone</span>
+                            <div className="flex items-center gap-1 mb-1">
+                                <span className="text-gray-500 text-sm">Phone</span>
+                                <span className="text-red-500">*</span>
+                            </div>
                             <input
                                 type="text"
                                 name="phone"
@@ -203,7 +215,10 @@ function AddCustomer({ onClose }) {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex flex-col">
-                                <span className="text-gray-500 text-sm mb-1">Account Holder Name</span>
+                                <div className="flex items-center gap-1 mb-1">
+                                    <span className="text-gray-500 text-sm">Account Holder Name</span>
+                                    <span className="text-red-500">*</span>
+                                </div>
                                 <input
                                     type="text"
                                     name="accountHolderName"
@@ -216,7 +231,10 @@ function AddCustomer({ onClose }) {
                                 </div>
 
                                 <div className="flex flex-col">
-                                <span className="text-gray-500 text-sm mb-1">Bank Name</span>
+                                <div className="flex items-center gap-1 mb-1">
+                                    <span className="text-gray-500 text-sm">Bank Name</span>
+                                    <span className="text-red-500">*</span>
+                                </div>
                                 <input
                                     type="text"
                                     name="bankName"
@@ -231,7 +249,10 @@ function AddCustomer({ onClose }) {
 
                             <div className="grid grid-cols-3 mt-4 gap-4">
                                 <div className="flex flex-col">
-                                <span className="text-gray-500 text-sm mb-1">Account Number</span>
+                                <div className="flex items-center gap-1 mb-1">
+                                    <span className="text-gray-500 text-sm">Account Number</span>
+                                    <span className="text-red-500">*</span>
+                                </div>
                                 <input
                                     type="text"
                                     name="accountNumber"
@@ -244,7 +265,10 @@ function AddCustomer({ onClose }) {
                                 </div>
 
                                 <div className="flex flex-col">
-                                <span className="text-gray-500 text-sm mb-1">Currency</span>
+                                <div className="flex items-center gap-1 mb-1">
+                                    <span className="text-gray-500 text-sm">Currency</span>
+                                    <span className="text-red-500">*</span>
+                                </div>
                                 <input
                                     type="text"
                                     name="currency"
@@ -257,7 +281,10 @@ function AddCustomer({ onClose }) {
                                 </div>
 
                                 <div className="flex flex-col">
-                                <span className="text-gray-500 text-sm mb-1">Account Type</span>
+                                <div className="flex items-center gap-1 mb-1">
+                                    <span className="text-gray-500 text-sm">Account Type</span>
+                                    <span className="text-red-500">*</span>
+                                </div>
                                 <input
                                     type="text"
                                     name="accountType"
