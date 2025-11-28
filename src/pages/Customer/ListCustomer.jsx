@@ -5,6 +5,7 @@ import searchIcon from "../../assets/search.svg";
 import { fetchCustomers } from "../../api/customer.service";
 import addUserIcon from "../../assets/add_person.svg";
 import { useNavigate } from "react-router-dom";
+import AddCustomer from "./AddCustomer";
 
 function ListCustomer() {
     const [search, setSearch] = useState("");
@@ -14,6 +15,7 @@ function ListCustomer() {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
+    const [showAddCustomer, setShowAddCustomer] = useState(false);
 
     useEffect(() => {
         if (!search.trim()) {
@@ -66,6 +68,7 @@ function ListCustomer() {
                         </div>
                         <button
                             className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 mr-12"
+                              onClick={() => setShowAddCustomer(true)}
                         >
                             <img src={addUserIcon} alt="Add Customer" className="w-5 h-5" />
                             Add Customer
@@ -157,6 +160,13 @@ function ListCustomer() {
                     )}
                 </div>
             </div>
+            {showAddCustomer && (
+                <AddCustomer
+                    onClose={() => setShowAddCustomer(false)}
+                    toast={(msg, type) => alert(msg)}
+                    refreshCustomers={loadCustomers}
+                />
+            )}
         </div>
     );
 }
