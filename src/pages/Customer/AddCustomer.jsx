@@ -274,7 +274,7 @@ function AddCustomer({ onClose }) {
                         </div>
                         ))}
 
-                        <div className="flex justify-end">
+                        <div className="flex justify-end -mt-9">
                             <button
                                 type="button"
                                 className="px-4 py-2 rounded-md border border-yellow-500 text-yellow-600 hover:bg-yellow-50"
@@ -283,7 +283,60 @@ function AddCustomer({ onClose }) {
                                 Add Account
                             </button>
                         </div>
-
+                        
+                        <div>
+                        <h3 className="font-semibold mb-2">Address</h3>
+                        <div className="grid grid-cols-4 gap-4">
+                            <div className="flex flex-col">
+                            <span className="text-gray-500 text-sm mb-1">Street Address</span>
+                            <input
+                                type="text"
+                                name="streetAddress"
+                                placeholder="Street Address"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col">
+                            <span className="text-gray-500 text-sm mb-1">City</span>
+                            <input
+                                type="text"
+                                name="city"
+                                placeholder="City"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col">
+                            <span className="text-gray-500 text-sm mb-1">Country</span>
+                            <input
+                                type="text"
+                                name="Country"
+                                placeholder="Country"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col">
+                            <span className="text-gray-500 text-sm mb-1">Postal Code</span>
+                            <input
+                                type="text"
+                                name="postal_code"
+                                placeholder="postal_code"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                required
+                            />
+                            </div>
+                        </div>
+                        </div>
                         <div className="flex justify-end space-x-3 mt-4">
                         <button
                             type="button"
