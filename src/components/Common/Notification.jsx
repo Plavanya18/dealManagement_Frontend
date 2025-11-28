@@ -4,6 +4,7 @@ import activateIcon from "../../assets/add_person.svg";
 import deleteIcon from "../../assets/delete.svg";
 import resetIcon from "../../assets/reset_lock.svg";
 import redShadeIcon from "../../assets/red_shade.svg";
+import greenShadeIcon from "../../assets/green_shade.svg";
 
 function NotificationCard({ confirmModal, onConfirm, onCancel }) {
     if (!confirmModal.open) return null;
@@ -14,43 +15,63 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
         actionType === "delete"
             ? "Delete Account"
             : actionType === "deactivate"
-                ? "Deactivate Account"
-                : actionType === "activate"
-                    ? "Activate Account"
-                    : actionType === "resetPassword"
-                        ? "Send Link"
-                        : "Confirm";
+            ? "Deactivate Account"
+            : actionType === "activate"
+            ? "Activate Account"
+            : actionType === "resetPassword"
+            ? "Send Link"
+            : "Confirm";
 
     const iconToShow =
         actionType === "delete"
             ? deleteIcon
             : actionType === "activate"
-                ? activateIcon
-                : actionType === "deactivate"
-                    ? deactivateIcon
-                    : actionType === "resetPassword"
-                        ? resetIcon
-                        : deactivateIcon;
+            ? activateIcon
+            : actionType === "deactivate"
+            ? deactivateIcon
+            : actionType === "resetPassword"
+            ? resetIcon
+            : deactivateIcon;
+
+    const isActivate = actionType === "activate";
+
+    const circleBg = isActivate ? "#10B935" : "#E21E26";
+    const glowShadow = isActivate
+        ? "0 25px 50px rgba(13,186,75,0.45)"
+        : "0 25px 50px rgba(226,30,38,0.45)";
+    const shadeIcon = isActivate ? greenShadeIcon : redShadeIcon;
 
     return (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
             <div className="w-[520px] rounded-3xl shadow-2xl overflow-hidden relative bg-white">
 
-                <div className="relative h-52 w-full flex justify-center items-start pt-8 bg-linear-to-b from-white via-white/40 to-[#fdeeee]">
-                    <div className="w-40 h-40 rounded-full bg-[#E21E26] shadow-[0_25px_50px_rgba(226,30,38,0.45)] flex items-center justify-center relative">
+                <div
+                    className={`relative h-52 w-full flex justify-center items-start pt-8 ${
+                        isActivate
+                            ? "bg-linear-to-b from-white via-white/40 to-[#e7f8ec]"
+                            : "bg-linear-to-b from-white via-white/40 to-[#fdeeee]"
+                    }`}
+                >
+                    <div
+                        className="w-40 h-40 rounded-full flex items-center justify-center relative"
+                        style={{ backgroundColor: circleBg, boxShadow: glowShadow }}
+                    >
                         <div className="absolute top-2 left-4 w-16 h-10 bg-white/40 rounded-full blur-md"></div>
-                            <img
-                            src={redShadeIcon}
+
+                        <img
+                            src={shadeIcon}
                             alt="shade"
                             className="absolute w-40 h-40 object-cover"
-                            />
+                        />
 
-                            <img
+                        <img
                             src={iconToShow}
                             alt="icon"
-                            className="absolute w-14 h-14"
-                            />
-                        </div>
+                            className={`absolute w-14 h-14 ${
+                                isActivate ? "invert brightness-100" : ""
+                            }`}
+                        />
+                    </div>
                 </div>
 
                 <div className="backdrop-blur-xl bg-white/0 rounded-t-[100px] -mt-12 pt-12 pb-10 px-10 border-2 border-[#E1E1E1] text-center shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
@@ -81,7 +102,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                             <>
                                 <button
                                     onClick={onConfirm}
-                                    className="bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]"
+                                    className={`${isActivate ? "bg-[#10B935] hover:bg-[#0aa33f]" : "bg-[#E21E26] hover:bg-[#c2181f]"} text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]`}
                                 >
                                     {confirmLabel}
                                 </button>
@@ -96,7 +117,6 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                         )}
                     </div>
                 </div>
-
             </div>
         </div>
     );
