@@ -102,7 +102,7 @@ export function FileUpload({ label, name, handleFileChange }) {
                                         </span>
                                     )}
                                 </p>
-
+{/* 
                                 {!completed && (
                                     <div className="w-full h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
                                         <div
@@ -110,7 +110,7 @@ export function FileUpload({ label, name, handleFileChange }) {
                                             style={{ width: `${progress}%` }}
                                         ></div>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                     </div>
 
@@ -124,6 +124,14 @@ export function FileUpload({ label, name, handleFileChange }) {
                             <img src={deleteIcon} alt="delete file" className="w-5 h-5" style={{filter:"invert(28%) sepia(94%) saturate(5184%) hue-rotate(-6deg) brightness(93%) contrast(109%)"}}/>
                         )}
                     </button>
+                </div>
+            )}
+            {uploadingFile && !completed && (
+                <div className="w-full h-2 bg-gray-200 rounded-b-xl overflow-hidden mt-0">
+                    <div
+                        className="h-2 bg-yellow-400 transition-all"
+                        style={{ width: `${progress}%` }}
+                    ></div>
                 </div>
             )}
         </div>
