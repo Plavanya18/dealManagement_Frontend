@@ -96,7 +96,9 @@ function AddCustomer({ onClose }) {
                         <div>
                         <h3 className="font-semibold mb-2">Customer Information</h3>
                             <div className="flex items-center gap-1 mb-1">
-                                <span className="text-gray-500 text-sm">Cutomer Name</span>
+                                <span className="text-gray-500 text-sm">
+                                    {customerType === "retail" ? "Customer Name" : "Company Name"}
+                                </span>
                                 <span className="text-red-500">*</span>
                             </div>
                             <input
@@ -112,7 +114,9 @@ function AddCustomer({ onClose }) {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                             <div className="flex items-center gap-1 mb-1">
-                                <span className="text-gray-500 text-sm">ID Number</span>
+                                <span className="text-gray-500 text-sm">
+                                    {customerType === "retail" ? "ID Number" : "Business License Number"}
+                                </span>
                                 <span className="text-red-500">*</span>
                             </div>
                             <input
@@ -136,7 +140,14 @@ function AddCustomer({ onClose }) {
                             </div>
 
                             <div>
-                            <span className="text-gray-500 text-sm">TIN</span>
+                           <div className="flex items-center gap-1 mb-1">
+                                <span className="text-gray-500 text-sm">TIN</span>
+                                {customerType === "corporate" ? (
+                                    <span className="text-red-500">*</span>
+                                ) : (
+                                    <span style={{ color: "#fffef7" }}>*</span>
+                                )}
+                            </div>
                             <input
                                 type="text"
                                 name="tin"
