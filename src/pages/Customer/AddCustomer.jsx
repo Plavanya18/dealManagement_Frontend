@@ -128,14 +128,37 @@ function AddCustomer({ onClose }) {
                                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-2"
                                 required
                             />
-                            <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center cursor-pointer mb-4">
-                                <p>Choose a file or drag & drop it here</p>
-                                <input
+                            <div
+                            className="rounded-md p-4 text-center cursor-pointer mb-4 relative bg-[#fffef7]"
+                            style={{
+                                position: "relative",
+                                padding: "16px",
+                            }}
+                            >
+                            <div
+                                style={{
+                                position: "absolute",
+                                inset: 0,
+                                borderRadius: "8px",
+                                padding: "2px",
+                                background: `
+                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) top/100% 2px no-repeat,
+                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) bottom/100% 2px no-repeat,
+                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) left/2px 100% no-repeat,
+                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) right/2px 100% no-repeat
+                                `,
+                                pointerEvents: "none",
+                                }}
+                            ></div>
+
+                            <p>Choose a file or drag & drop it here</p>
+
+                            <input
                                 type="file"
-                                name="idFile"
+                                name="tinFile"
                                 onChange={handleFileChange}
                                 className="mt-2"
-                                />
+                            />
                             </div>
                             </div>
 
@@ -156,14 +179,35 @@ function AddCustomer({ onClose }) {
                                 onChange={handleChange}
                                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-2"
                             />
-                            <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center cursor-pointer mb-4">
-                                <p>Choose a file or drag & drop it here</p>
-                                <input
+                            <div
+                                className="rounded-md p-4 text-center cursor-pointer mb-4 relative bg-[#fffef7]"
+                                style={{
+                                    position: "relative",
+                                    padding: "16px",
+                                }}
+                            >
+                            <div
+                                style={{
+                                position: "absolute",
+                                inset: 0,
+                                borderRadius: "8px",
+                                padding: "2px",
+                                background: `
+                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) top/100% 2px no-repeat,
+                                    repeating-linear-gradient(90deg, #ABABAB 0 12px, transparent 12px 24px) bottom/100% 2px no-repeat,
+                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) left/2px 100% no-repeat,
+                                    repeating-linear-gradient(180deg, #ABABAB 0 12px, transparent 12px 24px) right/2px 100% no-repeat
+                                `,
+                                pointerEvents: "none",
+                                }}
+                            ></div>
+                            <p>Choose a file or drag & drop it here</p>
+                            <input
                                 type="file"
                                 name="tinFile"
                                 onChange={handleFileChange}
                                 className="mt-2"
-                                />
+                            />
                             </div>
                             </div>
                         </div>
