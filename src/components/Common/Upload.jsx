@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
+import wrongIcon from "../../assets/wrong.svg";
+import deleteIcon from "../../assets/delete.svg";
 
 export function FileUpload({ label, name, handleFileChange }) {
     const [uploadingFile, setUploadingFile] = useState(null);
@@ -77,42 +79,50 @@ export function FileUpload({ label, name, handleFileChange }) {
             </div>
 
             {uploadingFile && (
-                <div className="mt-3 bg-white rounded-xl shadow p-3 flex items-center gap-3">
-                    <img
-                        src="https://img.icons8.com/color/48/000000/file.png"
-                        className="w-8 h-8"
-                        alt="file icon"
-                    />
+                <div className="mt-3 bg-white rounded-xl shadow p-3 flex items-center gap-3 justify-between">
 
-                    <div className="flex-1">
-                        <p className="font-medium text-sm">{uploadingFile.name}</p>
-
-                        <p className="text-xs text-gray-500">
-                            {(uploadingFile.size / 1024).toFixed(1)} KB •{" "}
-                            {!completed ? (
-                                <span className="text-blue-500">Uploading...</span>
-                            ) : (
-                                <span className="text-green-600 flex items-center gap-1">
-                                    <FaCheckCircle size={12} /> Completed
-                                </span>
-                            )}
-                        </p>
-
-                        {!completed && (
-                            <div className="w-full h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
-                                <div
-                                    className="h-2 bg-yellow-400 rounded-full transition-all"
-                                    style={{ width: `${progress}%` }}
-                                ></div>
+                    <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 bg-gray-200 rounded-md overflow-hidden">
+                            <img
+                                src="https://img.icons8.com/color/48/000000/file.png"
+                                className="w-8 h-8"
+                                alt="file icon"
+                            />
                             </div>
-                        )}
+
+                            <div className="flex-1 text-left">
+                                <p className="font-medium text-sm">{uploadingFile.name}</p>
+                                <p className="text-xs text-gray-500 whitespace-nowrap">
+                                    {(uploadingFile.size / 1024).toFixed(1)} KB •{" "}
+                                    {!completed ? (
+                                        <span className="text-black">Uploading...</span>
+                                    ) : (
+                                        <span className="text-green-600 inline-flex items-center gap-1">
+                                            <FaCheckCircle size={12} /> Completed
+                                        </span>
+                                    )}
+                                </p>
+
+                                {!completed && (
+                                    <div className="w-full h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                                        <div
+                                            className="h-2 bg-yellow-400 rounded-full transition-all"
+                                            style={{ width: `${progress}%` }}
+                                        ></div>
+                                    </div>
+                                )}
+                            </div>
                     </div>
 
                     <button
                         onClick={removeFile}
                         className="text-gray-500 hover:text-black"
                     >
-                        <IoMdClose size={20} />
+                        {!completed ? (
+                            <img src={wrongIcon} alt="cancel upload" className="w-5 h-5" />
+                        ) : (
+                            <img src={deleteIcon} alt="delete file" className="w-5 h-5" style={{filter:"invert(28%) sepia(94%) saturate(5184%) hue-rotate(-6deg) brightness(93%) contrast(109%)"}}/>
+                        )}
                     </button>
                 </div>
             )}
