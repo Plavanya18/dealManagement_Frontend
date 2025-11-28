@@ -82,7 +82,7 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                     </p>
 
                     <div className="flex justify-center gap-4">
-                        {actionType === "resetPassword" ? (
+                        {actionType === "resetPassword" && (
                             <>
                                 <button
                                     onClick={onCancel}
@@ -98,11 +98,31 @@ function NotificationCard({ confirmModal, onConfirm, onCancel }) {
                                     Send Link
                                 </button>
                             </>
-                        ) : (
+                        )}
+
+                        {actionType === "activate" && (
+                            <>
+                                <button
+                                    onClick={onCancel}
+                                    className="border-2 border-[#E5C100] text-[#E5C100] px-8 py-3 rounded-xl font-semibold min-w-[150px] text-[15px] transition-all duration-200 hover:bg-yellow-500 hover:text-white"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    onClick={onConfirm}
+                                    className="bg-[#10B935] hover:bg-[#0aa33f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]"
+                                >
+                                    Activate Account
+                                </button>
+                            </>
+                        )}
+
+                        {(actionType === "delete" || actionType === "deactivate") && (
                             <>
                                 <button
                                     onClick={onConfirm}
-                                    className={`${isActivate ? "bg-[#10B935] hover:bg-[#0aa33f]" : "bg-[#E21E26] hover:bg-[#c2181f]"} text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]`}
+                                    className="bg-[#E21E26] hover:bg-[#c2181f] text-white px-8 py-3 rounded-xl font-semibold min-w-[200px] text-[15px]"
                                 >
                                     {confirmLabel}
                                 </button>
