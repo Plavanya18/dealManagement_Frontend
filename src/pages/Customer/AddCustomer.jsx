@@ -83,7 +83,7 @@ function AddCustomer({ onClose }) {
                                 onClick={() => setCustomerType(type)}
                                 className={`
                                     flex-1 py-2 text-center h font-normal text-black transition-all duration-200
-                                    ${isSelected ? "bg-yellow-50  border border-yellow-400 rounded-2xl shadow" : "bg-white"}
+                                    ${isSelected ? "bg-yellow-50  border border-yellow-400 rounded-2xl shadow" : "bg-white border-transparent"}
                                 `}
                             >
                                 {type.charAt(0).toUpperCase() + type.slice(1)} Customer
